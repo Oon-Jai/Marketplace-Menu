@@ -86,7 +86,7 @@
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--border-color) transparent;
-      padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     }
 
     .content-layout::-webkit-scrollbar {
@@ -281,53 +281,6 @@
       color: #ef4444;
       font-size: 12px;
       font-weight: 800;
-    }
-
-    .floating-cart-bar {
-      position: absolute;
-      bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-      left: 12px;
-      right: 12px;
-      max-width: 500px;
-      margin: 0 auto;
-      background: rgba(8, 60, 51, 0.95);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--accent-green);
-      border-radius: 30px;
-      padding: 8px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 90;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-      cursor: pointer;
-      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
-    }
-
-    .floating-cart-bar.hidden {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(15px);
-      pointer-events: none;
-    }
-
-    .floating-cart-info { display: flex; align-items: center; gap: 8px; }
-    .floating-badge {
-      background: var(--accent-green);
-      color: #010c0a;
-      font-weight: 800;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 20px;
-    }
-
-    .floating-price { font-size: 13px; font-weight: 700; color: white; }
-    .floating-btn { font-size: 12px; font-weight: 600; color: var(--accent-green); }
-
-    @media (min-width: 768px) {
-      .floating-cart-bar {
-        display: none !important;
-      }
     }
 
     .cart-summary {
@@ -683,14 +636,6 @@
     </main>
   </div>
 
-  <div class="floating-cart-bar hidden" id="floatingCart" onclick="scrollToCart()">
-    <div class="floating-cart-info">
-      <span class="floating-badge" id="floatBadge">0</span>
-      <span class="floating-price" id="floatPrice">0 Kip</span>
-    </div>
-    <div class="floating-btn">View Basket ↓</div>
-  </div>
-
   <div class="modal-overlay" id="customModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -739,8 +684,8 @@
 </div>
 
 <script>
-  const PHONE_NUMBER = "8562057048174"; // Replace with actual WhatsApp phone number
-  const MESSENGER_USERNAME = "196oHGrmFn"; // Replace with actual Messenger Page ID or username
+  const PHONE_NUMBER = "8562057048174"; 
+  const MESSENGER_USERNAME = "YOUR_PAGE_USERNAME_OR_ID"; // Replace with your Facebook Page Username or ID
 
   const commonChoices = {
     veggies: [
@@ -867,10 +812,6 @@
     });
   }
 
-  function scrollToCart() {
-    document.getElementById('cartSection').scrollIntoView({ behavior: 'smooth' });
-  }
-
   function addToCart(id, name, price, subtext = '') {
     cart.push({ id, name, price, subtext });
     renderCart();
@@ -887,20 +828,14 @@
     const container = document.getElementById('cartItems');
     const countEl = document.getElementById('cartCount');
     const totalEl = document.getElementById('totalPrice');
-    const floatBadge = document.getElementById('floatBadge');
-    const floatPrice = document.getElementById('floatPrice');
-    const floatingCartBar = document.getElementById('floatingCart');
 
     let total = cart.reduce((sum, item) => sum + item.price, 0);
 
     countEl.innerText = `(${cart.length} item${cart.length === 1 ? '' : 's'})`;
-    floatBadge.innerText = cart.length;
-    floatPrice.innerText = formatKip(total);
 
     if (cart.length === 0) {
       container.innerHTML = `<p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>`;
       totalEl.innerText = '0 Kip';
-      floatingCartBar.classList.add('hidden');
     } else {
       container.innerHTML = '';
       cart.forEach((item, idx) => {
@@ -919,7 +854,6 @@
         container.appendChild(itemEl);
       });
       totalEl.innerText = formatKip(total);
-      floatingCartBar.classList.remove('hidden');
     }
   }
 
@@ -990,7 +924,6 @@
     const selected = document.querySelector('input[name="swPack"]:checked').value;
     applySandwichPackRules(selected);
 
-    // Uncheck selections that violate new max limits
     ['Sauce', 'Veggie', 'Protein'].forEach(type => {
       const groupName = `cust${type}`;
       const maxAllowed = currentActiveCustomItem[`max${type}s`];
