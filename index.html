@@ -338,6 +338,14 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
+      padding: 4px;
+      border-radius: var(--border-radius-sm);
+      transition: border 0.2s ease;
+    }
+
+    .order-options.error-highlight {
+      border: 1px solid #ef4444;
+      background: rgba(239, 68, 68, 0.1);
     }
 
     .order-options label {
@@ -362,6 +370,18 @@
       background: rgba(30, 77, 64, 0.5);
       color: var(--accent-green);
       font-weight: 700;
+    }
+
+    .order-type-error-msg {
+      display: none;
+      color: #f87171;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      background: rgba(239, 68, 68, 0.15);
+      padding: 6px;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid #ef4444;
     }
 
     .payment-note {
@@ -602,9 +622,13 @@
           <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
         </div>
 
-        <div class="order-options">
-          <label><input type="radio" name="orderType" value="Dine-In" checked> Dine-In</label>
-          <label><input type="radio" name="orderType" value="Pick-Up"> Pick-Up</label>
+        <div class="order-options" id="orderOptionsBox">
+          <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
+          <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
+        </div>
+        
+        <div class="order-type-error-msg" id="orderTypeErrorMsg">
+          ⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.
         </div>
 
         <div class="payment-note">
@@ -685,7 +709,7 @@
 
 <script>
   const PHONE_NUMBER = "8562057048174"; 
-  const MESSENGER_USERNAME = "oon.jai.laos"; // Replace with your Facebook Page Username or ID
+  const MESSENGER_USERNAME = "oon.jai.laos";
 
   const commonChoices = {
     veggies: [
@@ -980,11 +1004,28 @@
     closeCustomModal();
   }
 
-  function generateOrderMessage() {
-    if (cart.length === 0) return null;
+  function clearOrderTypeError() {
+    document.getElementById('orderOptionsBox').classList.remove('error-highlight');
+    document.getElementById('orderTypeErrorMsg').style.display = 'none';
+  }
 
-    const orderType = document.querySelector('input[name="orderType"]:checked').value;
-    let message = `*New Order - Oonjai Marketplace*\n`;
+  function buildOrderMessage() {
+    if (cart.length === 0) {
+      alert("Your basket is empty! Please add items before ordering.");
+      return null;
+    }
+
+    const orderTypeInput = document.querySelector('input[name="orderType"]:checked');
+    if (!orderTypeInput) {
+      document.getElementById('orderOptionsBox').classList.add('error-highlight');
+      document.getElementById('orderTypeErrorMsg').style.display = 'block';
+      document.getElementById('orderOptionsBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      alert("⚠️ Please select either Dine-In or Pick-Up before submitting your order!");
+      return null;
+    }
+
+    const orderType = orderTypeInput.value;
+    let message = `✦ *OONJAI MARKETPLACE ORDER* ✦\n`;
     message += `Type: *${orderType}*\n\n`;
     message += `*Items Ordered:*\n`;
 
@@ -996,39 +1037,28 @@
     });
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
-    message += `\n*Total:* ${formatKip(total)}\n\n`;
-    message += `Please provide your payment QR code to process this order.`;
+    message += `\n*Total: ${formatKip(total)}*\n`;
+    message += `\n_Please reply with your payment QR code to process this order._`;
 
     return message;
   }
 
   function checkoutWA() {
-    const msg = generateOrderMessage();
-    if (!msg) {
-      alert("Your order basket is empty.");
-      return;
-    }
+    const msg = buildOrderMessage();
+    if (!msg) return;
     const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
   }
 
   function checkoutMessenger() {
-    const msg = generateOrderMessage();
-    if (!msg) {
-      alert("Your order basket is empty.");
-      return;
-    }
-    navigator.clipboard.writeText(msg).then(() => {
-      alert("Order details copied to clipboard! Paste them into Messenger when the chat opens.");
-      window.open(`https://m.me/${MESSENGER_USERNAME}`, '_blank');
-    }).catch(() => {
-      window.open(`https://m.me/${MESSENGER_USERNAME}`, '_blank');
-    });
+    const msg = buildOrderMessage();
+    if (!msg) return;
+    const url = `https://m.me/${MESSENGER_USERNAME}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
   }
 
-  // Initial setup
+  // Initialize view on load
   renderProductsGrid();
-  renderCart();
 </script>
 </body>
 </html>
