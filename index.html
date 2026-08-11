@@ -262,7 +262,7 @@
   <!-- APP HEADER (Edit Name & Subtitle Here) -->
   <header>
     <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
-    <p>Select a category to explore our menu offerings and submit your order.</p>
+    <p>Select a category to explore our plant-based menu offerings and submit your order.</p>
   </header>
 
   <div class="content-layout" id="contentLayout">
@@ -764,7 +764,7 @@
     }
 
     const orderType = orderTypeInput.value;
-    let message = `✦ *OON JAI MARKETPLACE ORDER* ✦\n`;
+    let message = `✦ *OONJAI MARKETPLACE ORDER* ✦\n`;
     message += `Type: *${orderType}*\n\n`;
     message += `*Items Ordered:*\n`;
 
@@ -777,7 +777,11 @@
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     message += `\n*Total: ${formatKip(total)}*\n`;
-    message += `\n_Please reply with your payment QR code to process this order._`;
+    
+    // --- PAYMENT INSTRUCTIONS & IMGBB LINK ---
+    message += `\n_Please send your payment receipt to process this order._\n`;
+    message += `\n👉 *Get our Payment QR Code here:*\n`;
+    message += `https://ibb.co/2XPxGNZ`;
 
     return message;
   }
