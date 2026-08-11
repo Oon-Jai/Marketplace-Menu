@@ -107,7 +107,7 @@
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--border-color) transparent;
-      padding-bottom: 75px; /* Extra bottom padding so floating button doesn't hide content */
+      padding-bottom: 75px; /* Bottom padding so floating mobile bar doesn't obscure contents */
     }
     .content-layout::-webkit-scrollbar { width: 5px; }
     .content-layout::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
@@ -120,11 +120,11 @@
       .business-hours { font-size: 11px; }
       .content-layout {
         display: grid;
-        grid-template-columns: 210px 1fr;
+        grid-template-columns: 220px 1fr;
         gap: 18px;
         align-items: stretch;
         overflow-y: hidden;
-        padding-bottom: 60px;
+        padding-bottom: 0;
       }
     }
 
@@ -157,12 +157,26 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
+    /* Desktop Sidebar Footer for Review & Words of Hope */
+    .sidebar-bottom-actions {
+      display: none; /* Hidden on mobile; active on desktop */
+    }
+
     @media (min-width: 768px) {
       .categories-nav {
         display: flex; flex-direction: column; justify-content: flex-start;
         padding: 10px; gap: 8px; overflow-y: auto; height: 100%;
       }
       .nav-header { font-size: 13px; padding: 10px; margin-bottom: 6px; }
+
+      .sidebar-bottom-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: auto; /* Pushes to bottom of category list */
+        padding-top: 18px; /* Spacing away from category buttons */
+        border-top: 1px dashed var(--border-color);
+      }
     }
 
     .cat-btn {
@@ -284,60 +298,46 @@
     .platform-link.guru { color: #E53935; border-color: #E53935; }
     .platform-link.guru:hover { background: rgba(229, 57, 53, 0.15); box-shadow: 0 0 8px rgba(229, 57, 53, 0.3); }
 
-    /* Google Review Section */
-    .review-section {
-      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
-      padding: 16px; text-align: center; margin-bottom: 24px;
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-    }
-    .review-section p { font-size: 13px; color: var(--text-bright); font-weight: 600; }
-    .review-link {
+    /* SHARED STYLES FOR REVIEW & HOPE BUTTONS */
+    .btn-review-action {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      background: #ffffff; color: #1a73e8;
-      padding: 10px 16px; border-radius: var(--border-radius-main);
-      font-size: 13px; font-weight: 700; text-decoration: none;
-      transition: all 0.2s ease; border: 1px solid #1a73e8; width: 100%; max-width: 300px;
+      background: #ffffff; color: #1a73e8; padding: 10px 12px; border-radius: var(--border-radius-sm);
+      font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s ease;
+      border: 1px solid #1a73e8; cursor: pointer; text-align: center; line-height: 1.2;
     }
-    .review-link:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(26, 115, 232, 0.3); }
+    .btn-review-action:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26, 115, 232, 0.3); }
 
-    /* FIXED FLOATING BAR AT BOTTOM (Words of Hope) */
-    .floating-hope-bar {
+    .btn-hope-action {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff;
+      padding: 10px 12px; border-radius: var(--border-radius-sm); font-size: 11px; font-weight: 700;
+      border: 1px solid var(--accent-green); cursor: pointer; transition: all 0.2s ease;
+      text-align: center; line-height: 1.2;
+    }
+    .btn-hope-action:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(74, 222, 128, 0.3); }
+
+    /* FIXED FLOATING BAR AT BOTTOM (PHONE ONLY) */
+    .floating-phone-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(1, 12, 10, 0.92);
+      background: rgba(1, 12, 10, 0.94);
       border-top: 1px solid var(--border-color);
       backdrop-filter: blur(12px);
-      padding: 10px 16px;
+      padding: 10px 12px;
       z-index: 90;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      gap: 10px;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
     }
-
-    .hope-trigger-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: linear-gradient(135deg, #10b981 0%, #047857 100%);
-      color: #ffffff;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: 700;
-      border: 1px solid var(--accent-green);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(74, 222, 128, 0.2);
-      width: 100%;
-      max-width: 320px;
+    .floating-phone-bar .btn-review-action,
+    .floating-phone-bar .btn-hope-action {
+      flex: 1; /* Equal length on mobile phone screen */
     }
-    .hope-trigger-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(74, 222, 128, 0.35);
+
+    @media (min-width: 768px) {
+      .floating-phone-bar { display: none; } /* Hide floating bar on laptop */
     }
 
     /* --- 7. CUSTOMIZATION MODAL --- */
@@ -399,6 +399,16 @@
       <button class="cat-btn" data-category="smoothies" onclick="switchCategory('smoothies')">Smoothies</button>
       <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
       <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
+
+      <!-- LAPTOP ONLY: ACTION BUTTONS AT BOTTOM OF CATEGORY SIDEBAR -->
+      <div class="sidebar-bottom-actions">
+        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">
+          ⭐ Leave us a Review
+        </a>
+        <button class="btn-hope-action" onclick="openHopeModal()">
+          🌱 Words of Hope
+        </button>
+      </div>
     </aside>
 
     <main class="main-content" id="mainContent">
@@ -455,21 +465,16 @@
         </div>
       </div>
 
-      <!-- GOOGLE REVIEW SECTION -->
-      <div class="review-section">
-        <p>We'd Love to Hear About Experience!</p>
-        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="review-link">
-          ⭐ Leave us a Review ⭐
-        </a>
-      </div>
-
     </main>
   </div>
 
-  <!-- FIXED FLOATING BAR AT THE BOTTOM -->
-  <div class="floating-hope-bar">
-    <button class="hope-trigger-btn" onclick="openHopeModal()">
-      🌱 Words of Hope 🌱
+  <!-- FIXED FLOATING BAR AT BOTTOM (PHONE ONLY: REVIEW + WORDS OF HOPE SIDE BY SIDE) -->
+  <div class="floating-phone-bar">
+    <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">
+      ⭐ Leave Review
+    </a>
+    <button class="btn-hope-action" onclick="openHopeModal()">
+      🌱 Words of Hope
     </button>
   </div>
 
@@ -592,7 +597,7 @@
   // --- 1. STORE CONFIGURATION ---
   const PHONE_NUMBER = "8562057048174"; 
   const MESSENGER_USERNAME = "oon.jai.laos";
-  const EXTRA_ADDON_PRICE = 7000; // Extra Veggie or Protein price in Kip
+  const EXTRA_ADDON_PRICE = 7000;
 
   // --- 2. MENU INGREDIENTS ---
   const commonChoices = {
