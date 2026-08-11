@@ -56,13 +56,39 @@
       overflow: hidden;
     }
 
-    /* Header styling */
+    /* Header & Circular Logo Styling */
     header {
       flex-shrink: 0;
       text-align: center;
       padding: 2px 0 6px;
       border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    .logo-frame {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-green);
+      box-shadow: 0 0 12px rgba(74, 222, 128, 0.25);
+      overflow: hidden;
+      margin-bottom: 6px;
+      background-color: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
     header h1 { font-family: 'Georgia', serif; font-size: 18px; font-weight: 400; letter-spacing: 0.5px; }
     header h1 span { color: var(--accent-green); font-size: 12px; vertical-align: middle; }
     header p { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
@@ -84,6 +110,7 @@
 
     @media (min-width: 768px) {
       .app-container { padding: 18px; gap: 14px; }
+      .logo-frame { width: 85px; height: 85px; margin-bottom: 8px; }
       header h1 { font-size: 24px; }
       header p { font-size: 13px; }
       .content-layout {
@@ -312,6 +339,11 @@
   
   <!-- APP HEADER -->
   <header>
+    <!-- CIRCULAR LOGO CONTAINER -->
+    <div class="logo-frame">
+      <!-- 👇 PUT YOUR IMAGE URL HERE (replace the src attribute below) 👇 -->
+      <img src="https://ibb.co/2XPxGNZ" />
+    </div>
     <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
     <p>Select a category to explore our plant-based menu offerings and submit your orders.</p>
   </header>
@@ -401,7 +433,7 @@
   </div>
 
   <!-- ========================================== -->
-  <!--             CUSTOMIZATION MODALS             -->
+  <!--               CUSTOMIZATION MODALS         -->
   <!-- ========================================== -->
   <div class="modal-overlay" id="customModal">
     <div class="modal-box">
@@ -452,7 +484,7 @@
   </div>
 
   <!-- ========================================== -->
-  <!--        THEMED NOTIFICATION MODALS            -->
+  <!--         THEMED NOTIFICATION MODALS        -->
   <!-- ========================================== -->
   <div class="modal-overlay" id="notificationModal" style="z-index: 105;">
     <div class="modal-box" style="max-width: 320px; text-align: center; padding: 20px;">
@@ -474,7 +506,7 @@
 </div>
 
 <!-- ========================================== -->
-<!--               JAVASCRIPT LOGIC               -->
+<!--                JAVASCRIPT LOGIC            -->
 <!-- ========================================== -->
 <script>
   // --- 1. STORE CONFIGURATION (Edit Contacts Here) ---
@@ -609,7 +641,6 @@
     return cart.filter(item => item.id === id).length;
   }
 
-  // UPDATED: Switch category using dataset to prevent browser read errors
   function switchCategory(catKey) {
     currentCategory = catKey;
     document.querySelectorAll('.cat-btn').forEach(btn => {
