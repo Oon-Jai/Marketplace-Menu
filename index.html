@@ -491,7 +491,7 @@
   // --- 1. STORE CONFIGURATION ---
   const PHONE_NUMBER = "8562057048174"; 
   const MESSENGER_USERNAME = "oon.jai.laos";
-  const EXTRA_ADDON_PRICE = 5000; // Price per extra Veggie or Protein item in Kip
+  const EXTRA_ADDON_PRICE = 5000; // Extra Veggie or Protein price in Kip
 
   // --- 2. MENU INGREDIENTS ---
   const commonChoices = {
@@ -547,9 +547,9 @@
     ],
     bowl: [
       { id: 'bw1', name: 'Bowl Combo', price: 160000, desc: 'Protein pack + Wellness drink of your choice + Banana bread.', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2, needsWellnessChoice: true },
-      { id: 'bw2', name: 'Veggie Pack', price: 110000, desc: 'Includes 2 sauces, 5 veggies, and 1 protein.', isCustom: true, maxSauces: 2, maxVeggies: 5, maxProteins: 1 },
-      { id: 'bw3', name: 'Protein Pack', price: 115000, desc: 'Includes 2 sauces, 4 veggies, and 2 proteins.', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2 },
-      { id: 'bw4', name: 'Mini Pack', price: 99000, desc: 'Includes 1 sauce, 3 veggies, and 1 protein.', isCustom: true, maxSauces: 1, maxVeggies: 3, maxProteins: 1 }
+      { id: 'bw2', name: 'Veggie Pack', price: 110000, desc: 'Includes 2 sauces, 5 veggies, and 1 protein. Additional choices (+5,000 Kip each).', isCustom: true, maxSauces: 2, maxVeggies: 5, maxProteins: 1 },
+      { id: 'bw3', name: 'Protein Pack', price: 115000, desc: 'Includes 2 sauces, 4 veggies, and 2 proteins. Additional choices (+5,000 Kip each).', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2 },
+      { id: 'bw4', name: 'Mini Pack', price: 99000, desc: 'Includes 1 sauce, 3 veggies, and 1 protein. Additional choices (+5,000 Kip each).', isCustom: true, maxSauces: 1, maxVeggies: 3, maxProteins: 1 }
     ],
     smoothies: [
       { id: 'sm1', name: 'Kickstart', price: 70000, desc: 'Banana, pineapple, and spinach. No ice or sugar added, sweetened by dates.' },
@@ -719,8 +719,6 @@
   }
 
   // --- 7. MODAL CUSTOMIZATION LOGIC ---
-
-  // UPDATED: Enforce strict limits only on Sauces. Allow extra Veggies and Proteins beyond free quota.
   function enforceLimit(checkbox, groupName, maxAllowed) {
     if (groupName === 'custSauce') {
       const checked = document.querySelectorAll(`input[name="${groupName}"]:checked`);
@@ -791,7 +789,6 @@
     currentActiveCustomItem = null;
   }
 
-  // UPDATED: Dynamic calculation for extra veggies/proteins, total price adjustment, and warning confirmation.
   async function addCustomItemToCart() {
     if (!currentActiveCustomItem) return;
 
@@ -824,7 +821,7 @@
       return;
     }
 
-    // Determine extra additions
+    // Determine extra add-on counts
     const extraVegCount = Math.max(0, veggies.length - maxV);
     const extraProtCount = Math.max(0, proteins.length - maxP);
     const totalExtraCount = extraVegCount + extraProtCount;
@@ -832,16 +829,16 @@
 
     let warningParts = [];
 
-    // Shortage warning
+    // Shortage warning if below free allowance
     if (sauces.length < maxS || veggies.length < maxV || proteins.length < maxP) {
       let shortLines = [];
       if (sauces.length < maxS) shortLines.push(`Sauces: ${sauces.length} / ${maxS}`);
       if (veggies.length < maxV) shortLines.push(`Veggies: ${veggies.length} / ${maxV}`);
       if (proteins.length < maxP) shortLines.push(`Proteins: ${proteins.length} / ${maxP}`);
-      warningParts.push(`You still have unused free choices:\n` + shortLines.join('\n'));
+      warningParts.push(`You still have unused included choices:\n` + shortLines.join('\n'));
     }
 
-    // Exceeded warning (Add-ons)
+    // Exceeded warning detailing add-on costs
     if (totalExtraCount > 0) {
       let extraLines = [];
       if (extraVegCount > 0) extraLines.push(`Extra Veggies: +${extraVegCount} (${formatKip(extraVegCount * EXTRA_ADDON_PRICE)})`);
@@ -849,7 +846,6 @@
       warningParts.push(`Additional Add-ons selected:\n` + extraLines.join('\n') + `\nTotal Extra: +${formatKip(totalExtraCost)}`);
     }
 
-    // Trigger confirmation modal if either condition is met
     if (warningParts.length > 0) {
       const msg = warningParts.join('\n\n') + `\n\nAre you sure you want to proceed and add to order?`;
       const proceed = await customConfirm(msg, 'Customize Confirmation');
