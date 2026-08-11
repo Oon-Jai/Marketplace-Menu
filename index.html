@@ -108,10 +108,32 @@
       gap: 5px;
       backdrop-filter: blur(10px);
     }
+    
+    .nav-header {
+      grid-column: 1 / -1; /* spans all columns in grid */
+      background: rgba(74, 222, 128, 0.15);
+      color: var(--accent-green);
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-align: center;
+      padding: 8px;
+      border-radius: var(--border-radius-sm);
+      margin-bottom: 2px;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
     @media (min-width: 768px) {
       .categories-nav {
         display: flex; flex-direction: column; justify-content: flex-start;
         padding: 10px; gap: 8px; overflow-y: auto; height: 100%;
+      }
+      .nav-header {
+        font-size: 13px;
+        padding: 10px;
+        margin-bottom: 6px;
       }
     }
 
@@ -177,7 +199,7 @@
     /* --- 6. SHOPPING CART SUMMARY --- */
     .cart-summary {
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
-      padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-top: 6px; margin-bottom: 20px;
+      padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-top: 6px; margin-bottom: 10px;
     }
     .cart-title { font-family: 'Georgia', serif; font-size: 15px; color: var(--accent-green); display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
     .cart-items { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
@@ -219,12 +241,41 @@
     .delivery-title { font-size: 11px; font-weight: 700; color: var(--text-subhead); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
     .delivery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
     @media (min-width: 600px) { .delivery-grid { grid-template-columns: repeat(4, 1fr); } }
+    
     .platform-link {
-      background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color); color: var(--accent-green);
-      padding: 8px 6px; border-radius: var(--border-radius-sm); font-size: 11px; font-weight: 600; text-decoration: none;
+      background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color);
+      padding: 8px 6px; border-radius: var(--border-radius-sm); font-size: 11px; font-weight: 700; text-decoration: none;
       text-align: center; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
     }
-    .platform-link:hover { background: rgba(30, 77, 64, 0.5); border-color: var(--accent-green); box-shadow: 0 0 8px rgba(74, 222, 128, 0.2); }
+    
+    /* Delivery Brand Colors */
+    .platform-link.foodpanda { color: #D70F64; border-color: #D70F64; }
+    .platform-link.foodpanda:hover { background: rgba(215, 15, 100, 0.15); box-shadow: 0 0 8px rgba(215, 15, 100, 0.3); }
+
+    .platform-link.egets { color: #FF8200; border-color: #FF8200; }
+    .platform-link.egets:hover { background: rgba(255, 130, 0, 0.15); box-shadow: 0 0 8px rgba(255, 130, 0, 0.3); }
+
+    .platform-link.chompa { color: #00A651; border-color: #00A651; }
+    .platform-link.chompa:hover { background: rgba(0, 166, 81, 0.15); box-shadow: 0 0 8px rgba(0, 166, 81, 0.3); }
+
+    .platform-link.guru { color: #E53935; border-color: #E53935; }
+    .platform-link.guru:hover { background: rgba(229, 57, 53, 0.15); box-shadow: 0 0 8px rgba(229, 57, 53, 0.3); }
+
+    /* Google Review Section */
+    .review-section {
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
+      padding: 16px; text-align: center; margin-bottom: 24px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .review-section p { font-size: 13px; color: var(--text-bright); font-weight: 600; }
+    .review-link {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      background: #ffffff; color: #1a73e8; /* Google Blue */
+      padding: 10px 16px; border-radius: var(--border-radius-main);
+      font-size: 13px; font-weight: 700; text-decoration: none;
+      transition: all 0.2s ease; border: 1px solid #1a73e8; width: 100%; max-width: 300px;
+    }
+    .review-link:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(26, 115, 232, 0.3); }
 
     /* --- 7. CUSTOMIZATION MODAL (Popups) --- */
     .modal-overlay {
@@ -259,7 +310,7 @@
 <!-- ========================================== -->
 <div class="app-container" id="appRoot">
   
-  <!-- APP HEADER (Edit Name & Subtitle Here) -->
+  <!-- APP HEADER -->
   <header>
     <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
     <p>Select a category to explore our plant-based menu offerings and submit your order.</p>
@@ -269,14 +320,15 @@
     
     <!-- CATEGORY NAVIGATION SIDEBAR -->
     <aside class="categories-nav" id="categoryNav">
-      <button class="cat-btn active" onclick="switchCategory('burgers')">Burgers</button>
-      <button class="cat-btn" onclick="switchCategory('sandwiches')">Sandwiches</button>
-      <button class="cat-btn" onclick="switchCategory('texmex')">Tex-Mexican</button>
-      <button class="cat-btn" onclick="switchCategory('pasta')">Pasta</button>
-      <button class="cat-btn" onclick="switchCategory('bowl')">Build Your Bowl</button>
-      <button class="cat-btn" onclick="switchCategory('smoothies')">Smoothies</button>
-      <button class="cat-btn" onclick="switchCategory('refreshers')">Refreshers</button>
-      <button class="cat-btn" onclick="switchCategory('wellness')">Wellness Drinks</button>
+      <div class="nav-header">Menu Categories</div>
+      <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
+      <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
+      <button class="cat-btn" data-category="texmex" onclick="switchCategory('texmex')">Tex-Mexican</button>
+      <button class="cat-btn" data-category="pasta" onclick="switchCategory('pasta')">Pasta</button>
+      <button class="cat-btn" data-category="bowl" onclick="switchCategory('bowl')">Build Your Bowl</button>
+      <button class="cat-btn" data-category="smoothies" onclick="switchCategory('smoothies')">Smoothies</button>
+      <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
+      <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
     </aside>
 
     <main class="main-content" id="mainContent">
@@ -324,18 +376,27 @@
             <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
           </div>
 
-          <!-- Delivery Partner Links (Edit external links here) -->
+          <!-- Delivery Partner Links with Branding -->
           <div class="delivery-section">
             <div class="delivery-title">Or Order / Find Us On</div>
             <div class="delivery-grid">
-              <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" rel="noopener noreferrer" class="platform-link">Food Panda</a>
-              <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" rel="noopener noreferrer" class="platform-link">E-GetS</a>
-              <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" rel="noopener noreferrer" class="platform-link">ChompA</a>
-              <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" rel="noopener noreferrer" class="platform-link">Restaurant Guru</a>
+              <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" rel="noopener noreferrer" class="platform-link foodpanda">Food Panda</a>
+              <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" rel="noopener noreferrer" class="platform-link egets">E-GetS</a>
+              <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" rel="noopener noreferrer" class="platform-link chompa">ChompA</a>
+              <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" rel="noopener noreferrer" class="platform-link guru">Restaurant Guru</a>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Google Review Section -->
+      <div class="review-section">
+        <p>Enjoyed your food? Let us know how we did!</p>
+        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="review-link">
+          ⭐ Leave us a Review on Google
+        </a>
+      </div>
+
     </main>
   </div>
 
@@ -518,7 +579,6 @@
     document.getElementById('notificationModal').classList.remove('active');
   }
 
-  // Returns a Promise so we can use async/await just like standard confirm()
   function customConfirm(message, title = 'Confirm Action') {
     return new Promise((resolve) => {
       document.getElementById('notifTitle').innerText = title;
@@ -541,22 +601,23 @@
 
   // --- 5. UI RENDERING FUNCTIONS ---
   
-  // Format currency
   function formatKip(amount) {
     return amount.toLocaleString() + ' Kip';
   }
 
-  // Count specific item in cart to show multiplication tag (e.g., ×2)
   function getItemCountInCart(id) {
     return cart.filter(item => item.id === id).length;
   }
 
-  // Switch between menu categories
+  // UPDATED: Switch category using dataset to prevent browser read errors
   function switchCategory(catKey) {
     currentCategory = catKey;
     document.querySelectorAll('.cat-btn').forEach(btn => {
-      btn.classList.remove('active');
-      if (btn.getAttribute('onclick').includes(catKey)) btn.classList.add('active');
+      if (btn.dataset.category === catKey) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
     });
 
     const titleMap = {
@@ -572,7 +633,6 @@
     if (scrollTarget) scrollTarget.scrollTop = 0;
   }
 
-  // Render the product cards for the current category
   function renderProductsGrid() {
     const container = document.getElementById('productsGrid');
     container.innerHTML = '';
@@ -584,7 +644,6 @@
       
       const countTextHtml = count > 0 ? `<span class="item-count-text">×${count}</span>` : '';
       
-      // Determine if clicking add should open the modal or add directly
       const actionButton = item.isCustom
         ? `<button class="add-btn" onclick="openCustomModal('${currentCategory}', '${item.id}')">Customize</button>`
         : `<button class="add-btn" onclick="addToCart('${item.id}', '${item.name}', ${item.price})">Add +</button>`;
@@ -654,7 +713,6 @@
 
   // --- 7. MODAL CUSTOMIZATION LOGIC ---
 
-  // Prevents user from selecting more than the max limit
   function enforceLimit(checkbox, groupName, maxAllowed) {
     const checked = document.querySelectorAll(`input[name="${groupName}"]:checked`);
     if (checked.length > maxAllowed) {
@@ -663,7 +721,6 @@
     }
   }
 
-  // Opens the Customization Pop-Up
   function openCustomModal(catKey, itemId) {
     const item = menuData[catKey].find(i => i.id === itemId);
     if (!item) return;
@@ -675,7 +732,6 @@
     const builderBox = document.getElementById('standardBuilderBox');
     const wellnessChoiceBox = document.getElementById('wellnessChoiceBox');
 
-    // Display appropriate options based on item type
     if (item.isRefresher) {
       refresherBox.style.display = 'block';
       builderBox.style.display = 'none';
@@ -685,7 +741,6 @@
       refresherBox.style.display = 'none';
       builderBox.style.display = 'block';
 
-      // Check if it's the Bowl Combo requiring a wellness drink
       if (item.needsWellnessChoice) {
         wellnessChoiceBox.style.display = 'block';
         document.getElementById('wellnessContainer').innerHTML = commonChoices.wellnessDrinks.map((drink, idx) => `
@@ -699,7 +754,6 @@
 
       updateModalRulesUI();
 
-      // Create checkbox lists
       const createChoicesHtml = (arr, name) => arr.map(val => `
         <label class="option-label">
           <input type="checkbox" name="${name}" value="${val}" onchange="enforceLimit(this, '${name}', currentActiveCustomItem.max${name.replace('cust', '')}s)"> ${val}
@@ -716,7 +770,6 @@
     document.getElementById('customModal').classList.add('active');
   }
 
-  // Update instruction text dynamically
   function updateModalRulesUI() {
     if (!currentActiveCustomItem) return;
     const rulesEl = document.getElementById('modalRulesInfo');
@@ -728,7 +781,6 @@
     currentActiveCustomItem = null;
   }
 
-  // Process selected options and send to cart (Made async to support custom confirm)
   async function addCustomItemToCart() {
     if (!currentActiveCustomItem) return;
 
@@ -761,7 +813,6 @@
       return;
     }
 
-    // Remind customer if they under-selected
     if (sauces.length < maxS || veggies.length < maxV || proteins.length < maxP) {
       const msg = `You still have available choices!\n\n` +
                   `Sauces: ${sauces.length} / ${maxS}\n` +
@@ -796,13 +847,11 @@
 
   // --- 8. CHECKOUT & MESSAGING LOGIC ---
   
-  // Clears the error warning when user selects Dine-In/Pick-Up
   function clearOrderTypeError() {
     document.getElementById('orderOptionsBox').classList.remove('error-highlight');
     document.getElementById('orderTypeErrorMsg').style.display = 'none';
   }
 
-  // Formats the entire cart into a string message for WhatsApp/Messenger
   function buildOrderMessage() {
     if (cart.length === 0) {
       customAlert("Your basket is empty! Please add items before ordering.", "Empty Basket");
@@ -832,15 +881,11 @@
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     message += `\n*Total: ${formatKip(total)}*\n`;
-    
-    // --- PAYMENT INSTRUCTIONS & IMGBB LINK ---
     message += `\n👉Note: Please send your payment receipt to process this order.\n`;
     
-
     return message;
   }
 
-  // Trigger WhatsApp Checkout
   function checkoutWA() {
     const msg = buildOrderMessage();
     if (!msg) return;
@@ -848,7 +893,6 @@
     window.open(url, '_blank');
   }
 
-  // Trigger Messenger Checkout
   function checkoutMessenger() {
     const msg = buildOrderMessage();
     if (!msg) return;
