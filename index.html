@@ -56,7 +56,7 @@
       overflow: hidden;
     }
 
-    /* --- ADJUSTED HEADER: Left-aligned horizontal layout --- */
+    /* --- MOBILE HEADER: Left-aligned horizontal layout --- */
     header {
       flex-shrink: 0;
       padding: 6px 4px 10px;
@@ -69,8 +69,8 @@
     }
 
     .logo-frame {
-      width: 54px;
-      height: 54px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       border: 2px solid var(--accent-green);
       box-shadow: 0 0 10px rgba(74, 222, 128, 0.25);
@@ -87,6 +87,11 @@
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+
+    /* Desktop-only logo inside sidebar (hidden on mobile) */
+    .sidebar-logo {
+      display: none;
     }
 
     .header-text {
@@ -120,12 +125,41 @@
     .content-layout::-webkit-scrollbar { width: 5px; }
     .content-layout::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
 
+    /* --- DESKTOP STYLES (Laptop / Large Screen) --- */
     @media (min-width: 768px) {
       .app-container { padding: 18px; gap: 14px; }
-      header { gap: 16px; padding-bottom: 12px; }
-      .logo-frame { width: 68px; height: 68px; }
-      header h1 { font-size: 22px; }
-      header p { font-size: 13px; }
+      
+      /* Header centered on Laptop */
+      header { 
+        justify-content: center; 
+        text-align: center; 
+        padding-bottom: 12px; 
+      }
+
+      /* Hide logo inside header on Laptop */
+      header .logo-frame { 
+        display: none; 
+      }
+
+      header h1 { font-size: 24px; }
+      header p { font-size: 13px; margin-top: 4px; }
+
+      /* Display Logo on top of Menu Categories sidebar on Laptop */
+      .sidebar-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 6px;
+      }
+
+      .sidebar-logo .logo-frame {
+        display: flex;
+        width: 80px;
+        height: 80px;
+        border-width: 2px;
+      }
+
       .content-layout {
         display: grid;
         grid-template-columns: 210px 1fr;
@@ -350,8 +384,9 @@
 <!-- ========================================== -->
 <div class="app-container" id="appRoot">
   
-  <!-- APP HEADER (UPDATED WITH DIRECT IMAGE URL & LEFT ALIGNMENT) -->
+  <!-- APP HEADER -->
   <header>
+    <!-- Logo Frame for Mobile -->
     <div class="logo-frame">
       <img src="https://i.ibb.co/2XPxGNZ/image.jpg" alt="Oon Jai Marketplace Logo" />
     </div>
@@ -365,6 +400,13 @@
     
     <!-- CATEGORY NAVIGATION SIDEBAR -->
     <aside class="categories-nav" id="categoryNav">
+      <!-- Logo Frame for Desktop (Visible on top of Menu Categories on laptop) -->
+      <div class="sidebar-logo">
+        <div class="logo-frame">
+          <img src="https://i.ibb.co/2XPxGNZ/image.jpg" alt="Oon Jai Marketplace Logo" />
+        </div>
+      </div>
+      
       <div class="nav-header">Menu Categories</div>
       <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
       <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
