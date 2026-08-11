@@ -389,8 +389,28 @@
       <button class="btn-wa" style="width:100%; margin-top: 10px; background: #22c55e;" onclick="addCustomItemToCart()">Add to Order</button>
     </div>
   </div>
-</div>
 
+  <!-- ========================================== -->
+  <!--        THEMED NOTIFICATION MODALS            -->
+  <!-- ========================================== -->
+  <div class="modal-overlay" id="notificationModal" style="z-index: 105;">
+    <div class="modal-box" style="max-width: 320px; text-align: center; padding: 20px;">
+      <h3 class="modal-title" id="notifTitle" style="margin-bottom: 12px;">Notification</h3>
+      <p id="notifMessage" style="font-size: 13px; color: var(--text-subhead); margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap;"></p>
+      
+      <!-- Alert Action (Single OK Button) -->
+      <div id="notifAlertAction">
+        <button class="add-btn" style="width: 100%;" onclick="closeNotification()">OK</button>
+      </div>
+      
+      <!-- Confirm Actions (Cancel / Proceed Buttons) -->
+      <div id="notifConfirmActions" style="display: none; gap: 10px;">
+        <button class="cat-btn" style="flex: 1; justify-content: center;" id="btnNotifCancel">Cancel</button>
+        <button class="add-btn" style="flex: 1;" id="btnNotifProceed">Proceed</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ========================================== -->
 <!--               JAVASCRIPT LOGIC               -->
@@ -483,6 +503,41 @@
   let cart = [];
   let currentActiveCustomItem = null;
   let currentCategory = 'burgers';
+
+  // --- THEMED NOTIFICATION HELPERS ---
+  
+  function customAlert(message, title = 'Notification') {
+    document.getElementById('notifTitle').innerText = title;
+    document.getElementById('notifMessage').innerText = message;
+    document.getElementById('notifAlertAction').style.display = 'block';
+    document.getElementById('notifConfirmActions').style.display = 'none';
+    document.getElementById('notificationModal').classList.add('active');
+  }
+
+  function closeNotification() {
+    document.getElementById('notificationModal').classList.remove('active');
+  }
+
+  // Returns a Promise so we can use async/await just like standard confirm()
+  function customConfirm(message, title = 'Confirm Action') {
+    return new Promise((resolve) => {
+      document.getElementById('notifTitle').innerText = title;
+      document.getElementById('notifMessage').innerText = message;
+      document.getElementById('notifAlertAction').style.display = 'none';
+      document.getElementById('notifConfirmActions').style.display = 'flex';
+      document.getElementById('notificationModal').classList.add('active');
+      
+      document.getElementById('btnNotifCancel').onclick = () => {
+        closeNotification();
+        resolve(false);
+      };
+      
+      document.getElementById('btnNotifProceed').onclick = () => {
+        closeNotification();
+        resolve(true);
+      };
+    });
+  }
 
   // --- 5. UI RENDERING FUNCTIONS ---
   
@@ -604,7 +659,7 @@
     const checked = document.querySelectorAll(`input[name="${groupName}"]:checked`);
     if (checked.length > maxAllowed) {
       checkbox.checked = false;
-      alert(`Limit reached! You can select up to ${maxAllowed} item(s) for this section.`);
+      customAlert(`Limit reached! You can select up to ${maxAllowed} item(s) for this section.`, 'Limit Reached');
     }
   }
 
@@ -673,8 +728,8 @@
     currentActiveCustomItem = null;
   }
 
-  // Process selected options and send to cart
-  function addCustomItemToCart() {
+  // Process selected options and send to cart (Made async to support custom confirm)
+  async function addCustomItemToCart() {
     if (!currentActiveCustomItem) return;
 
     if (currentActiveCustomItem.isRefresher) {
@@ -702,7 +757,7 @@
     const maxP = currentActiveCustomItem.maxProteins;
 
     if (sauces.length === 0 && veggies.length === 0 && proteins.length === 0) {
-      alert("Please select at least one item to build your option.");
+      customAlert("Please select at least one item to build your option.", "Selection Required");
       return;
     }
 
@@ -714,7 +769,7 @@
                   `Proteins: ${proteins.length} / ${maxP}\n\n` +
                   `Are you sure you want to proceed and add to order?`;
       
-      const proceed = confirm(msg);
+      const proceed = await customConfirm(msg, 'Incomplete Selection');
       if (!proceed) return; 
     }
 
@@ -750,7 +805,7 @@
   // Formats the entire cart into a string message for WhatsApp/Messenger
   function buildOrderMessage() {
     if (cart.length === 0) {
-      alert("Your basket is empty! Please add items before ordering.");
+      customAlert("Your basket is empty! Please add items before ordering.", "Empty Basket");
       return null;
     }
 
@@ -759,7 +814,7 @@
       document.getElementById('orderOptionsBox').classList.add('error-highlight');
       document.getElementById('orderTypeErrorMsg').style.display = 'block';
       document.getElementById('orderOptionsBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      alert("⚠️ Please select either Dine-In or Pick-Up before submitting your order!");
+      customAlert("⚠️ Please select either Dine-In or Pick-Up before submitting your order!", "Action Required");
       return null;
     }
 
@@ -771,7 +826,7 @@
     cart.forEach((item, index) => {
       message += `${index + 1}. *${item.name}* - ${formatKip(item.price)}\n`;
       if (item.subtext) {
-        message += `   _${item.subtext}_\n`;
+        message += `    _${item.subtext}_\n`;
       }
     });
 
