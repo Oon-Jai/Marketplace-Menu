@@ -56,25 +56,25 @@
       overflow: hidden;
     }
 
-    /* Header & Circular Logo Styling */
+    /* --- ADJUSTED HEADER: Left-aligned horizontal layout --- */
     header {
       flex-shrink: 0;
-      text-align: center;
-      padding: 2px 0 6px;
+      padding: 6px 4px 10px;
       border-bottom: 1px solid var(--border-color);
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
+      gap: 12px;
+      text-align: left;
     }
 
     .logo-frame {
-      width: 70px;
-      height: 70px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       border: 2px solid var(--accent-green);
-      box-shadow: 0 0 12px rgba(74, 222, 128, 0.25);
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.25);
       overflow: hidden;
-      margin-bottom: 6px;
       background-color: var(--card-bg);
       display: flex;
       align-items: center;
@@ -89,9 +89,21 @@
       display: block;
     }
 
-    header h1 { font-family: 'Georgia', serif; font-size: 18px; font-weight: 400; letter-spacing: 0.5px; }
-    header h1 span { color: var(--accent-green); font-size: 12px; vertical-align: middle; }
-    header p { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+    .header-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    header h1 { 
+      font-family: 'Georgia', serif; 
+      font-size: 17px; 
+      font-weight: 600; 
+      letter-spacing: 0.5px; 
+      line-height: 1.2;
+    }
+    header h1 span { color: var(--accent-green); font-size: 11px; vertical-align: middle; }
+    header p { font-size: 11px; color: var(--text-muted); margin-top: 2px; line-height: 1.2; }
 
     /* Content Grid (Nav + Main Menu) */
     .content-layout {
@@ -110,8 +122,9 @@
 
     @media (min-width: 768px) {
       .app-container { padding: 18px; gap: 14px; }
-      .logo-frame { width: 85px; height: 85px; margin-bottom: 8px; }
-      header h1 { font-size: 24px; }
+      header { gap: 16px; padding-bottom: 12px; }
+      .logo-frame { width: 68px; height: 68px; }
+      header h1 { font-size: 22px; }
       header p { font-size: 13px; }
       .content-layout {
         display: grid;
@@ -337,15 +350,15 @@
 <!-- ========================================== -->
 <div class="app-container" id="appRoot">
   
-  <!-- APP HEADER -->
+  <!-- APP HEADER (UPDATED WITH DIRECT IMAGE URL & LEFT ALIGNMENT) -->
   <header>
-    <!-- CIRCULAR LOGO CONTAINER -->
     <div class="logo-frame">
-      <!-- 👇 PUT YOUR IMAGE URL HERE (replace the src attribute below) 👇 -->
-      <img src="https://ibb.co/2XPxGNZ" />
+      <img src="https://i.ibb.co/2XPxGNZ/image.jpg" alt="Oon Jai Marketplace Logo" />
     </div>
-    <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
-    <p>Select a category to explore our plant-based menu offerings and submit your orders.</p>
+    <div class="header-text">
+      <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
+      <p>Select a category to explore our plant-based menu offerings and submit your orders.</p>
+    </div>
   </header>
 
   <div class="content-layout" id="contentLayout">
