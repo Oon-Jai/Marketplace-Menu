@@ -4,15 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Oonjai Marketplace - Menu</title>
+  
+  <!-- ========================================== -->
+  <!--               CSS STYLESHEET               -->
+  <!-- ========================================== -->
   <style>
+    /* --- 1. THEME COLORS & VARIABLES (Edit colors here) --- */
     :root {
       --bg-dark: #010c0a;
       --bg-gradient: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%);
       --card-bg: rgba(2, 18, 15, 0.85);
       --border-color: #1e4d40;
-      --accent-green: #4ade80;
-      --wa-color: #25D366;
-      --msgr-color: #0084FF;
+      --accent-green: #4ade80; /* Main highlight color */
+      --wa-color: #25D366; /* WhatsApp Button Color */
+      --msgr-color: #0084FF; /* Messenger Button Color */
       --text-bright: #ffffff;
       --text-muted: #94a3b8;
       --text-subhead: #cbd5e1;
@@ -20,6 +25,7 @@
       --border-radius-sm: 10px;
     }
 
+    /* --- 2. GENERAL RESET --- */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -30,13 +36,12 @@
     html, body {
       width: 100%;
       height: 100%;
-      margin: 0;
-      padding: 0;
       overflow: hidden;
       background: var(--bg-dark);
       color: var(--text-bright);
     }
 
+    /* --- 3. MAIN APP LAYOUT --- */
     .app-container {
       width: 100%;
       height: 100%;
@@ -51,32 +56,18 @@
       overflow: hidden;
     }
 
+    /* Header styling */
     header {
       flex-shrink: 0;
       text-align: center;
       padding: 2px 0 6px;
       border-bottom: 1px solid var(--border-color);
     }
+    header h1 { font-family: 'Georgia', serif; font-size: 18px; font-weight: 400; letter-spacing: 0.5px; }
+    header h1 span { color: var(--accent-green); font-size: 12px; vertical-align: middle; }
+    header p { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 
-    header h1 {
-      font-family: 'Georgia', serif;
-      font-size: 18px;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-    }
-
-    header h1 span {
-      color: var(--accent-green);
-      font-size: 12px;
-      vertical-align: middle;
-    }
-
-    header p {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 1px;
-    }
-
+    /* Content Grid (Nav + Main Menu) */
     .content-layout {
       flex: 1;
       display: flex;
@@ -88,23 +79,13 @@
       scrollbar-color: var(--border-color) transparent;
       padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
     }
-
-    .content-layout::-webkit-scrollbar {
-      width: 5px;
-    }
-    .content-layout::-webkit-scrollbar-thumb {
-      background-color: var(--border-color);
-      border-radius: 4px;
-    }
+    .content-layout::-webkit-scrollbar { width: 5px; }
+    .content-layout::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
 
     @media (min-width: 768px) {
-      .app-container { 
-        padding: 18px; 
-        gap: 14px; 
-      }
+      .app-container { padding: 18px; gap: 14px; }
       header h1 { font-size: 24px; }
       header p { font-size: 13px; }
-
       .content-layout {
         display: grid;
         grid-template-columns: 210px 1fr;
@@ -115,6 +96,7 @@
       }
     }
 
+    /* --- 4. CATEGORY NAVIGATION (Left Sidebar on Desktop) --- */
     .categories-nav {
       flex-shrink: 0;
       background: var(--card-bg);
@@ -126,16 +108,10 @@
       gap: 5px;
       backdrop-filter: blur(10px);
     }
-
     @media (min-width: 768px) {
       .categories-nav {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        padding: 10px;
-        gap: 8px;
-        overflow-y: auto;
-        height: 100%;
+        display: flex; flex-direction: column; justify-content: flex-start;
+        padding: 10px; gap: 8px; overflow-y: auto; height: 100%;
       }
     }
 
@@ -145,423 +121,153 @@
       color: var(--text-subhead);
       padding: 6px 2px;
       border-radius: var(--border-radius-sm);
-      font-size: 10px;
-      font-weight: 600;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 34px;
-      line-height: 1.1;
+      font-size: 10px; font-weight: 600; text-align: center;
+      cursor: pointer; transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 34px; line-height: 1.1;
     }
-
     @media (min-width: 768px) {
-      .cat-btn {
-        padding: 10px 12px;
-        font-size: 13px;
-        text-align: left;
-        justify-content: flex-start;
-        min-height: auto;
-      }
+      .cat-btn { padding: 10px 12px; font-size: 13px; text-align: left; justify-content: flex-start; min-height: auto; }
     }
-
     .cat-btn:hover, .cat-btn.active {
       background: rgba(30, 77, 64, 0.5);
-      border-color: var(--accent-green);
-      color: var(--accent-green);
+      border-color: var(--accent-green); color: var(--accent-green);
       box-shadow: 0 0 10px rgba(74, 222, 128, 0.15);
     }
 
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-height: 0;
-    }
-
+    /* --- 5. MENU & PRODUCT CARDS --- */
+    .main-content { flex: 1; display: flex; flex-direction: column; gap: 14px; min-height: 0; }
     @media (min-width: 768px) {
-      .main-content {
-        overflow-y: auto;
-        padding-right: 4px;
-        padding-bottom: 40px;
-      }
+      .main-content { overflow-y: auto; padding-right: 4px; padding-bottom: 40px; }
       .main-content::-webkit-scrollbar { width: 6px; }
       .main-content::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
     }
 
-    .menu-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .section-title {
-      font-family: 'Georgia', serif;
-      font-size: 16px;
-      color: var(--accent-green);
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 4px;
-    }
-
-    .products-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .menu-section { display: flex; flex-direction: column; gap: 10px; }
+    .section-title { font-family: 'Georgia', serif; font-size: 16px; color: var(--accent-green); border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
+    .products-grid { display: flex; flex-direction: column; gap: 10px; }
 
     .product-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius-main);
-      padding: 12px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: border-color 0.2s ease;
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-main); padding: 12px 14px;
+      display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s ease;
     }
-
-    .product-card:hover {
-      border-color: rgba(74, 222, 128, 0.4);
-    }
-
-    @media (min-width: 600px) {
-      .product-card {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-      }
-    }
+    .product-card:hover { border-color: rgba(74, 222, 128, 0.4); }
+    @media (min-width: 600px) { .product-card { flex-direction: row; justify-content: space-between; align-items: center; } }
 
     .product-info { flex: 1; }
     .product-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
     .product-desc { font-size: 12px; color: var(--text-muted); line-height: 1.3; }
 
-    .product-action {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+    .product-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    @media (min-width: 600px) { .product-action { justify-content: flex-end; min-width: 180px; } }
 
-    @media (min-width: 600px) {
-      .product-action { justify-content: flex-end; min-width: 180px; }
-    }
-
-    .price {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent-green);
-      white-space: nowrap;
-    }
-
-    .btn-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .price { font-size: 13px; font-weight: 700; color: var(--accent-green); white-space: nowrap; }
+    .btn-wrapper { display: flex; align-items: center; gap: 8px; }
+    
+    /* Standard Add Button */
     .add-btn {
-      background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
-      color: white;
-      border: none;
-      padding: 7px 14px;
-      border-radius: var(--border-radius-sm);
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s ease;
+      background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: white;
+      border: none; padding: 7px 14px; border-radius: var(--border-radius-sm);
+      font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s ease;
     }
-
     .add-btn:active { transform: scale(0.95); }
+    .item-count-text { color: #ef4444; font-size: 12px; font-weight: 800; }
 
-    .item-count-text {
-      color: #ef4444;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
+    /* --- 6. SHOPPING CART SUMMARY --- */
     .cart-summary {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius-main);
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 6px;
-      margin-bottom: 20px;
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
+      padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-top: 6px; margin-bottom: 20px;
     }
-
-    .cart-title {
-      font-family: 'Georgia', serif;
-      font-size: 15px;
-      color: var(--accent-green);
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 6px;
-    }
-
-    .cart-items {
-      max-height: 180px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      padding-bottom: 6px;
-    }
-
+    .cart-title { font-family: 'Georgia', serif; font-size: 15px; color: var(--accent-green); display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+    .cart-items { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 6px; }
     .cart-item-name { font-size: 12px; font-weight: 600; }
     .cart-item-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
     .cart-item-price { font-size: 12px; font-weight: 600; color: var(--accent-green); }
+    .remove-btn { color: #f87171; background: none; border: none; font-size: 11px; cursor: pointer; margin-left: 8px; }
 
-    .remove-btn {
-      color: #f87171;
-      background: none;
-      border: none;
-      font-size: 11px;
-      cursor: pointer;
-      margin-left: 8px;
-    }
-
-    .order-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      padding: 4px;
-      border-radius: var(--border-radius-sm);
-      transition: border 0.2s ease;
-    }
-
-    .order-options.error-highlight {
-      border: 1px solid #ef4444;
-      background: rgba(239, 68, 68, 0.1);
-    }
-
+    /* Order Options (Dine-in / Pick-up) */
+    .order-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 4px; border-radius: var(--border-radius-sm); transition: border 0.2s ease; }
+    .order-options.error-highlight { border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1); }
     .order-options label {
-      font-size: 12px;
-      background: rgba(2, 18, 15, 0.75);
-      border: 1px solid var(--border-color);
-      padding: 8px;
-      border-radius: var(--border-radius-sm);
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      font-size: 12px; background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color);
+      padding: 8px; border-radius: var(--border-radius-sm); text-align: center;
+      display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.2s ease;
     }
-
     .order-options input[type="radio"] { accent-color: var(--accent-green); }
+    .order-options label:has(input:checked) { border-color: var(--accent-green); background: rgba(30, 77, 64, 0.5); color: var(--accent-green); font-weight: 700; }
+    .order-type-error-msg { display: none; color: #f87171; font-size: 11px; font-weight: 700; text-align: center; background: rgba(239, 68, 68, 0.15); padding: 6px; border-radius: var(--border-radius-sm); border: 1px solid #ef4444; }
 
-    .order-options label:has(input:checked) {
-      border-color: var(--accent-green);
-      background: rgba(30, 77, 64, 0.5);
-      color: var(--accent-green);
-      font-weight: 700;
-    }
-
-    .order-type-error-msg {
-      display: none;
-      color: #f87171;
-      font-size: 11px;
-      font-weight: 700;
-      text-align: center;
-      background: rgba(239, 68, 68, 0.15);
-      padding: 6px;
-      border-radius: var(--border-radius-sm);
-      border: 1px solid #ef4444;
-    }
-
-    .payment-note {
-      font-size: 11px;
-      color: #fbbf24;
-      background: rgba(251, 191, 36, 0.1);
-      padding: 8px 10px;
-      border-radius: var(--border-radius-sm);
-      border-left: 3px solid #fbbf24;
-      line-height: 1.3;
-    }
-
-    .cart-total {
-      border-top: 1px solid var(--border-color);
-      padding-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .total-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 15px;
-      font-weight: 700;
-    }
-
-    .action-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    @media (min-width: 600px) {
-      .action-buttons { flex-direction: row; }
-    }
-
+    /* Cart Bottom Section (Total, Payment Note, Checkout Buttons) */
+    .payment-note { font-size: 11px; color: #fbbf24; background: rgba(251, 191, 36, 0.1); padding: 8px 10px; border-radius: var(--border-radius-sm); border-left: 3px solid #fbbf24; line-height: 1.3; }
+    .cart-total { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 12px; }
+    .total-row { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700; }
+    .action-buttons { display: flex; flex-direction: column; gap: 8px; }
+    @media (min-width: 600px) { .action-buttons { flex-direction: row; } }
+    
     .btn-wa, .btn-msgr {
-      flex: 1;
-      padding: 10px;
-      color: white;
-      border: none;
-      border-radius: var(--border-radius-sm);
-      font-weight: 600;
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      transition: opacity 0.2s ease;
+      flex: 1; padding: 10px; color: white; border: none; border-radius: var(--border-radius-sm);
+      font-weight: 600; font-size: 12px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; transition: opacity 0.2s ease;
     }
-
     .btn-wa { background: var(--wa-color); }
     .btn-msgr { background: var(--msgr-color); }
     .btn-wa:hover, .btn-msgr:hover { opacity: 0.9; }
 
-    .delivery-section {
-      border-top: 1px dashed var(--border-color);
-      padding-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .delivery-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-subhead);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      text-align: center;
-    }
-
-    .delivery-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    @media (min-width: 600px) {
-      .delivery-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
+    /* External Delivery Links */
+    .delivery-section { border-top: 1px dashed var(--border-color); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .delivery-title { font-size: 11px; font-weight: 700; color: var(--text-subhead); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+    .delivery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    @media (min-width: 600px) { .delivery-grid { grid-template-columns: repeat(4, 1fr); } }
     .platform-link {
-      background: rgba(2, 18, 15, 0.75);
-      border: 1px solid var(--border-color);
-      color: var(--accent-green);
-      padding: 8px 6px;
-      border-radius: var(--border-radius-sm);
-      font-size: 11px;
-      font-weight: 600;
-      text-decoration: none;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
+      background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color); color: var(--accent-green);
+      padding: 8px 6px; border-radius: var(--border-radius-sm); font-size: 11px; font-weight: 600; text-decoration: none;
+      text-align: center; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
     }
+    .platform-link:hover { background: rgba(30, 77, 64, 0.5); border-color: var(--accent-green); box-shadow: 0 0 8px rgba(74, 222, 128, 0.2); }
 
-    .platform-link:hover {
-      background: rgba(30, 77, 64, 0.5);
-      border-color: var(--accent-green);
-      box-shadow: 0 0 8px rgba(74, 222, 128, 0.2);
-    }
-
+    /* --- 7. CUSTOMIZATION MODAL (Popups) --- */
     .modal-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(4px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 14px;
-      z-index: 100;
+      position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
+      display: none; justify-content: center; align-items: center; padding: 14px; z-index: 100;
     }
-
     .modal-overlay.active { display: flex; }
-
     .modal-box {
-      background: #041f1a;
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius-main);
-      max-width: 480px;
-      width: 100%;
-      max-height: 90%;
-      overflow-y: auto;
-      padding: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      background: #041f1a; border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
+      max-width: 480px; width: 100%; max-height: 90%; overflow-y: auto; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
     }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
     .modal-title { font-family: 'Georgia', serif; font-size: 16px; color: var(--accent-green); }
     .close-modal { background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; }
 
+    /* Builder Layouts inside Modal */
     .builder-section { margin-bottom: 12px; }
     .builder-section h4 { font-size: 11px; text-transform: uppercase; color: var(--text-subhead); margin-bottom: 6px; }
     .builder-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-
     .option-label {
-      background: rgba(2, 18, 15, 0.75);
-      border: 1px solid var(--border-color);
-      padding: 6px 8px;
-      border-radius: var(--border-radius-sm);
-      font-size: 11px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
+      background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color); padding: 6px 8px;
+      border-radius: var(--border-radius-sm); font-size: 11px; display: flex; align-items: center; gap: 6px; cursor: pointer;
     }
-
-    .modal-subtitle {
-      font-size: 11px;
-      color: var(--accent-green);
-      margin-bottom: 10px;
-      background: rgba(74, 222, 128, 0.1);
-      padding: 6px 10px;
-      border-radius: var(--border-radius-sm);
-    }
+    .option-label:has(input:checked) { border-color: var(--accent-green); background: rgba(30, 77, 64, 0.5); color: var(--accent-green); font-weight: 700; }
+    .modal-subtitle { font-size: 11px; color: var(--accent-green); margin-bottom: 10px; background: rgba(74, 222, 128, 0.1); padding: 6px 10px; border-radius: var(--border-radius-sm); }
   </style>
 </head>
 <body>
 
+<!-- ========================================== -->
+<!--              MAIN HTML STRUCTURE             -->
+<!-- ========================================== -->
 <div class="app-container" id="appRoot">
+  
+  <!-- APP HEADER (Edit Name & Subtitle Here) -->
   <header>
     <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
     <p>Select a category to explore our menu offerings and submit your order.</p>
   </header>
 
   <div class="content-layout" id="contentLayout">
+    
+    <!-- CATEGORY NAVIGATION SIDEBAR -->
     <aside class="categories-nav" id="categoryNav">
       <button class="cat-btn active" onclick="switchCategory('burgers')">Burgers</button>
       <button class="cat-btn" onclick="switchCategory('sandwiches')">Sandwiches</button>
@@ -574,11 +280,15 @@
     </aside>
 
     <main class="main-content" id="mainContent">
+      
+      <!-- MENU PRODUCTS SECTION -->
       <div class="menu-section">
         <h2 class="section-title" id="categoryTitle">Burgers</h2>
+        <!-- Products will be injected here via JavaScript -->
         <div class="products-grid" id="productsGrid"></div>
       </div>
 
+      <!-- SHOPPING CART SUMMARY SECTION -->
       <div class="cart-summary" id="cartSection">
         <div class="cart-title">
           <span>Your Order Basket</span>
@@ -589,11 +299,11 @@
           <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
         </div>
 
+        <!-- Order Options (Dine In / Pick Up) -->
         <div class="order-options" id="orderOptionsBox">
           <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
           <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
         </div>
-        
         <div class="order-type-error-msg" id="orderTypeErrorMsg">
           ⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.
         </div>
@@ -608,11 +318,13 @@
             <span id="totalPrice" class="price" style="font-size: 16px;">0 Kip</span>
           </div>
           
+          <!-- Checkout Buttons -->
           <div class="action-buttons">
             <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
             <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
           </div>
 
+          <!-- Delivery Partner Links (Edit external links here) -->
           <div class="delivery-section">
             <div class="delivery-title">Or Order / Find Us On</div>
             <div class="delivery-grid">
@@ -627,6 +339,9 @@
     </main>
   </div>
 
+  <!-- ========================================== -->
+  <!--             CUSTOMIZATION MODALS             -->
+  <!-- ========================================== -->
   <div class="modal-overlay" id="customModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -634,21 +349,41 @@
         <button class="close-modal" onclick="closeCustomModal()">✕</button>
       </div>
 
-      <div class="modal-subtitle" id="modalRulesInfo"></div>
-      
-      <div class="builder-section">
-        <h4>Sauces</h4>
-        <div class="builder-options" id="saucesContainer"></div>
+      <!-- Option 1: Refresher Sweetener Choice Modal -->
+      <div id="refresherSweetenerBox" style="display: none;">
+        <div class="builder-section">
+          <h4>Choose Sweetener</h4>
+          <div class="builder-options">
+            <label class="option-label"><input type="radio" name="refresherSweetener" value="Honey" checked> Honey</label>
+            <label class="option-label"><input type="radio" name="refresherSweetener" value="Sugar"> Sugar</label>
+          </div>
+        </div>
       </div>
 
-      <div class="builder-section">
-        <h4>Veggies</h4>
-        <div class="builder-options" id="veggiesContainer"></div>
-      </div>
+      <!-- Option 2: Standard Sandwich & Bowl Builder Box -->
+      <div id="standardBuilderBox">
+        <div class="modal-subtitle" id="modalRulesInfo"></div>
+        
+        <!-- Only shows for specific items (like Bowl Combo) -->
+        <div id="wellnessChoiceBox" class="builder-section" style="display: none;">
+          <h4>Choose Wellness Drink</h4>
+          <div class="builder-options" id="wellnessContainer"></div>
+        </div>
 
-      <div class="builder-section">
-        <h4>Proteins</h4>
-        <div class="builder-options" id="proteinsContainer"></div>
+        <div class="builder-section">
+          <h4>Sauces</h4>
+          <div class="builder-options" id="saucesContainer"></div>
+        </div>
+
+        <div class="builder-section">
+          <h4>Veggies</h4>
+          <div class="builder-options" id="veggiesContainer"></div>
+        </div>
+
+        <div class="builder-section">
+          <h4>Proteins</h4>
+          <div class="builder-options" id="proteinsContainer"></div>
+        </div>
       </div>
 
       <button class="btn-wa" style="width:100%; margin-top: 10px; background: #22c55e;" onclick="addCustomItemToCart()">Add to Order</button>
@@ -656,90 +391,112 @@
   </div>
 </div>
 
+
+<!-- ========================================== -->
+<!--               JAVASCRIPT LOGIC               -->
+<!-- ========================================== -->
 <script>
+  // --- 1. STORE CONFIGURATION (Edit Contacts Here) ---
   const PHONE_NUMBER = "8562057048174"; 
   const MESSENGER_USERNAME = "oon.jai.laos";
 
+  // --- 2. MENU INGREDIENTS (Edit Choices for Modals Here) ---
   const commonChoices = {
     veggies: [
-      'Grilled mushroom', 'Grilled bell peppers', 'Grilled eggplant', 
-      'Caramelized onion', 'Microgreen', 'Avocado', 
-      'Lettuce', 'Tomato', 'Onion', 'Carrot', 'Olives', 'Corn'
+      'Grilled mushrooms', 'Grilled bell peppers', 'Grilled eggplant', 
+      'Caramelized onion', 'Microgreens', 'Avocado', 
+      'Lettuce', 'Tomatoes', 'Onions', 'Carrots', 'Olives', 'Corn'
     ],
     proteins: [
       'Beans', 'Sautéed tofu', 'Lemon chicken', 
       'Ground meat', 'Spicy sausage', 'Regular sausage', 'Falafel'
     ],
+    sandwichProteins: [
+      'Sautéed tofu', 'Lemon chicken', 'Ground meat', 
+      'Spicy sausage', 'Regular sausage'
+    ],
     sauces: [
       'Garlic mayo', 'Basil mayo', 'Chili mayo', 
       'Tahini sauce', 'Hummus', 'Cheese sauce'
+    ],
+    wellnessDrinks: [
+      'Summer in My Heart', 'Wish Upon a Heart', 
+      'Heartwarmer', 'Red Heart'
     ]
   };
 
+  // --- 3. MENU DATA (Edit Item Names, Prices, and Descriptions Here) ---
   const menuData = {
     burgers: [
-      { id: 'b1', name: 'Burger Combo', price: 199000, desc: 'Five delicious mini sliders/burgers combo set.' },
-      { id: 'b2', name: 'The Classic Burger', price: 120000, desc: 'Classic juicy patty with house sauce, lettuce, and pickles.' },
-      { id: 'b3', name: 'The Cheeser', price: 110000, desc: 'Loaded with melted cheese for true cheese lovers.' },
-      { id: 'b4', name: 'Bougie', price: 130000, desc: 'Gourmet patty topped with premium house toppings.' },
+      { id: 'b1', name: 'Burger Combo', price: 199000, desc: 'The Classic Burger + Mint Pineapple Refresher + Lemon Oat Cookie.' },
+      { id: 'b2', name: 'The Classic Burger', price: 120000, desc: 'Meaty patty, lettuce, tomato, onion, pickles, garlic mayo, and cheese sauce. Served with a portion of fries.' },
+      { id: 'b3', name: 'The Cheeser', price: 110000, desc: 'Meaty patty, tomato, garlic mayo, and cheese sauce. Served with a portion of fries.' },
+      { id: 'b4', name: 'Bougie', price: 130000, desc: 'Meaty patty, microgreens, tomato, caramelized onion, sautéed mushroom, grilled pineapple, and basil mayo. Served with a portion of fries.' },
       { id: 'b5', name: 'French Fries', price: 60000, desc: 'Crispy golden French fries with seasoning.' }
     ],
     sandwiches: [
-      { id: 's1', name: 'Sandwich Combo', price: 180000, desc: 'Set of five delicious gourmet mini sandwiches.' },
-      { id: 's2', name: 'Mediterranean Sandwich', price: 105000, desc: 'Fresh Mediterranean flavors, herbs, and savory toppings.' },
-      { id: 's3', name: 'Italian Sandwich', price: 105000, desc: 'Traditional Italian-style ingredients and savory sauces.' },
-      { id: 's4', name: 'Chickelicious', price: 110000, desc: 'Tender seasoned chicken with house garlic sauce.' },
-      { id: 's5', name: 'Build Your Own Sandwich', price: 110000, desc: 'Customizable sandwich. Choose your sauces, veggies, and protein.', isCustom: true, maxSauces: 2, maxVeggies: 3, maxProteins: 1 }
+      { id: 's1', name: 'Sandwich Combo', price: 180000, desc: 'Chickelicious sandwich + Paradise Point Refresher + Brownie.' },
+      { id: 's2', name: 'Mediterranean Sandwich', price: 105000, desc: 'Falafel, hummus, tahini sauce, tomato, pickles, mint, and cilantro.' },
+      { id: 's3', name: 'Italian Sandwich', price: 105000, desc: 'Grilled tofu, sautéed veggies, tomato, lettuce, onion, and basil mayo.' },
+      { id: 's4', name: 'Chickelicious', price: 110000, desc: 'Plant-based chicken, caramelized onion, olives, microgreens, tomato, cheese sauce, and basil mayo.' },
+      { id: 's5', name: 'Build Your Own Sandwich', price: 110000, desc: 'Customizable sandwich. Choose your sauces, veggies, and protein.', isCustom: true, maxSauces: 2, maxVeggies: 3, maxProteins: 1, specificProteins: 'sandwichProteins' }
     ],
     texmex: [
-      { id: 'tx1', name: 'Tex-Mex Combo', price: 210000, desc: 'A grand fiesta platter featuring our best Tex-Mex specialties.' },
-      { id: 'tx2', name: 'Quesadilla', price: 85000, desc: 'Cheesy, melty goodness folded in a toasted flour tortilla.' },
-      { id: 'tx3', name: 'Tacos', price: 99000, desc: 'Authentic street-style tacos packed with vibrant flavors.' }
+      { id: 'tx1', name: 'Tex-Mex Combo', price: 210000, desc: 'Tacos + Quesadilla + Mint Pineapple Refresher.' },
+      { id: 'tx2', name: 'Quesadilla', price: 85000, desc: 'Flour tortilla with cheese sauce, ground meat, and pico de gallo.' },
+      { id: 'tx3', name: 'Tacos', price: 99000, desc: 'Two soft shell tacos filled with ground meat or black beans, grilled bell pepper, avocado, pico de gallo, and cheese sauce.' }
     ],
     pasta: [
-      { id: 'p1', name: 'Miso-Seaweed', price: 110000, desc: 'Savory Japanese-fusion miso seaweed cream sauce.' },
-      { id: 'p2', name: 'Carbonara', price: 110000, desc: 'Rich and creamy authentic style carbonara.' },
-      { id: 'p3', name: 'Spaghetti', price: 110000, desc: 'Classic spaghetti cooked al dente with house sauce.' },
-      { id: 'p4', name: 'Pesto Pasta', price: 110000, desc: 'Fresh aromatic basil pesto with olive oil.' }
+      { id: 'p1', name: 'Miso-Seaweed', price: 110000, desc: 'Herb, fresh, vibrant, and aromatic miso-seaweed fusion.' },
+      { id: 'p2', name: 'Carbonara', price: 110000, desc: 'Rich and creamy pasta made with peanut butter and coconut milk.' },
+      { id: 'p3', name: 'Spaghetti', price: 110000, desc: 'Classic spaghetti packed with fresh, bright tomato goodness.' },
+      { id: 'p4', name: 'Pesto Pasta', price: 110000, desc: 'Herb, fresh, vibrant, and aromatic basil pesto.' }
     ],
     bowl: [
-      { id: 'bw1', name: 'Veggie Pack', price: 110000, desc: 'Includes 2 sauces, 5 veggies, and 1 protein.', isCustom: true, maxSauces: 2, maxVeggies: 5, maxProteins: 1 },
-      { id: 'bw2', name: 'Protein Pack', price: 115000, desc: 'Includes 2 sauces, 4 veggies, and 2 proteins.', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2 },
-      { id: 'bw3', name: 'Mini Pack', price: 99000, desc: 'Includes 1 sauce, 3 veggies, and 1 protein.', isCustom: true, maxSauces: 1, maxVeggies: 3, maxProteins: 1 }
+      { id: 'bw1', name: 'Bowl Combo', price: 175000, desc: 'Protein pack + Wellness drink of your choice + Banana bread.', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2, needsWellnessChoice: true },
+      { id: 'bw2', name: 'Veggie Pack', price: 110000, desc: 'Includes 2 sauces, 5 veggies, and 1 protein.', isCustom: true, maxSauces: 2, maxVeggies: 5, maxProteins: 1 },
+      { id: 'bw3', name: 'Protein Pack', price: 115000, desc: 'Includes 2 sauces, 4 veggies, and 2 proteins.', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2 },
+      { id: 'bw4', name: 'Mini Pack', price: 99000, desc: 'Includes 1 sauce, 3 veggies, and 1 protein.', isCustom: true, maxSauces: 1, maxVeggies: 3, maxProteins: 1 }
     ],
     smoothies: [
-      { id: 'sm1', name: 'Kickstart', price: 70000, desc: 'Energizing fresh fruit smoothie.' },
-      { id: 'sm2', name: 'Fruitopia', price: 70000, desc: 'Sweet blend of fresh seasonal fruits.' },
-      { id: 'sm3', name: 'Paradise Point', price: 70000, desc: 'Tropical fruit blend with refreshing coconut notes.' },
-      { id: 'sm4', name: 'Mary Jane', price: 80000, desc: 'Special power smoothie blend.' },
-      { id: 'sm5', name: "Reese's Cup", price: 70000, desc: 'Rich chocolate peanut butter smoothie.' }
+      { id: 'sm1', name: 'Kickstart', price: 70000, desc: 'Banana, pineapple, and spinach. No ice or sugar added, sweetened by dates.' },
+      { id: 'sm2', name: 'Fruitopia', price: 70000, desc: 'Mango, strawberry, and pineapple. No ice or sugar added, sweetened by dates.' },
+      { id: 'sm3', name: 'Paradise Point', price: 70000, desc: 'Passion fruit and pineapple. No ice or sugar added, sweetened by dates.' },
+      { id: 'sm4', name: 'Mary Jane', price: 80000, desc: 'Strawberry, mulberry, and banana. No ice or sugar added, sweetened by dates.' },
+      { id: 'sm5', name: "Reese's Cup", price: 70000, desc: 'Banana, peanut butter, and cocoa powder. No ice or sugar added, sweetened by dates.' }
     ],
     refreshers: [
-      { id: 'r1', name: 'Mint Pineapple', price: 45000, desc: 'Chilled tropical pineapple with fresh mint.' },
-      { id: 'r2', name: 'Strawberry Limeade', price: 50000, desc: 'Sweet strawberries paired with tangy lime.' },
-      { id: 'r3', name: 'Sparkling Lime', price: 45000, desc: 'Crisp and fizzy lime soda refresher.' },
-      { id: 'r4', name: 'Honey Passion', price: 45000, desc: 'Exotic passionfruit sweetened with natural honey.' }
+      { id: 'r1', name: 'Mint Pineapple', price: 45000, desc: 'Fresh mint and pineapple.', isCustom: true, isRefresher: true },
+      { id: 'r2', name: 'Strawberry Lemonade', price: 50000, desc: 'Strawberry and lime.', isCustom: true, isRefresher: true },
+      { id: 'r3', name: 'Sparkling Lime', price: 45000, desc: 'Sparkling water and fresh lime.', isCustom: true, isRefresher: true },
+      { id: 'r4', name: 'Honey Passion', price: 45000, desc: 'Passion fruit and honey.', isCustom: true, isRefresher: true }
     ],
     wellness: [
-      { id: 'w1', name: 'Summer in My Heart', price: 47000, desc: 'Refreshing botanical wellness drink.' },
-      { id: 'w2', name: 'Wish Upon a Heart', price: 47000, desc: 'Revitalizing herbal tea and tonic brew.' },
-      { id: 'w3', name: 'Heartwarmer', price: 47000, desc: 'Soothing spiced wellness drink.' },
-      { id: 'w4', name: 'Red Heart', price: 47000, desc: 'Antioxidant-rich red berry wellness tonic.' }
+      { id: 'w1', name: 'Summer in My Heart', price: 47000, desc: 'Pineapple juice and coconut water.' },
+      { id: 'w2', name: 'Wish Upon a Heart', price: 47000, desc: 'Green apple, basil cordial, lemon juice, and tapioca pearls.' },
+      { id: 'w3', name: 'Heartwarmer', price: 47000, desc: 'Ginger and turmeric tea, lemon juice, honey, and chia seeds.' },
+      { id: 'w4', name: 'Red Heart', price: 47000, desc: 'Lemongrass cordial, lemon, beetroot, and apple.' }
     ]
   };
 
+  // --- 4. APP STATE (Tracks current category and cart contents) ---
   let cart = [];
   let currentActiveCustomItem = null;
   let currentCategory = 'burgers';
 
+  // --- 5. UI RENDERING FUNCTIONS ---
+  
+  // Format currency
   function formatKip(amount) {
     return amount.toLocaleString() + ' Kip';
   }
 
+  // Count specific item in cart to show multiplication tag (e.g., ×2)
   function getItemCountInCart(id) {
     return cart.filter(item => item.id === id).length;
   }
 
+  // Switch between menu categories
   function switchCategory(catKey) {
     currentCategory = catKey;
     document.querySelectorAll('.cat-btn').forEach(btn => {
@@ -755,10 +512,12 @@
     document.getElementById('categoryTitle').innerText = titleMap[catKey];
     renderProductsGrid();
     
+    // Scroll to top of menu on mobile
     const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
     if (scrollTarget) scrollTarget.scrollTop = 0;
   }
 
+  // Render the product cards for the current category
   function renderProductsGrid() {
     const container = document.getElementById('productsGrid');
     container.innerHTML = '';
@@ -769,6 +528,8 @@
       card.className = 'product-card';
       
       const countTextHtml = count > 0 ? `<span class="item-count-text">×${count}</span>` : '';
+      
+      // Determine if clicking add should open the modal or add directly
       const actionButton = item.isCustom
         ? `<button class="add-btn" onclick="openCustomModal('${currentCategory}', '${item.id}')">Customize</button>`
         : `<button class="add-btn" onclick="addToCart('${item.id}', '${item.name}', ${item.price})">Add +</button>`;
@@ -790,6 +551,8 @@
     });
   }
 
+  // --- 6. CART MANAGEMENT ---
+  
   function addToCart(id, name, price, subtext = '') {
     cart.push({ id, name, price, subtext });
     renderCart();
@@ -808,7 +571,6 @@
     const totalEl = document.getElementById('totalPrice');
 
     let total = cart.reduce((sum, item) => sum + item.price, 0);
-
     countEl.innerText = `(${cart.length} item${cart.length === 1 ? '' : 's'})`;
 
     if (cart.length === 0) {
@@ -835,6 +597,9 @@
     }
   }
 
+  // --- 7. MODAL CUSTOMIZATION LOGIC ---
+
+  // Prevents user from selecting more than the max limit
   function enforceLimit(checkbox, groupName, maxAllowed) {
     const checked = document.querySelectorAll(`input[name="${groupName}"]:checked`);
     if (checked.length > maxAllowed) {
@@ -843,28 +608,60 @@
     }
   }
 
+  // Opens the Customization Pop-Up
   function openCustomModal(catKey, itemId) {
     const item = menuData[catKey].find(i => i.id === itemId);
     if (!item) return;
 
     currentActiveCustomItem = { ...item };
-    updateModalRulesUI();
-
     document.getElementById('modalTitle').innerText = item.name;
 
-    const createChoicesHtml = (arr, name) => arr.map(val => `
-      <label class="option-label">
-        <input type="checkbox" name="${name}" value="${val}" onchange="enforceLimit(this, '${name}', currentActiveCustomItem.max${name.replace('cust', '')}s)"> ${val}
-      </label>
-    `).join('');
+    const refresherBox = document.getElementById('refresherSweetenerBox');
+    const builderBox = document.getElementById('standardBuilderBox');
+    const wellnessChoiceBox = document.getElementById('wellnessChoiceBox');
 
-    document.getElementById('saucesContainer').innerHTML = createChoicesHtml(commonChoices.sauces, 'custSauce');
-    document.getElementById('veggiesContainer').innerHTML = createChoicesHtml(commonChoices.veggies, 'custVeggie');
-    document.getElementById('proteinsContainer').innerHTML = createChoicesHtml(commonChoices.proteins, 'custProtein');
+    // Display appropriate options based on item type
+    if (item.isRefresher) {
+      refresherBox.style.display = 'block';
+      builderBox.style.display = 'none';
+      wellnessChoiceBox.style.display = 'none';
+      document.querySelector('input[name="refresherSweetener"][value="Honey"]').checked = true;
+    } else {
+      refresherBox.style.display = 'none';
+      builderBox.style.display = 'block';
+
+      // Check if it's the Bowl Combo requiring a wellness drink
+      if (item.needsWellnessChoice) {
+        wellnessChoiceBox.style.display = 'block';
+        document.getElementById('wellnessContainer').innerHTML = commonChoices.wellnessDrinks.map((drink, idx) => `
+          <label class="option-label">
+            <input type="radio" name="custWellness" value="${drink}" ${idx === 0 ? 'checked' : ''}> ${drink}
+          </label>
+        `).join('');
+      } else {
+        wellnessChoiceBox.style.display = 'none';
+      }
+
+      updateModalRulesUI();
+
+      // Create checkbox lists
+      const createChoicesHtml = (arr, name) => arr.map(val => `
+        <label class="option-label">
+          <input type="checkbox" name="${name}" value="${val}" onchange="enforceLimit(this, '${name}', currentActiveCustomItem.max${name.replace('cust', '')}s)"> ${val}
+        </label>
+      `).join('');
+
+      const pList = item.specificProteins ? commonChoices[item.specificProteins] : commonChoices.proteins;
+
+      document.getElementById('saucesContainer').innerHTML = createChoicesHtml(commonChoices.sauces, 'custSauce');
+      document.getElementById('veggiesContainer').innerHTML = createChoicesHtml(commonChoices.veggies, 'custVeggie');
+      document.getElementById('proteinsContainer').innerHTML = createChoicesHtml(pList, 'custProtein');
+    }
 
     document.getElementById('customModal').classList.add('active');
   }
 
+  // Update instruction text dynamically
   function updateModalRulesUI() {
     if (!currentActiveCustomItem) return;
     const rulesEl = document.getElementById('modalRulesInfo');
@@ -876,8 +673,21 @@
     currentActiveCustomItem = null;
   }
 
+  // Process selected options and send to cart
   function addCustomItemToCart() {
     if (!currentActiveCustomItem) return;
+
+    if (currentActiveCustomItem.isRefresher) {
+      const sweetener = document.querySelector('input[name="refresherSweetener"]:checked').value;
+      addToCart(
+        currentActiveCustomItem.id,
+        currentActiveCustomItem.name,
+        currentActiveCustomItem.price,
+        `Sweetened by: ${sweetener}`
+      );
+      closeCustomModal();
+      return;
+    }
 
     const getSelectedVals = (groupName) => {
       return Array.from(document.querySelectorAll(`input[name="${groupName}"]:checked`)).map(cb => cb.value);
@@ -896,7 +706,7 @@
       return;
     }
 
-    // Goal 4: Remind customer if they selected less than the allowed limits
+    // Remind customer if they under-selected
     if (sauces.length < maxS || veggies.length < maxV || proteins.length < maxP) {
       const msg = `You still have available choices!\n\n` +
                   `Sauces: ${sauces.length} / ${maxS}\n` +
@@ -905,10 +715,16 @@
                   `Are you sure you want to proceed and add to order?`;
       
       const proceed = confirm(msg);
-      if (!proceed) return; // Stop them so they can add more
+      if (!proceed) return; 
     }
 
     let subParts = [];
+    
+    if (currentActiveCustomItem.needsWellnessChoice) {
+      const drink = document.querySelector('input[name="custWellness"]:checked').value;
+      subParts.push(`Drink: ${drink}`);
+    }
+
     if (sauces.length) subParts.push(`Sauces: ${sauces.join(', ')}`);
     if (veggies.length) subParts.push(`Veggies: ${veggies.join(', ')}`);
     if (proteins.length) subParts.push(`Proteins: ${proteins.join(', ')}`);
@@ -923,18 +739,21 @@
     closeCustomModal();
   }
 
+  // --- 8. CHECKOUT & MESSAGING LOGIC ---
+  
+  // Clears the error warning when user selects Dine-In/Pick-Up
   function clearOrderTypeError() {
     document.getElementById('orderOptionsBox').classList.remove('error-highlight');
     document.getElementById('orderTypeErrorMsg').style.display = 'none';
   }
 
+  // Formats the entire cart into a string message for WhatsApp/Messenger
   function buildOrderMessage() {
     if (cart.length === 0) {
       alert("Your basket is empty! Please add items before ordering.");
       return null;
     }
 
-    // Goal 2: Ensure order type is selected (no default option)
     const orderTypeInput = document.querySelector('input[name="orderType"]:checked');
     if (!orderTypeInput) {
       document.getElementById('orderOptionsBox').classList.add('error-highlight');
@@ -945,7 +764,7 @@
     }
 
     const orderType = orderTypeInput.value;
-    let message = `✦ *OONJAI MARKETPLACE ORDER* ✦\n`;
+    let message = `✦ *OON JAI MARKETPLACE ORDER* ✦\n`;
     message += `Type: *${orderType}*\n\n`;
     message += `*Items Ordered:*\n`;
 
@@ -963,6 +782,7 @@
     return message;
   }
 
+  // Trigger WhatsApp Checkout
   function checkoutWA() {
     const msg = buildOrderMessage();
     if (!msg) return;
@@ -970,6 +790,7 @@
     window.open(url, '_blank');
   }
 
+  // Trigger Messenger Checkout
   function checkoutMessenger() {
     const msg = buildOrderMessage();
     if (!msg) return;
@@ -977,7 +798,7 @@
     window.open(url, '_blank');
   }
 
-  // Initialize view on load
+  // --- Initialize Default View on Page Load ---
   renderProductsGrid();
 </script>
 </body>
