@@ -9,15 +9,15 @@
   <!--               CSS STYLESHEET               -->
   <!-- ========================================== -->
   <style>
-    /* --- 1. THEME COLORS & VARIABLES (Edit colors here) --- */
+    /* --- 1. THEME COLORS & VARIABLES --- */
     :root {
       --bg-dark: #010c0a;
       --bg-gradient: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%);
       --card-bg: rgba(2, 18, 15, 0.85);
       --border-color: #1e4d40;
-      --accent-green: #4ade80; /* Main highlight color */
-      --wa-color: #25D366; /* WhatsApp Button Color */
-      --msgr-color: #0084FF; /* Messenger Button Color */
+      --accent-green: #4ade80;
+      --wa-color: #25D366;
+      --msgr-color: #0084FF;
       --text-bright: #ffffff;
       --text-muted: #94a3b8;
       --text-subhead: #cbd5e1;
@@ -56,7 +56,7 @@
       overflow: hidden;
     }
 
-    /* --- MOBILE HEADER: Left-aligned horizontal layout --- */
+    /* --- HEADER (MOBILE DEFAULT: Left-aligned Row) --- */
     header {
       flex-shrink: 0;
       padding: 6px 4px 10px;
@@ -68,9 +68,16 @@
       text-align: left;
     }
 
+    .header-left {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
     .logo-frame {
-      width: 60px;
-      height: 60px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       border: 2px solid var(--accent-green);
       box-shadow: 0 0 10px rgba(74, 222, 128, 0.25);
@@ -79,7 +86,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
     }
 
     .logo-frame img {
@@ -89,12 +95,7 @@
       display: block;
     }
 
-    /* Desktop-only logo inside sidebar (hidden on mobile) */
-    .sidebar-logo {
-      display: none;
-    }
-
-    .header-text {
+    .header-right {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -125,40 +126,35 @@
     .content-layout::-webkit-scrollbar { width: 5px; }
     .content-layout::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
 
-    /* --- DESKTOP STYLES (Laptop / Large Screen) --- */
+    /* --- DESKTOP STYLES (LAPTOP / LARGE SCREEN) --- */
     @media (min-width: 768px) {
       .app-container { padding: 18px; gap: 14px; }
-      
-      /* Header centered on Laptop */
-      header { 
-        justify-content: center; 
-        text-align: center; 
-        padding-bottom: 12px; 
+
+      /* Align Header with Content Grid (210px left column + 1fr right column) */
+      header {
+        display: grid;
+        grid-template-columns: 210px 1fr;
+        gap: 18px;
+        align-items: center;
+        padding-bottom: 12px;
       }
 
-      /* Hide logo inside header on Laptop */
-      header .logo-frame { 
-        display: none; 
+      .header-left {
+        justify-content: center;
+      }
+
+      .logo-frame {
+        width: 70px;
+        height: 70px;
+      }
+
+      .header-right {
+        text-align: center;
+        align-items: center;
       }
 
       header h1 { font-size: 24px; }
       header p { font-size: 13px; margin-top: 4px; }
-
-      /* Display Logo on top of Menu Categories sidebar on Laptop */
-      .sidebar-logo {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding-bottom: 6px;
-      }
-
-      .sidebar-logo .logo-frame {
-        display: flex;
-        width: 80px;
-        height: 80px;
-        border-width: 2px;
-      }
 
       .content-layout {
         display: grid;
@@ -170,7 +166,7 @@
       }
     }
 
-    /* --- 4. CATEGORY NAVIGATION (Left Sidebar on Desktop) --- */
+    /* --- 4. CATEGORY NAVIGATION --- */
     .categories-nav {
       flex-shrink: 0;
       background: var(--card-bg);
@@ -184,7 +180,7 @@
     }
     
     .nav-header {
-      grid-column: 1 / -1; /* spans all columns in grid */
+      grid-column: 1 / -1;
       background: rgba(74, 222, 128, 0.15);
       color: var(--accent-green);
       text-transform: uppercase;
@@ -261,7 +257,6 @@
     .price { font-size: 13px; font-weight: 700; color: var(--accent-green); white-space: nowrap; }
     .btn-wrapper { display: flex; align-items: center; gap: 8px; }
     
-    /* Standard Add Button */
     .add-btn {
       background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: white;
       border: none; padding: 7px 14px; border-radius: var(--border-radius-sm);
@@ -283,7 +278,6 @@
     .cart-item-price { font-size: 12px; font-weight: 600; color: var(--accent-green); }
     .remove-btn { color: #f87171; background: none; border: none; font-size: 11px; cursor: pointer; margin-left: 8px; }
 
-    /* Order Options (Dine-in / Pick-up) */
     .order-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 4px; border-radius: var(--border-radius-sm); transition: border 0.2s ease; }
     .order-options.error-highlight { border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1); }
     .order-options label {
@@ -295,7 +289,6 @@
     .order-options label:has(input:checked) { border-color: var(--accent-green); background: rgba(30, 77, 64, 0.5); color: var(--accent-green); font-weight: 700; }
     .order-type-error-msg { display: none; color: #f87171; font-size: 11px; font-weight: 700; text-align: center; background: rgba(239, 68, 68, 0.15); padding: 6px; border-radius: var(--border-radius-sm); border: 1px solid #ef4444; }
 
-    /* Cart Bottom Section (Total, Payment Note, Checkout Buttons) */
     .payment-note { font-size: 11px; color: #fbbf24; background: rgba(251, 191, 36, 0.1); padding: 8px 10px; border-radius: var(--border-radius-sm); border-left: 3px solid #fbbf24; line-height: 1.3; }
     .cart-total { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 12px; }
     .total-row { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700; }
@@ -310,7 +303,6 @@
     .btn-msgr { background: var(--msgr-color); }
     .btn-wa:hover, .btn-msgr:hover { opacity: 0.9; }
 
-    /* External Delivery Links */
     .delivery-section { border-top: 1px dashed var(--border-color); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
     .delivery-title { font-size: 11px; font-weight: 700; color: var(--text-subhead); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
     .delivery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -322,7 +314,6 @@
       text-align: center; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
     }
     
-    /* Delivery Brand Colors */
     .platform-link.foodpanda { color: #D70F64; border-color: #D70F64; }
     .platform-link.foodpanda:hover { background: rgba(215, 15, 100, 0.15); box-shadow: 0 0 8px rgba(215, 15, 100, 0.3); }
 
@@ -335,7 +326,6 @@
     .platform-link.guru { color: #E53935; border-color: #E53935; }
     .platform-link.guru:hover { background: rgba(229, 57, 53, 0.15); box-shadow: 0 0 8px rgba(229, 57, 53, 0.3); }
 
-    /* Google Review Section */
     .review-section {
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
       padding: 16px; text-align: center; margin-bottom: 24px;
@@ -344,14 +334,14 @@
     .review-section p { font-size: 13px; color: var(--text-bright); font-weight: 600; }
     .review-link {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      background: #ffffff; color: #1a73e8; /* Google Blue */
+      background: #ffffff; color: #1a73e8;
       padding: 10px 16px; border-radius: var(--border-radius-main);
       font-size: 13px; font-weight: 700; text-decoration: none;
       transition: all 0.2s ease; border: 1px solid #1a73e8; width: 100%; max-width: 300px;
     }
     .review-link:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(26, 115, 232, 0.3); }
 
-    /* --- 7. CUSTOMIZATION MODAL (Popups) --- */
+    /* --- 7. CUSTOMIZATION MODAL --- */
     .modal-overlay {
       position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
       display: none; justify-content: center; align-items: center; padding: 14px; z-index: 100;
@@ -365,7 +355,6 @@
     .modal-title { font-family: 'Georgia', serif; font-size: 16px; color: var(--accent-green); }
     .close-modal { background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; }
 
-    /* Builder Layouts inside Modal */
     .builder-section { margin-bottom: 12px; }
     .builder-section h4 { font-size: 11px; text-transform: uppercase; color: var(--text-subhead); margin-bottom: 6px; }
     .builder-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
@@ -386,11 +375,12 @@
   
   <!-- APP HEADER -->
   <header>
-    <!-- Logo Frame for Mobile -->
-    <div class="logo-frame">
-      <img src="https://i.ibb.co/2XPxGNZ/image.jpg" alt="Oon Jai Marketplace Logo" />
+    <div class="header-left">
+      <div class="logo-frame">
+        <img src="https://i.ibb.co/2XPxGNZ/image.jpg" alt="Oon Jai Marketplace Logo" />
+      </div>
     </div>
-    <div class="header-text">
+    <div class="header-right">
       <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
       <p>Select a category to explore our plant-based menu offerings and submit your orders.</p>
     </div>
@@ -400,13 +390,6 @@
     
     <!-- CATEGORY NAVIGATION SIDEBAR -->
     <aside class="categories-nav" id="categoryNav">
-      <!-- Logo Frame for Desktop (Visible on top of Menu Categories on laptop) -->
-      <div class="sidebar-logo">
-        <div class="logo-frame">
-          <img src="https://i.ibb.co/2XPxGNZ/image.jpg" alt="Oon Jai Marketplace Logo" />
-        </div>
-      </div>
-      
       <div class="nav-header">Menu Categories</div>
       <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
       <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
@@ -423,7 +406,6 @@
       <!-- MENU PRODUCTS SECTION -->
       <div class="menu-section">
         <h2 class="section-title" id="categoryTitle">Burgers</h2>
-        <!-- Products will be injected here via JavaScript -->
         <div class="products-grid" id="productsGrid"></div>
       </div>
 
@@ -438,7 +420,6 @@
           <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
         </div>
 
-        <!-- Order Options (Dine In / Pick Up) -->
         <div class="order-options" id="orderOptionsBox">
           <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
           <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
@@ -457,13 +438,11 @@
             <span id="totalPrice" class="price" style="font-size: 16px;">0 Kip</span>
           </div>
           
-          <!-- Checkout Buttons -->
           <div class="action-buttons">
             <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
             <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
           </div>
 
-          <!-- Delivery Partner Links with Branding -->
           <div class="delivery-section">
             <div class="delivery-title">Or Order / Find Us On</div>
             <div class="delivery-grid">
@@ -487,9 +466,7 @@
     </main>
   </div>
 
-  <!-- ========================================== -->
-  <!--               CUSTOMIZATION MODALS         -->
-  <!-- ========================================== -->
+  <!-- CUSTOMIZATION MODALS -->
   <div class="modal-overlay" id="customModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -497,7 +474,6 @@
         <button class="close-modal" onclick="closeCustomModal()">✕</button>
       </div>
 
-      <!-- Option 1: Refresher Sweetener Choice Modal -->
       <div id="refresherSweetenerBox" style="display: none;">
         <div class="builder-section">
           <h4>Choose Sweetener</h4>
@@ -508,11 +484,9 @@
         </div>
       </div>
 
-      <!-- Option 2: Standard Sandwich & Bowl Builder Box -->
       <div id="standardBuilderBox">
         <div class="modal-subtitle" id="modalRulesInfo"></div>
         
-        <!-- Only shows for specific items (like Bowl Combo) -->
         <div id="wellnessChoiceBox" class="builder-section" style="display: none;">
           <h4>Choose Wellness Drink</h4>
           <div class="builder-options" id="wellnessContainer"></div>
@@ -538,20 +512,16 @@
     </div>
   </div>
 
-  <!-- ========================================== -->
-  <!--         THEMED NOTIFICATION MODALS        -->
-  <!-- ========================================== -->
+  <!-- NOTIFICATION MODALS -->
   <div class="modal-overlay" id="notificationModal" style="z-index: 105;">
     <div class="modal-box" style="max-width: 320px; text-align: center; padding: 20px;">
       <h3 class="modal-title" id="notifTitle" style="margin-bottom: 12px;">Notification</h3>
       <p id="notifMessage" style="font-size: 13px; color: var(--text-subhead); margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap;"></p>
       
-      <!-- Alert Action (Single OK Button) -->
       <div id="notifAlertAction">
         <button class="add-btn" style="width: 100%;" onclick="closeNotification()">OK</button>
       </div>
       
-      <!-- Confirm Actions (Cancel / Proceed Buttons) -->
       <div id="notifConfirmActions" style="display: none; gap: 10px;">
         <button class="cat-btn" style="flex: 1; justify-content: center;" id="btnNotifCancel">Cancel</button>
         <button class="add-btn" style="flex: 1;" id="btnNotifProceed">Proceed</button>
@@ -564,11 +534,9 @@
 <!--                JAVASCRIPT LOGIC            -->
 <!-- ========================================== -->
 <script>
-  // --- 1. STORE CONFIGURATION (Edit Contacts Here) ---
   const PHONE_NUMBER = "8562057048174"; 
   const MESSENGER_USERNAME = "oon.jai.laos";
 
-  // --- 2. MENU INGREDIENTS (Edit Choices for Modals Here) ---
   const commonChoices = {
     veggies: [
       'Grilled mushrooms', 'Grilled bell peppers', 'Grilled eggplant', 
@@ -593,7 +561,6 @@
     ]
   };
 
-  // --- 3. MENU DATA (Edit Item Names, Prices, and Descriptions Here) ---
   const menuData = {
     burgers: [
       { id: 'b1', name: 'Burger Combo', price: 199000, desc: 'The Classic Burger + Mint Pineapple Refresher + Lemon Oat Cookie.' },
@@ -647,13 +614,10 @@
     ]
   };
 
-  // --- 4. APP STATE (Tracks current category and cart contents) ---
   let cart = [];
   let currentActiveCustomItem = null;
   let currentCategory = 'burgers';
 
-  // --- THEMED NOTIFICATION HELPERS ---
-  
   function customAlert(message, title = 'Notification') {
     document.getElementById('notifTitle').innerText = title;
     document.getElementById('notifMessage').innerText = message;
@@ -686,8 +650,6 @@
     });
   }
 
-  // --- 5. UI RENDERING FUNCTIONS ---
-  
   function formatKip(amount) {
     return amount.toLocaleString() + ' Kip';
   }
@@ -714,7 +676,6 @@
     document.getElementById('categoryTitle').innerText = titleMap[catKey];
     renderProductsGrid();
     
-    // Scroll to top of menu on mobile
     const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
     if (scrollTarget) scrollTarget.scrollTop = 0;
   }
@@ -751,8 +712,6 @@
     });
   }
 
-  // --- 6. CART MANAGEMENT ---
-  
   function addToCart(id, name, price, subtext = '') {
     cart.push({ id, name, price, subtext });
     renderCart();
@@ -796,8 +755,6 @@
       totalEl.innerText = formatKip(total);
     }
   }
-
-  // --- 7. MODAL CUSTOMIZATION LOGIC ---
 
   function enforceLimit(checkbox, groupName, maxAllowed) {
     const checked = document.querySelectorAll(`input[name="${groupName}"]:checked`);
@@ -931,8 +888,6 @@
     closeCustomModal();
   }
 
-  // --- 8. CHECKOUT & MESSAGING LOGIC ---
-  
   function clearOrderTypeError() {
     document.getElementById('orderOptionsBox').classList.remove('error-highlight');
     document.getElementById('orderTypeErrorMsg').style.display = 'none';
@@ -986,7 +941,6 @@
     window.open(url, '_blank');
   }
 
-  // --- Initialize Default View on Page Load ---
   renderProductsGrid();
 </script>
 </body>
