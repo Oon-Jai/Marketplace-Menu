@@ -5,23 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Oonjai Marketplace</title>
   
-  <!-- ========================================== -->
-  <!--                CSS STYLESHEET              -->
-  <!-- ========================================== -->
   <style>
     /* --- NEW TOP NAVIGATION & TAB STYLES --- */
     .top-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 60px;
-      background: rgba(1, 12, 10, 0.95);
-      border-bottom: 1px solid var(--border-color);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      z-index: 1000;
+      position: fixed; top: 0; left: 0; right: 0; height: 60px;
+      background: rgba(1, 12, 10, 0.95); border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; z-index: 1000;
     }
 
     .nav-left { display: flex; align-items: center; gap: 12px; }
@@ -90,12 +80,12 @@
     .location-link:hover { text-decoration: underline; opacity: 0.85; }
     .business-hours { color: var(--text-muted); font-size: 10px; text-align: center; line-height: 1.3; }
 
-    /* Desktop Extra Logo */
-    .desktop-header-logo { display: none; }
-
     .content-layout { flex: 1; display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow-y: auto; padding-bottom: 75px; }
     .content-layout::-webkit-scrollbar { width: 5px; }
     .content-layout::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
+
+    /* BIG DESKTOP SIDEBAR LOGO */
+    .sidebar-logo { display: none; }
 
     @media (min-width: 768px) {
       .app-container { padding: 18px; padding-top: 85px; gap: 14px; }
@@ -104,21 +94,18 @@
       .header-info-bar { flex-direction: row; gap: 16px; font-size: 12px; }
       .business-hours { font-size: 11px; }
       
-      /* Displaying the Top Right Desktop Logo */
-      .desktop-header-logo {
+      .content-layout { display: grid; grid-template-columns: 220px 1fr; gap: 18px; align-items: stretch; overflow-y: hidden; padding-bottom: 0; }
+      
+      /* Make logo visible, centered, and 1.75x bigger (approx 114px) */
+      .sidebar-logo {
         display: block;
-        position: absolute;
-        top: 50%;
-        right: 15px;
-        transform: translateY(-50%);
-        width: 65px;
-        height: 65px;
+        margin: 0 auto 15px auto;
+        width: 114px;
+        height: 114px;
         border-radius: 50%;
         border: 2px solid var(--accent-green);
         object-fit: cover;
       }
-
-      .content-layout { display: grid; grid-template-columns: 220px 1fr; gap: 18px; align-items: stretch; overflow-y: hidden; padding-bottom: 0; }
     }
 
     /* --- 4. CATEGORY NAVIGATION --- */
@@ -136,7 +123,7 @@
     .sidebar-bottom-actions { display: none; }
 
     @media (min-width: 768px) {
-      .categories-nav { display: flex; flex-direction: column; justify-content: flex-start; padding: 10px; gap: 8px; overflow-y: auto; height: 100%; }
+      .categories-nav { display: flex; flex-direction: column; justify-content: flex-start; padding: 15px 10px 10px 10px; gap: 8px; overflow-y: auto; height: 100%; }
       .nav-header { font-size: 13px; padding: 10px; margin-bottom: 6px; }
       .sidebar-bottom-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 18px; border-top: 1px dashed var(--border-color); }
     }
@@ -216,12 +203,13 @@
     @media (min-width: 768px) { .floating-phone-bar { display: none; } }
 
     /* WORDS OF HOPE SPLIT LAYOUT */
-    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 15px; }
-    @media (min-width: 768px) { .hope-split-layout { grid-template-columns: 1fr 1fr; align-items: start; } }
+    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 15px; }
+    @media (min-width: 768px) { .hope-split-layout { grid-template-columns: 1fr 1fr; align-items: center; } }
 
-    .carousel-container { position: relative; width: 100%; border-radius: var(--border-radius-main); overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 10px;}
+    .carousel-container { position: relative; width: 100%; max-width: 480px; margin: 0 auto; border-radius: var(--border-radius-main); overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 10px; }
     .carousel-track { display: flex; transition: transform 0.4s ease-in-out; }
-    .carousel-img { width: 100%; flex-shrink: 0; aspect-ratio: 4/5; object-fit: cover; }
+    /* Aspect ratio updated to 16/9 for rectangular cards */
+    .carousel-img { width: 100%; flex-shrink: 0; aspect-ratio: 16/9; object-fit: contain; background: #010c0a; }
     .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(2, 18, 15, 0.75); color: white; border: 1px solid var(--border-color); padding: 12px; cursor: pointer; border-radius: 50%; z-index: 10; transition: all 0.2s ease;}
     .carousel-btn:hover { background: var(--accent-green); color: var(--bg-dark); }
     .carousel-btn.prev { left: 10px; } .carousel-btn.next { right: 10px; }
@@ -274,35 +262,29 @@
   <div class="app-container" id="appRoot">
     
     <!-- BLANK HOME TAB -->
-    <div id="tab-home" class="tab-pane">
-      <!-- Intentionally left blank as requested -->
-    </div>
+    <div id="tab-home" class="tab-pane"></div>
 
     <!-- MAIN MENU TAB -->
     <div id="tab-menu" class="tab-pane active">
       
-      <!-- APP HEADER (Contains Desktop Big Logo on right side) -->
+      <!-- APP HEADER -->
       <header>
         <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
-
         <div class="header-info-bar">
-          <div class="business-hours">
-            🕒 Mon–Thu: 11:00 – 14:00, 16:00 – 18:30 | Fri: 11:00 – 14:00
-          </div>
-          <a href="https://maps.app.goo.gl/YojE5Vj56rt93vGC6?g_st=aw" target="_blank" rel="noopener noreferrer" class="location-link">
-            📍 Vientiane, Laos
-          </a>
+          <div class="business-hours">🕒 Mon–Thu: 11:00 – 14:00, 16:00 – 18:30 | Fri: 11:00 – 14:00</div>
+          <a href="https://maps.app.goo.gl/YojE5Vj56rt93vGC6?g_st=aw" target="_blank" rel="noopener noreferrer" class="location-link">📍 Vientiane, Laos</a>
         </div>
         <p>Select a category to explore our plant-based menu offerings and submit your orders.</p>
-
-        <!-- Bigger Desktop Logo - Will naturally hide on Mobile via CSS -->
-        <img src="https://i.postimg.cc/DZmP1t7Q/logo.jpg" class="desktop-header-logo" alt="Oon Jai Logo" />
       </header>
 
       <div class="content-layout" id="contentLayout">
         
         <!-- CATEGORY NAVIGATION SIDEBAR -->
         <aside class="categories-nav" id="categoryNav">
+          
+          <!-- Bigger Desktop Logo Placed ABOVE Categories -->
+          <img src="https://i.postimg.cc/DZmP1t7Q/logo.jpg" class="sidebar-logo" alt="Oon Jai Logo" />
+          
           <div class="nav-header">Menu Categories</div>
           <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
           <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
@@ -313,14 +295,9 @@
           <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
           <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
 
-          <!-- LAPTOP ONLY: ACTION BUTTONS AT BOTTOM OF CATEGORY SIDEBAR -->
           <div class="sidebar-bottom-actions">
-            <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">
-              ⭐ Leave us a Review
-            </a>
-            <button class="btn-hope-action" onclick="switchMainTab('hope')">
-              🌱 Words of Hope
-            </button>
+            <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">⭐ Leave us a Review</a>
+            <button class="btn-hope-action" onclick="switchMainTab('hope')">🌱 Words of Hope</button>
           </div>
         </aside>
 
@@ -346,13 +323,9 @@
               <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
               <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
             </div>
-            <div class="order-type-error-msg" id="orderTypeErrorMsg">
-              ⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.
-            </div>
+            <div class="order-type-error-msg" id="orderTypeErrorMsg">⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.</div>
 
-            <div class="payment-note">
-              <strong>Note:</strong> A QR code will be sent to you for payment before your order is processed. This helps us verify and prevent fake orders. Thank you!
-            </div>
+            <div class="payment-note"><strong>Note:</strong> A QR code will be sent to you for payment before your order is processed. This helps us verify and prevent fake orders. Thank you!</div>
 
             <div class="cart-total">
               <div class="total-row">
@@ -380,96 +353,98 @@
       </div>
     </div>
     
-    <!-- WORDS OF HOPE TAB (Split Layout) -->
+    <!-- WORDS OF HOPE TAB (Match Layout to Screenshot) -->
     <div id="tab-hope" class="tab-pane" style="overflow-y: auto;">
       
-      <!-- Banner & Description Header -->
-      <img src="https://i.postimg.cc/8PH5RscH/banner.jpg" style="width: 100%; height: 160px; object-fit: cover; border-radius: var(--border-radius-main); margin-bottom: 10px;" alt="Words of Hope Banner" />
-      <h2 style="font-family: 'Georgia', serif; color: var(--accent-green); margin-bottom: 8px; text-align: center;">Words of Hope</h2>
-      <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.5; text-align: center;">
-        Share an encouraging message with a stranger to spread kindness across our community. Swipe through the gallery below to see previous messages of hope!
-      </p>
+      <!-- Top Banner Image -->
+      <img src="https://i.postimg.cc/8PH5RscH/banner.jpg" style="width: 100%; height: 220px; object-fit: cover; border-radius: var(--border-radius-main) var(--border-radius-main) 0 0; margin-bottom: 0;" alt="Words of Hope Banner" />
 
-      <!-- Two Column Layout -->
-      <div class="hope-split-layout">
-        
-        <!-- LEFT COLUMN: CAROUSEL & LINK -->
-        <div>
-          <div class="carousel-container">
-            <button class="carousel-btn prev" onclick="moveHopeCarousel(-1)">&#10094;</button>
-            <div class="carousel-track" id="hopeCarouselTrack"></div>
-            <button class="carousel-btn next" onclick="moveHopeCarousel(1)">&#10095;</button>
-          </div>
-          <div class="carousel-dots" id="hopeCarouselDots"></div>
+      <div style="background: rgba(2, 18, 15, 0.6); padding: 30px 20px; border-radius: 0 0 var(--border-radius-main) var(--border-radius-main); border: 1px solid var(--border-color); border-top: none;">
           
-          <div style="text-align: center;">
-            <a href="#" target="_blank" style="color: var(--accent-green); font-size: 13px; font-weight: bold; text-decoration: none;">View All Community Messages</a>
+          <!-- Dashed Text Description Section -->
+          <div style="border-top: 1px dashed var(--border-color); border-bottom: 1px dashed var(--border-color); padding: 20px 10px; margin-bottom: 30px; text-align: center;">
+            <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.6;">
+              Every message shared here has the power to brighten someone's day! Leave a word of encouragement, an inspiring quote, or a meaningful message—it may be featured on one of our next cards and bring hope to someone when they need it most.
+            </p>
           </div>
-        </div>
 
-        <!-- RIGHT COLUMN: SCRIPT FORM & QUOTATION -->
-        <div>
-          
-          <!-- Exact user-provided Form Script -->
-          <div style="font-family: 'Georgia', 'Times New Roman', serif; max-width: 480px; width: 100%; min-height: 252px; margin: 0 auto; padding: 28px 30px; border-radius: 16px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: #ffffff;">
-            <div>
-              <h3 style="margin-top: 0; margin-bottom: 6px; font-size: 22px; font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif;">
-                <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-right: 4px;">✦</span>
-                Message for a Stranger
-                <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-left: 4px;">✦</span>
+          <!-- Two Column Split Layout -->
+          <div class="hope-split-layout">
+            
+            <!-- LEFT COLUMN: CAROUSEL -->
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <h3 style="margin-top: 0; margin-bottom: 4px; font-size: 18px; font-weight: 600; color: #ffffff; text-align: center; font-family: 'Georgia', serif;">
+                <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span>
+                Featured Messages
+                <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span>
               </h3>
-              <p style="margin: 0 0 20px 0; font-size: 12px; color: #94a3b8; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif; line-height: 1.4; font-weight: 300;">
-                Leave an encouraging thought or quote to brighten someone's day.
-              </p>
-              <form id="customForm" autocomplete="off" style="font-family: 'Segoe UI', -apple-system, sans-serif;">
-                <input type="hidden" id="device_token" name="device_token" />
-                <div style="margin-bottom: 16px;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <label style="font-weight: 600; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Your Message</label>
-                    <span id="wordCounter" style="font-size: 11px; color: #64748b; font-weight: 500;">0 / 20-30 words</span>
-                  </div>
-                  <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
-                </div>
-                <div style="margin-bottom: 20px;">
-                  <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Name or Initials</label>
-                  <input type="text" id="name" name="sender_name" placeholder="e.g., Sarah V., S. Valdez, or Anonymous" autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; outline: none;" />
-                </div>
-                <div style="display: flex; gap: 10px;">
-                  <button type="submit" id="submitBtn" style="flex: 2; padding: 11px 16px; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif; letter-spacing: 0.02em;">Submit Message</button>
-                  <button type="button" onclick="clearForm()" style="flex: 1; padding: 11px 16px; background-color: transparent; color: #94a3b8; border: 1px solid #1e4d40; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif;">Clear</button>
-                </div>
-              </form>
+              <p style="margin: 0 0 15px 0; font-size: 11px; color: #94a3b8; text-align: center;">We are grateful for every word of encouragement.</p>
+              
+              <div class="carousel-container">
+                <button class="carousel-btn prev" onclick="moveHopeCarousel(-1)">&#10094;</button>
+                <div class="carousel-track" id="hopeCarouselTrack"></div>
+                <button class="carousel-btn next" onclick="moveHopeCarousel(1)">&#10095;</button>
+              </div>
+              <div class="carousel-dots" id="hopeCarouselDots"></div>
             </div>
-            <div id="statusMsg" style="margin-top: 10px; font-size: 12px; font-weight: 500; text-align: center; min-height: 18px; font-family: 'Segoe UI', sans-serif;"></div>
-          </div>
 
-          <!-- Quotation Container -->
-          <div style="margin-top: 20px; padding: 18px; border-left: 3px solid var(--accent-green); background: rgba(74, 222, 128, 0.05); border-radius: 0 var(--border-radius-main) var(--border-radius-main) 0;">
-            <p style="font-style: italic; color: var(--text-subhead); font-size: 14px; line-height: 1.5; font-family: 'Georgia', serif;">
+            <!-- RIGHT COLUMN: USER SCRIPT FORM -->
+            <div style="display: flex; justify-content: center; align-items: center;">
+              
+              <div style="font-family: 'Georgia', 'Times New Roman', serif; max-width: 480px; width: 100%; min-height: 252px; margin: 0 auto; padding: 28px 30px; border-radius: 16px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: #ffffff;">
+                <div>
+                  <h3 style="margin-top: 0; margin-bottom: 6px; font-size: 22px; font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif;">
+                    <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-right: 4px;">✦</span>
+                    Message for a Stranger
+                    <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-left: 4px;">✦</span>
+                  </h3>
+                  <p style="margin: 0 0 20px 0; font-size: 12px; color: #94a3b8; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif; line-height: 1.4; font-weight: 300;">
+                    Leave an encouraging thought or quote to brighten someone's day.
+                  </p>
+                  <form id="customForm" autocomplete="off" style="font-family: 'Segoe UI', -apple-system, sans-serif;">
+                    <input type="hidden" id="device_token" name="device_token" />
+                    <div style="margin-bottom: 16px;">
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <label style="font-weight: 600; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Your Message</label>
+                        <span id="wordCounter" style="font-size: 11px; color: #64748b; font-weight: 500;">0 / 20-30 words</span>
+                      </div>
+                      <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                      <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Name or Initials</label>
+                      <input type="text" id="name" name="sender_name" placeholder="e.g., Sarah V., S. Valdez, or Anonymous" autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; outline: none;" />
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                      <button type="submit" id="submitBtn" style="flex: 2; padding: 11px 16px; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif; letter-spacing: 0.02em;">Submit Message</button>
+                      <button type="button" onclick="clearForm()" style="flex: 1; padding: 11px 16px; background-color: transparent; color: #94a3b8; border: 1px solid #1e4d40; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif;">Clear</button>
+                    </div>
+                  </form>
+                </div>
+                <div id="statusMsg" style="margin-top: 10px; font-size: 12px; font-weight: 500; text-align: center; min-height: 18px; font-family: 'Segoe UI', sans-serif;"></div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- QUOTATION (Bottom Center, Full Width) -->
+          <div style="text-align: center; max-width: 600px; margin: 40px auto 10px auto; padding-top: 25px; border-top: 1px solid rgba(74, 222, 128, 0.15);">
+            <p style="font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif;">
               "A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."
             </p>
-            <span style="font-weight: 700; color: var(--accent-green); display: block; margin-top: 8px; font-size: 12px;">— Amelia Earhart</span>
+            <span style="font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px;">— Amelia Earhart</span>
           </div>
 
-        </div>
       </div>
-      <br><br><br> <!-- Bottom spacing for smooth scrolling -->
     </div>
     
     <!-- BLANK REVIEW TAB -->
-    <div id="tab-review" class="tab-pane">
-      <!-- Intentionally left blank as requested -->
-    </div>
+    <div id="tab-review" class="tab-pane"></div>
   </div>
 
-  <!-- FIXED FLOATING BAR AT BOTTOM (PHONE ONLY: REVIEW + WORDS OF HOPE SIDE BY SIDE) -->
+  <!-- FIXED FLOATING BAR AT BOTTOM (PHONE ONLY) -->
   <div class="floating-phone-bar">
-    <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">
-      ⭐ Leave Review
-    </a>
-    <button class="btn-hope-action" onclick="switchMainTab('hope')">
-      🌱 Words of Hope
-    </button>
+    <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">⭐ Leave Review</a>
+    <button class="btn-hope-action" onclick="switchMainTab('hope')">🌱 Words of Hope</button>
   </div>
 
   <!-- CUSTOMIZATION MODAL -->
@@ -479,7 +454,6 @@
         <h3 class="modal-title" id="modalTitle">Build Your Own</h3>
         <button class="close-modal" onclick="closeCustomModal()">✕</button>
       </div>
-
       <div id="refresherSweetenerBox" style="display: none;">
         <div class="builder-section">
           <h4>Choose Sweetener</h4>
@@ -489,7 +463,6 @@
           </div>
         </div>
       </div>
-
       <div id="standardBuilderBox">
         <div class="modal-subtitle" id="modalRulesInfo"></div>
         <div id="wellnessChoiceBox" class="builder-section" style="display: none;">
@@ -509,7 +482,6 @@
           <div class="builder-options" id="proteinsContainer"></div>
         </div>
       </div>
-
       <button class="btn-wa" style="width:100%; margin-top: 10px; background: #22c55e;" onclick="addCustomItemToCart()">Add to Order</button>
     </div>
   </div>
@@ -519,11 +491,7 @@
     <div class="modal-box" style="max-width: 320px; text-align: center; padding: 20px;">
       <h3 class="modal-title" id="notifTitle" style="margin-bottom: 12px;">Notification</h3>
       <p id="notifMessage" style="font-size: 13px; color: var(--text-subhead); margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap;"></p>
-      
-      <div id="notifAlertAction">
-        <button class="add-btn" style="width: 100%;" onclick="closeNotification()">OK</button>
-      </div>
-      
+      <div id="notifAlertAction"><button class="add-btn" style="width: 100%;" onclick="closeNotification()">OK</button></div>
       <div id="notifConfirmActions" style="display: none; gap: 10px;">
         <button class="cat-btn" style="flex: 1; justify-content: center;" id="btnNotifCancel">Cancel</button>
         <button class="add-btn" style="flex: 1;" id="btnNotifProceed">Proceed</button>
