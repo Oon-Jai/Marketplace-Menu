@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Oonjai Marketplace - Menu</title>
+  <title>Oonjai Marketplace</title>
   
   <!-- ========================================== -->
-  <!--               CSS STYLESHEET               -->
+  <!--                CSS STYLESHEET              -->
   <!-- ========================================== -->
   <style>
     /* --- 1. THEME COLORS & VARIABLES --- */
@@ -64,8 +64,7 @@
     }
     header h1 { font-family: 'Georgia', serif; font-size: 18px; font-weight: 400; letter-spacing: 0.5px; }
     header h1 span { color: var(--accent-green); font-size: 12px; vertical-align: middle; }
-    header p { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
-
+    
     .header-info-bar {
       display: flex;
       flex-direction: column;
@@ -85,18 +84,8 @@
       gap: 4px;
       transition: opacity 0.2s ease;
     }
-
-    .location-link:hover {
-      text-decoration: underline;
-      opacity: 0.85;
-    }
-
-    .business-hours {
-      color: var(--text-muted);
-      font-size: 10px;
-      text-align: center;
-      line-height: 1.3;
-    }
+    .location-link:hover { text-decoration: underline; opacity: 0.85; }
+    .business-hours { color: var(--text-muted); font-size: 10px; text-align: center; line-height: 1.3; }
 
     .content-layout {
       flex: 1;
@@ -107,7 +96,7 @@
       overflow-y: auto;
       scrollbar-width: thin;
       scrollbar-color: var(--border-color) transparent;
-      padding-bottom: 75px; /* Bottom padding so floating mobile bar doesn't obscure contents */
+      padding-bottom: 20px;
     }
     .content-layout::-webkit-scrollbar { width: 5px; }
     .content-layout::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
@@ -115,7 +104,6 @@
     @media (min-width: 768px) {
       .app-container { padding: 18px; gap: 14px; }
       header h1 { font-size: 24px; }
-      header p { font-size: 13px; }
       .header-info-bar { flex-direction: row; gap: 16px; font-size: 12px; }
       .business-hours { font-size: 11px; }
       .content-layout {
@@ -128,85 +116,243 @@
       }
     }
 
-    /* --- 4. CATEGORY NAVIGATION --- */
-    .categories-nav {
-      flex-shrink: 0;
+    /* --- 4. NAVIGATION SIDEBAR / TABS --- */
+    .main-sidebar {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius-main);
       padding: 6px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
+      flex-shrink: 0;
       backdrop-filter: blur(10px);
     }
     
-    .nav-header {
-      grid-column: 1 / -1;
-      background: rgba(74, 222, 128, 0.15);
-      color: var(--accent-green);
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-align: center;
-      padding: 8px;
-      border-radius: var(--border-radius-sm);
-      margin-bottom: 2px;
-      border: 1px solid rgba(74, 222, 128, 0.3);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
-    /* Desktop Sidebar Footer for Review & Words of Hope */
-    .sidebar-bottom-actions {
-      display: none; /* Hidden on mobile; active on desktop */
-    }
-
-    @media (min-width: 768px) {
-      .categories-nav {
-        display: flex; flex-direction: column; justify-content: flex-start;
-        padding: 10px; gap: 8px; overflow-y: auto; height: 100%;
+    /* MOBILE NAVIGATION */
+    @media (max-width: 767px) {
+      .main-tabs-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
       }
-      .nav-header { font-size: 13px; padding: 10px; margin-bottom: 6px; }
+      .menu-tab-group { display: contents; }
+      .main-tab-btn {
+        flex: 1 1 calc(25% - 5px);
+        min-width: 0;
+      }
+      .collapsible-menu {
+        flex: 1 1 100%;
+        order: 10;
+        display: none; 
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        margin-top: 5px;
+        padding-top: 5px;
+        border-top: 1px dashed var(--border-color);
+      }
+      .collapsible-menu.active { display: grid; }
+    }
 
-      .sidebar-bottom-actions {
+    /* DESKTOP NAVIGATION */
+    @media (min-width: 768px) {
+      .main-sidebar {
+        padding: 10px;
+        height: 100%;
+        overflow-y: auto;
+      }
+      .main-tabs-wrapper {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        margin-top: auto; /* Pushes to bottom of category list */
-        padding-top: 18px; /* Spacing away from category buttons */
-        border-top: 1px dashed var(--border-color);
       }
+      .menu-tab-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .main-tab-btn {
+        padding: 12px 14px;
+        font-size: 14px;
+        text-align: left;
+      }
+      .collapsible-menu {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        padding-left: 14px;
+        border-left: 2px solid var(--border-color);
+        margin-left: 10px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+      }
+      .collapsible-menu.active { display: flex; }
+      .cat-btn { text-align: left; justify-content: flex-start; padding: 10px 12px; font-size: 13px; }
     }
 
+    /* COMMON NAV BUTTON STYLES */
+    .main-tab-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-bright);
+      padding: 8px 4px;
+      border-radius: var(--border-radius-sm);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    .main-tab-btn:hover, .main-tab-btn.active {
+      background: rgba(74, 222, 128, 0.15);
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.1);
+    }
     .cat-btn {
       background: transparent;
       border: 1px solid var(--border-color);
       color: var(--text-subhead);
       padding: 6px 2px;
       border-radius: var(--border-radius-sm);
-      font-size: 10px; font-weight: 600; text-align: center;
-      cursor: pointer; transition: all 0.2s ease;
+      font-size: 10px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: all 0.2s ease;
       display: flex; align-items: center; justify-content: center;
       min-height: 34px; line-height: 1.1;
-    }
-    @media (min-width: 768px) {
-      .cat-btn { padding: 10px 12px; font-size: 13px; text-align: left; justify-content: flex-start; min-height: auto; }
     }
     .cat-btn:hover, .cat-btn.active {
       background: rgba(30, 77, 64, 0.5);
       border-color: var(--accent-green); color: var(--accent-green);
-      box-shadow: 0 0 10px rgba(74, 222, 128, 0.15);
     }
 
-    /* --- 5. MENU & PRODUCT CARDS --- */
-    .main-content { flex: 1; display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+    /* --- 5. TABS & MAIN CONTENT --- */
+    .main-content {
+      flex: 1; 
+      display: flex; 
+      flex-direction: column; 
+      min-height: 0; 
+    }
     @media (min-width: 768px) {
-      .main-content { overflow-y: auto; padding-right: 4px; padding-bottom: 40px; }
+      .main-content { overflow-y: auto; padding-right: 4px; padding-bottom: 20px; }
       .main-content::-webkit-scrollbar { width: 6px; }
       .main-content::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
     }
 
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- TAB 1: HOME STYLES --- */
+    .home-welcome { text-align: center; padding: 10px 0; }
+    .home-welcome h2 { font-family: 'Georgia', serif; color: var(--accent-green); margin-bottom: 8px; font-weight: 400;}
+    .home-welcome p { color: var(--text-subhead); font-size: 13px; line-height: 1.5;}
+    
+    .feature-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 600px) { .feature-cards { grid-template-columns: repeat(3, 1fr); } }
+    
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-main);
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .feature-card:hover { border-color: var(--accent-green); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,222,128,0.1); }
+    .feature-card h3 { font-size: 14px; color: white; margin-bottom: 6px; }
+    .feature-card p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+    .about-us-section {
+      background: rgba(2, 18, 15, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-main);
+      padding: 20px;
+      margin-top: 10px;
+    }
+    .about-us-section h3 { color: var(--accent-green); font-family: 'Georgia', serif; font-size: 18px; margin-bottom: 12px; font-weight: 400;}
+    .about-us-section p { font-size: 13px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 12px; }
+    .about-us-section p:last-child { margin-bottom: 0; }
+
+    /* FEATURE BANNERS (Words of Hope & Review) */
+    .feature-banner {
+      width: 100%;
+      border-radius: var(--border-radius-main);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-color);
+      margin-bottom: 14px;
+    }
+    .feature-banner img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+    @media (min-width: 600px) { .feature-banner img { height: 200px; } }
+    .feature-text-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(1, 12, 10, 0.9));
+      padding: 15px;
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* --- TAB 4: CAROUSEL STYLES --- */
+    .review-carousel-container {
+      position: relative;
+      width: 100%;
+      border-radius: var(--border-radius-main);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .review-carousel-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+    .carousel-img {
+      width: 100%;
+      flex-shrink: 0;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(2, 18, 15, 0.75);
+      color: white;
+      border: 1px solid var(--border-color);
+      padding: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 50%;
+      z-index: 10;
+      transition: all 0.2s ease;
+    }
+    .carousel-btn:hover { background: var(--accent-green); color: var(--bg-dark); }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; margin-bottom: 20px;}
+    .dot { width: 8px; height: 8px; background: var(--border-color); border-radius: 50%; cursor: pointer; transition: background 0.2s; }
+    .dot.active { background: var(--accent-green); }
+
+    /* --- 6. MENU & PRODUCT CARDS --- */
     .menu-section { display: flex; flex-direction: column; gap: 10px; }
     .section-title { font-family: 'Georgia', serif; font-size: 16px; color: var(--accent-green); border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
     .products-grid { display: flex; flex-direction: column; gap: 10px; }
@@ -237,7 +383,7 @@
     .add-btn:active { transform: scale(0.95); }
     .item-count-text { color: #ef4444; font-size: 12px; font-weight: 800; }
 
-    /* --- 6. SHOPPING CART SUMMARY --- */
+    /* --- 7. SHOPPING CART SUMMARY --- */
     .cart-summary {
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
       padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-top: 6px; margin-bottom: 10px;
@@ -298,49 +444,15 @@
     .platform-link.guru { color: #E53935; border-color: #E53935; }
     .platform-link.guru:hover { background: rgba(229, 57, 53, 0.15); box-shadow: 0 0 8px rgba(229, 57, 53, 0.3); }
 
-    /* SHARED STYLES FOR REVIEW & HOPE BUTTONS */
     .btn-review-action {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      background: #ffffff; color: #1a73e8; padding: 10px 12px; border-radius: var(--border-radius-sm);
-      font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.2s ease;
+      background: #ffffff; color: #1a73e8; padding: 12px; border-radius: var(--border-radius-sm);
+      font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s ease;
       border: 1px solid #1a73e8; cursor: pointer; text-align: center; line-height: 1.2;
     }
     .btn-review-action:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26, 115, 232, 0.3); }
 
-    .btn-hope-action {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff;
-      padding: 10px 12px; border-radius: var(--border-radius-sm); font-size: 11px; font-weight: 700;
-      border: 1px solid var(--accent-green); cursor: pointer; transition: all 0.2s ease;
-      text-align: center; line-height: 1.2;
-    }
-    .btn-hope-action:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(74, 222, 128, 0.3); }
-
-    /* FIXED FLOATING BAR AT BOTTOM (PHONE ONLY) */
-    .floating-phone-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(1, 12, 10, 0.94);
-      border-top: 1px solid var(--border-color);
-      backdrop-filter: blur(12px);
-      padding: 10px 12px;
-      z-index: 90;
-      display: flex;
-      gap: 10px;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
-    }
-    .floating-phone-bar .btn-review-action,
-    .floating-phone-bar .btn-hope-action {
-      flex: 1; /* Equal length on mobile phone screen */
-    }
-
-    @media (min-width: 768px) {
-      .floating-phone-bar { display: none; } /* Hide floating bar on laptop */
-    }
-
-    /* --- 7. CUSTOMIZATION MODAL --- */
+    /* --- 8. MODALS --- */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
       display: none; justify-content: center; align-items: center; padding: 14px; z-index: 100;
@@ -382,100 +494,196 @@
         📍 Vientiane, Laos
       </a>
     </div>
-
-    <p>Select a category to explore our plant-based menu offerings and submit your orders.</p>
   </header>
 
   <div class="content-layout" id="contentLayout">
     
-    <!-- CATEGORY NAVIGATION SIDEBAR -->
-    <aside class="categories-nav" id="categoryNav">
-      <div class="nav-header">Menu Categories</div>
-      <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
-      <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
-      <button class="cat-btn" data-category="texmex" onclick="switchCategory('texmex')">Tex-Mexican</button>
-      <button class="cat-btn" data-category="pasta" onclick="switchCategory('pasta')">Pasta</button>
-      <button class="cat-btn" data-category="bowl" onclick="switchCategory('bowl')">Build Your Bowl</button>
-      <button class="cat-btn" data-category="smoothies" onclick="switchCategory('smoothies')">Smoothies</button>
-      <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
-      <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
+    <!-- MAIN NAVIGATION SIDEBAR (Also acts as Header Tabs on Mobile) -->
+    <aside class="main-sidebar" id="mainSidebar">
+      <div class="main-tabs-wrapper">
+        <button class="main-tab-btn active" data-maintab="home" onclick="switchMainTab('home')">Home</button>
+        
+        <div class="menu-tab-group">
+          <button class="main-tab-btn" data-maintab="menu" onclick="switchMainTab('menu')">Menu</button>
+          
+          <!-- COLLAPSIBLE SUB-MENU (Active only when Menu tab is open) -->
+          <div id="menuCategoriesContainer" class="collapsible-menu">
+            <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
+            <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
+            <button class="cat-btn" data-category="texmex" onclick="switchCategory('texmex')">Tex-Mexican</button>
+            <button class="cat-btn" data-category="pasta" onclick="switchCategory('pasta')">Pasta</button>
+            <button class="cat-btn" data-category="bowl" onclick="switchCategory('bowl')">Build Your Bowl</button>
+            <button class="cat-btn" data-category="smoothies" onclick="switchCategory('smoothies')">Smoothies</button>
+            <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
+            <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
+          </div>
+        </div>
 
-      <!-- LAPTOP ONLY: ACTION BUTTONS AT BOTTOM OF CATEGORY SIDEBAR -->
-      <div class="sidebar-bottom-actions">
-        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">
-          ⭐ Leave us a Review
-        </a>
-        <button class="btn-hope-action" onclick="openHopeModal()">
-          🌱 Words of Hope
-        </button>
+        <button class="main-tab-btn" data-maintab="hope" onclick="switchMainTab('hope')">Words of Hope</button>
+        <button class="main-tab-btn" data-maintab="review" onclick="switchMainTab('review')">Review</button>
       </div>
     </aside>
 
     <main class="main-content" id="mainContent">
       
-      <!-- MENU PRODUCTS SECTION -->
-      <div class="menu-section">
-        <h2 class="section-title" id="categoryTitle">Burgers</h2>
-        <div class="products-grid" id="productsGrid"></div>
-      </div>
-
-      <!-- SHOPPING CART SUMMARY SECTION -->
-      <div class="cart-summary" id="cartSection">
-        <div class="cart-title">
-          <span>Your Order Basket</span>
-          <span id="cartCount">(0 items)</span>
+      <!-- ================== TAB 1: HOME ================== -->
+      <div id="tab-home" class="tab-pane active">
+        <div class="home-welcome">
+          <h2>Welcome to Oon Jai</h2>
+          <p>Nourishing the body and the community through wholesome plant-based meals.</p>
         </div>
         
-        <div class="cart-items" id="cartItems">
-          <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
+        <div class="feature-cards">
+          <div class="feature-card" onclick="switchMainTab('menu')">
+            <h3>🍽️ Explore Menu</h3>
+            <p>Browse our vibrant plant-based dishes, customize your bowls, and submit your order easily.</p>
+          </div>
+          <div class="feature-card" onclick="switchMainTab('hope')">
+            <h3>🌱 Words of Hope</h3>
+            <p>Share a kind, encouraging message with a stranger and help us spread community joy.</p>
+          </div>
+          <div class="feature-card" onclick="switchMainTab('review')">
+            <h3>⭐ Leave a Review</h3>
+            <p>Let us know how we did! Check out our highlights and review us on Google.</p>
+          </div>
         </div>
 
-        <div class="order-options" id="orderOptionsBox">
-          <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
-          <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
+        <div class="about-us-section">
+          <h3>About Us</h3>
+          <p>Oon Jai Marketplace is a mission-driven vegetarian and vegan restaurant located in Vientiane, Laos. More than just a place to enjoy wholesome food, Oon Jai exists to promote healthy living, compassionate service, and meaningful relationships through plant-based meals and community engagement.</p>
+          <p>Every meal served and every person welcomed represents an opportunity to share kindness, care, and connection. Through food and hospitality, Oon Jai seeks to demonstrate that a simple meal can become a powerful expression of love, compassion, and service—nourishing not only the body but also the community.</p>
+          <p>For more information about Oon Jai and our mission, please visit us at <a href="http://www.oonjai.org" target="_blank" style="color:var(--accent-green)">www.oonjai.org</a>.</p>
         </div>
-        <div class="order-type-error-msg" id="orderTypeErrorMsg">
-          ⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.
+      </div>
+
+      <!-- ================== TAB 2: MENU ================== -->
+      <div id="tab-menu" class="tab-pane">
+        <!-- MENU PRODUCTS SECTION -->
+        <div class="menu-section">
+          <h2 class="section-title" id="categoryTitle">Burgers</h2>
+          <div class="products-grid" id="productsGrid"></div>
         </div>
 
-        <div class="payment-note">
-          <strong>Note:</strong> A QR code will be sent to you for payment before your order is processed. This helps us verify and prevent fake orders. Thank you!
-        </div>
-
-        <div class="cart-total">
-          <div class="total-row">
-            <span>Total:</span>
-            <span id="totalPrice" class="price" style="font-size: 16px;">0 Kip</span>
+        <!-- SHOPPING CART SUMMARY SECTION -->
+        <div class="cart-summary" id="cartSection">
+          <div class="cart-title">
+            <span>Your Order Basket</span>
+            <span id="cartCount">(0 items)</span>
           </div>
           
-          <div class="action-buttons">
-            <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
-            <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
+          <div class="cart-items" id="cartItems">
+            <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
           </div>
 
-          <div class="delivery-section">
-            <div class="delivery-title">Or Order / Find Us On</div>
-            <div class="delivery-grid">
-              <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" rel="noopener noreferrer" class="platform-link foodpanda">Food Panda</a>
-              <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" rel="noopener noreferrer" class="platform-link egets">E-GetS</a>
-              <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" rel="noopener noreferrer" class="platform-link chompa">ChompA</a>
-              <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" rel="noopener noreferrer" class="platform-link guru">Restaurant Guru</a>
+          <div class="order-options" id="orderOptionsBox">
+            <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
+            <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
+          </div>
+          <div class="order-type-error-msg" id="orderTypeErrorMsg">
+            ⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.
+          </div>
+
+          <div class="payment-note">
+            <strong>Note:</strong> A QR code will be sent to you for payment before your order is processed. This helps us verify and prevent fake orders. Thank you!
+          </div>
+
+          <div class="cart-total">
+            <div class="total-row">
+              <span>Total:</span>
+              <span id="totalPrice" class="price" style="font-size: 16px;">0 Kip</span>
+            </div>
+            
+            <div class="action-buttons">
+              <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
+              <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
+            </div>
+
+            <div class="delivery-section">
+              <div class="delivery-title">Or Order / Find Us On</div>
+              <div class="delivery-grid">
+                <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" rel="noopener noreferrer" class="platform-link foodpanda">Food Panda</a>
+                <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" rel="noopener noreferrer" class="platform-link egets">E-GetS</a>
+                <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" rel="noopener noreferrer" class="platform-link chompa">ChompA</a>
+                <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" rel="noopener noreferrer" class="platform-link guru">Restaurant Guru</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-    </main>
-  </div>
+      <!-- ================== TAB 3: WORDS OF HOPE ================== -->
+      <div id="tab-hope" class="tab-pane">
+        
+        <div class="feature-banner">
+          <img src="https://ibb.co/TMVHSpvR" onerror="this.src='https://placehold.co/800x300/083c33/4ade80?text=Community+Project'" alt="Words of Hope Feature" />
+          <div class="feature-text-overlay">Spread Kindness Across Our Community</div>
+        </div>
 
-  <!-- FIXED FLOATING BAR AT BOTTOM (PHONE ONLY: REVIEW + WORDS OF HOPE SIDE BY SIDE) -->
-  <div class="floating-phone-bar">
-    <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">
-      ⭐ Leave Review
-    </a>
-    <button class="btn-hope-action" onclick="openHopeModal()">
-      🌱 Words of Hope
-    </button>
+        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 20px;">
+          <p style="font-size: 13px; color: var(--text-subhead); margin-bottom: 20px; line-height: 1.5; text-align: center;">
+            Share an encouraging message with a stranger. We print these out and pass them along to spread kindness across our community!
+          </p>
+
+          <div style="width: 100%; border-radius: 12px; background: rgba(2, 18, 15, 0.4); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; padding: 16px; color: #ffffff;">
+            <h3 style="margin-top: 0; margin-bottom: 4px; font-size: 18px; font-weight: 400; color: #ffffff; text-align: center; font-family: 'Georgia', serif;">
+              <span style="color: #4ade80; font-size: 11px; vertical-align: middle;">✦</span>
+              Message for a Stranger
+              <span style="color: #4ade80; font-size: 11px; vertical-align: middle;">✦</span>
+            </h3>
+            <p style="margin: 0 0 14px 0; font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.3;">
+              Leave an encouraging thought or quote to brighten someone's day.
+            </p>
+
+            <form id="customForm" autocomplete="off">
+              <input type="hidden" id="device_token" name="device_token" />
+
+              <div style="margin-bottom: 12px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                  <label style="font-weight: 600; color: #cbd5e1; font-size: 10px; text-transform: uppercase;">Your Message</label>
+                  <span id="wordCounter" style="font-size: 10px; color: #64748b;">0 / 20-30 words</span>
+                </div>
+                <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required style="width: 100%; padding: 8px 10px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 6px; font-size: 12px; color: #f8fafc; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
+              </div>
+
+              <div style="margin-bottom: 14px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 4px; color: #cbd5e1; font-size: 10px; text-transform: uppercase;">Name or Initials</label>
+                <input type="text" id="name" name="sender_name" placeholder="e.g., Sarah V., or Anonymous" style="width: 100%; padding: 8px 10px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 6px; font-size: 12px; color: #f8fafc; box-sizing: border-box; outline: none;" />
+              </div>
+
+              <div style="display: flex; gap: 8px;">
+                <button type="submit" id="submitBtn" style="flex: 2; padding: 10px 12px; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: none; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">Submit Message</button>
+                <button type="button" onclick="clearForm()" style="flex: 1; padding: 10px 12px; background-color: transparent; color: #94a3b8; border: 1px solid #1e4d40; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">Clear</button>
+              </div>
+            </form>
+            <div id="statusMsg" style="margin-top: 8px; font-size: 11px; font-weight: 500; text-align: center; min-height: 16px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================== TAB 4: REVIEW ================== -->
+      <div id="tab-review" class="tab-pane">
+        
+        <div style="text-align: center; padding: 10px 0;">
+          <h2 style="font-family: 'Georgia', serif; color: var(--accent-green); margin-bottom: 8px; font-weight: 400;">Share Your Experience</h2>
+          <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.5;">Check out our menu highlights below, and if you loved your meal, please take a moment to leave us a review!</p>
+        </div>
+
+        <!-- 10-IMAGE CAROUSEL -->
+        <div class="review-carousel-container">
+          <button class="carousel-btn prev" onclick="moveReviewCarousel(-1)">&#10094;</button>
+          <div class="review-carousel-track" id="reviewCarouselTrack">
+            <!-- Populated via JS -->
+          </div>
+          <button class="carousel-btn next" onclick="moveReviewCarousel(1)">&#10095;</button>
+        </div>
+        <div class="carousel-dots" id="reviewCarouselDots"></div>
+
+        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action" style="display:block; margin: 0 auto; max-width: 300px;">
+          ⭐ Leave us a Review on Google
+        </a>
+      </div>
+
+    </main>
   </div>
 
   <!-- CUSTOMIZATION MODAL -->
@@ -521,57 +729,6 @@
       </div>
 
       <button class="btn-wa" style="width:100%; margin-top: 10px; background: #22c55e;" onclick="addCustomItemToCart()">Add to Order</button>
-    </div>
-  </div>
-
-  <!-- WORDS OF HOPE FLOATING MODAL -->
-  <div class="modal-overlay" id="hopeModal">
-    <div class="modal-box" style="padding: 20px 16px;">
-      <div class="modal-header" style="margin-bottom: 6px;">
-        <h3 class="modal-title" style="color: #4ade80;">Community Project</h3>
-        <button class="close-modal" onclick="closeHopeModal()">✕</button>
-      </div>
-      <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.4;">
-        Share an encouraging message with a stranger. We print these out and pass them along to spread kindness across our community!
-      </p>
-
-      <!-- EMBEDDED WORDS OF HOPE FORM -->
-      <div style="font-family: 'Georgia', 'Times New Roman', serif; width: 100%; border-radius: 12px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; padding: 16px; color: #ffffff;">
-        <div>
-          <h3 style="margin-top: 0; margin-bottom: 4px; font-size: 18px; font-weight: 400; color: #ffffff; text-align: center; font-family: 'Georgia', serif;">
-            <span style="color: #4ade80; font-size: 11px; vertical-align: middle;">✦</span>
-            Message for a Stranger
-            <span style="color: #4ade80; font-size: 11px; vertical-align: middle;">✦</span>
-          </h3>
-          <p style="margin: 0 0 14px 0; font-size: 11px; color: #94a3b8; text-align: center; font-family: 'Segoe UI', sans-serif; line-height: 1.3;">
-            Leave an encouraging thought or quote to brighten someone's day.
-          </p>
-
-          <form id="customForm" autocomplete="off" style="font-family: 'Segoe UI', sans-serif;">
-            <input type="hidden" id="device_token" name="device_token" />
-
-            <div style="margin-bottom: 12px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                <label style="font-weight: 600; color: #cbd5e1; font-size: 10px; text-transform: uppercase;">Your Message</label>
-                <span id="wordCounter" style="font-size: 10px; color: #64748b;">0 / 20-30 words</span>
-              </div>
-              <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required style="width: 100%; padding: 8px 10px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 6px; font-size: 12px; color: #f8fafc; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
-            </div>
-
-            <div style="margin-bottom: 14px;">
-              <label style="display: block; font-weight: 600; margin-bottom: 4px; color: #cbd5e1; font-size: 10px; text-transform: uppercase;">Name or Initials</label>
-              <input type="text" id="name" name="sender_name" placeholder="e.g., Sarah V., or Anonymous" style="width: 100%; padding: 8px 10px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 6px; font-size: 12px; color: #f8fafc; box-sizing: border-box; outline: none;" />
-            </div>
-
-            <div style="display: flex; gap: 8px;">
-              <button type="submit" id="submitBtn" style="flex: 2; padding: 9px 12px; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: none; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">Submit Message</button>
-              <button type="button" onclick="clearForm()" style="flex: 1; padding: 9px 12px; background-color: transparent; color: #94a3b8; border: 1px solid #1e4d40; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">Clear</button>
-            </div>
-          </form>
-        </div>
-
-        <div id="statusMsg" style="margin-top: 8px; font-size: 11px; font-weight: 500; text-align: center; min-height: 16px; font-family: 'Segoe UI', sans-serif;"></div>
-      </div>
     </div>
   </div>
 
@@ -678,10 +835,65 @@
     ]
   };
 
-  // --- 4. APP STATE ---
+  // --- 4. APP STATE & TABBING LOGIC ---
   let cart = [];
   let currentActiveCustomItem = null;
   let currentCategory = 'burgers';
+
+  function switchMainTab(tabId) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    // Remove active state from main buttons
+    document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
+
+    // Show selected tab & highlight button
+    document.getElementById('tab-' + tabId).classList.add('active');
+    document.querySelectorAll(`[data-maintab="${tabId}"]`).forEach(btn => btn.classList.add('active'));
+
+    // Toggle menu categories sub-menu
+    const categoriesGrid = document.getElementById('menuCategoriesContainer');
+    if (tabId === 'menu') {
+      categoriesGrid.classList.add('active');
+      renderProductsGrid(); // Refresh grid view
+    } else {
+      categoriesGrid.classList.remove('active');
+    }
+
+    // Scroll to top
+    const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
+    if (scrollTarget) scrollTarget.scrollTop = 0;
+  }
+
+  // --- REVIEW CAROUSEL LOGIC ---
+  let currentReviewSlide = 0;
+  function initReviewCarousel() {
+    const track = document.getElementById('reviewCarouselTrack');
+    const dots = document.getElementById('reviewCarouselDots');
+    let html = '';
+    let dotsHtml = '';
+    
+    // Using the exact placeholder provided for 10 slides
+    for(let i=0; i<10; i++) {
+      html += `<img src="https://ibb.co/TMVHSpvR" class="carousel-img" alt="Review Image ${i+1}" onerror="this.src='https://placehold.co/600x400/041f1a/4ade80?text=Menu+Highlight+${i+1}'"/>`;
+      dotsHtml += `<span class="dot" onclick="setReviewCarousel(${i})"></span>`;
+    }
+    track.innerHTML = html;
+    dots.innerHTML = dotsHtml;
+    setReviewCarousel(0);
+  }
+
+  function moveReviewCarousel(dir) { setReviewCarousel(currentReviewSlide + dir); }
+  function setReviewCarousel(index) {
+    if(index < 0) index = 9;
+    if(index > 9) index = 0;
+    currentReviewSlide = index;
+    const track = document.getElementById('reviewCarouselTrack');
+    track.style.transform = `translateX(-${index * 100}%)`;
+    
+    document.querySelectorAll('.carousel-dots .dot').forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+    });
+  }
 
   // --- THEMED NOTIFICATION HELPERS ---
   function customAlert(message, title = 'Notification') {
@@ -708,7 +920,6 @@
         closeNotification();
         resolve(false);
       };
-      
       document.getElementById('btnNotifProceed').onclick = () => {
         closeNotification();
         resolve(true);
@@ -741,6 +952,12 @@
       refreshers: 'Refreshers', wellness: 'Wellness Drinks'
     };
     document.getElementById('categoryTitle').innerText = titleMap[catKey];
+    
+    // Automatically switch to Menu tab if clicking category from desktop view
+    if(!document.getElementById('tab-menu').classList.contains('active')){
+      switchMainTab('menu');
+    }
+
     renderProductsGrid();
     
     const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
@@ -1036,15 +1253,7 @@
     window.open(url, '_blank');
   }
 
-  // --- 9. WORDS OF HOPE MODAL CONTROLS & FORM SCRIPT ---
-  function openHopeModal() {
-    document.getElementById('hopeModal').classList.add('active');
-  }
-
-  function closeHopeModal() {
-    document.getElementById('hopeModal').classList.remove('active');
-  }
-
+  // --- 9. WORDS OF HOPE INLINE FORM SCRIPT ---
   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz447Z4KgONw60pVrGdHxFCWwferoy8koE2uza6BGILlDPiiY-UOtq79I8xJwQGNT2b/exec";
 
   let deviceToken = localStorage.getItem("oonjai_user_id");
@@ -1117,9 +1326,6 @@
       status.innerText = "✓ Message sent successfully!";
       clearForm();
       submitBtn.disabled = false;
-      setTimeout(() => {
-        closeHopeModal();
-      }, 1500);
     })
     .catch(error => {
       status.style.color = "#f87171";
@@ -1128,6 +1334,8 @@
     });
   });
 
+  // --- INITIALIZATION ---
+  initReviewCarousel();
   renderProductsGrid();
 </script>
 </body>
