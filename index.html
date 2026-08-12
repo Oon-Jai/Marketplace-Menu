@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Oonjai Marketplace</title>
+  <title>Oon Jai Marketplace</title>
   
-  <!-- ========================================== -->
-  <!--                CSS STYLESHEET              -->
-  <!-- ========================================== -->
   <style>
     /* --- 1. THEME COLORS & VARIABLES --- */
     :root {
       --bg-dark: #010c0a;
       --bg-gradient: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%);
-      --card-bg: rgba(2, 18, 15, 0.85);
+      --card-bg: #041f1a;
       --border-color: #1e4d40;
       --accent-green: #4ade80;
       --wa-color: #25D366;
@@ -36,478 +33,394 @@
     html, body {
       width: 100%;
       height: 100%;
-      overflow: hidden;
       background: var(--bg-dark);
       color: var(--text-bright);
+      overflow-x: hidden;
     }
 
-    /* --- 3. MAIN APP LAYOUT --- */
-    .app-container {
-      width: 100%;
-      height: 100%;
-      background: var(--bg-gradient);
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 0 auto;
-      max-width: 1200px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    header {
-      flex-shrink: 0;
-      text-align: center;
-      padding: 2px 0 8px;
+    /* --- 3. TOP NAVIGATION (MAIN CATEGORIES) --- */
+    .top-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: rgba(1, 12, 10, 0.95);
       border-bottom: 1px solid var(--border-color);
-    }
-    header h1 { font-family: 'Georgia', serif; font-size: 18px; font-weight: 400; letter-spacing: 0.5px; }
-    header h1 span { color: var(--accent-green); font-size: 12px; vertical-align: middle; }
-    
-    .header-info-bar {
+      backdrop-filter: blur(10px);
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 4px;
-      margin-top: 4px;
-      font-size: 11px;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
     }
 
-    .location-link {
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-small-logo {
+      height: 36px;
+      width: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--accent-green);
+    }
+    .nav-brand {
+      font-family: 'Georgia', serif;
+      font-size: 16px;
       color: var(--accent-green);
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: opacity 0.2s ease;
+      font-weight: bold;
     }
-    .location-link:hover { text-decoration: underline; opacity: 0.85; }
-    .business-hours { color: var(--text-muted); font-size: 10px; text-align: center; line-height: 1.3; }
 
-    .content-layout {
-      flex: 1;
+    /* Desktop Links */
+    .nav-links {
+      display: none;
+      gap: 24px;
+    }
+    .nav-tab {
+      background: none;
+      border: none;
+      color: var(--text-subhead);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 8px 0;
+      position: relative;
+      transition: color 0.2s;
+    }
+    .nav-tab:hover, .nav-tab.active {
+      color: var(--accent-green);
+    }
+    .nav-tab.active::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--accent-green); border-radius: 2px;
+    }
+
+    /* Mobile Hamburger */
+    .hamburger {
+      display: block;
+      background: none;
+      border: none;
+      color: var(--text-bright);
+      font-size: 24px;
+      cursor: pointer;
+    }
+    
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 60px; left: 0; right: 0;
+      background: rgba(4, 31, 26, 0.98);
+      border-bottom: 1px solid var(--border-color);
+      flex-direction: column;
+      padding: 10px 20px;
+      z-index: 999;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu .nav-tab {
+      text-align: left; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 16px;
+    }
+    .mobile-menu .nav-tab.active::after { display: none; }
+    
+    @media (min-width: 768px) {
+      .hamburger, .mobile-menu { display: none !important; }
+      .nav-links { display: flex; }
+    }
+
+    /* --- 4. HERO SECTION (CHOMP-A STYLE) --- */
+    .app-container {
+      padding-top: 60px; /* Offset for fixed nav */
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: calc(100vh - 60px);
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      min-height: 0;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--border-color) transparent;
-      padding-bottom: 20px;
-    }
-    .content-layout::-webkit-scrollbar { width: 5px; }
-    .content-layout::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
-
-    @media (min-width: 768px) {
-      .app-container { padding: 18px; gap: 14px; }
-      header h1 { font-size: 24px; }
-      .header-info-bar { flex-direction: row; gap: 16px; font-size: 12px; }
-      .business-hours { font-size: 11px; }
-      .content-layout {
-        display: grid;
-        grid-template-columns: 220px 1fr;
-        gap: 18px;
-        align-items: stretch;
-        overflow-y: hidden;
-        padding-bottom: 0;
-      }
     }
 
-    /* --- 4. NAVIGATION SIDEBAR / TABS --- */
-    .main-sidebar {
+    .hero-section {
+      position: relative;
+      margin-bottom: 70px;
+    }
+    .hero-banner {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    @media (min-width: 768px) { .hero-banner { height: 260px; } }
+
+    .hero-card {
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92%;
+      max-width: 800px;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: var(--border-radius-main);
-      padding: 6px;
-      flex-shrink: 0;
-      backdrop-filter: blur(10px);
+      padding: 16px 20px 16px 120px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      transition: max-height 0.3s ease;
+      overflow: hidden;
     }
     
-    /* MOBILE NAVIGATION */
-    @media (max-width: 767px) {
-      .main-tabs-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-      }
-      .menu-tab-group { display: contents; }
-      .main-tab-btn {
-        flex: 1 1 calc(25% - 5px);
-        min-width: 0;
-      }
-      .collapsible-menu {
-        flex: 1 1 100%;
-        order: 10;
-        display: none; 
-        grid-template-columns: repeat(4, 1fr);
-        gap: 5px;
-        margin-top: 5px;
-        padding-top: 5px;
-        border-top: 1px dashed var(--border-color);
-      }
-      .collapsible-menu.active { display: grid; }
+    .hero-logo-wrapper {
+      position: absolute;
+      top: -30px;
+      left: 20px;
+      width: 85px;
+      height: 85px;
+      border-radius: 50%;
+      border: 4px solid var(--card-bg);
+      overflow: hidden;
+      background: white;
+      z-index: 2;
     }
+    .hero-big-logo { width: 100%; height: 100%; object-fit: cover; }
 
-    /* DESKTOP NAVIGATION */
-    @media (min-width: 768px) {
-      .main-sidebar {
-        padding: 10px;
-        height: 100%;
-        overflow-y: auto;
-      }
-      .main-tabs-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .menu-tab-group {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-      }
-      .main-tab-btn {
-        padding: 12px 14px;
-        font-size: 14px;
-        text-align: left;
-      }
-      .collapsible-menu {
-        display: none;
-        flex-direction: column;
-        gap: 6px;
-        padding-left: 14px;
-        border-left: 2px solid var(--border-color);
-        margin-left: 10px;
-        margin-top: 4px;
-        margin-bottom: 4px;
-      }
-      .collapsible-menu.active { display: flex; }
-      .cat-btn { text-align: left; justify-content: flex-start; padding: 10px 12px; font-size: 13px; }
-    }
-
-    /* COMMON NAV BUTTON STYLES */
-    .main-tab-btn {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-bright);
-      padding: 8px 4px;
-      border-radius: var(--border-radius-sm);
+    .hero-info h1 { font-family: 'Georgia', serif; font-size: 18px; margin-bottom: 4px; }
+    .hero-info p { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+    
+    .hero-details {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255,255,255,0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
       font-size: 11px;
-      font-weight: 700;
+      color: var(--text-subhead);
+    }
+    .hero-details div { display: flex; align-items: center; gap: 4px; }
+
+    .collapse-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
       cursor: pointer;
-      text-align: center;
-      transition: all 0.2s ease;
+      font-size: 12px;
     }
-    .main-tab-btn:hover, .main-tab-btn.active {
-      background: rgba(74, 222, 128, 0.15);
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-      box-shadow: 0 0 10px rgba(74, 222, 128, 0.1);
+    
+    .hero-card.collapsed .hero-details { display: none; }
+
+    @media (max-width: 600px) {
+      .hero-card { padding: 12px 12px 12px 95px; bottom: -40px; }
+      .hero-logo-wrapper { width: 70px; height: 70px; top: -25px; left: 12px; }
+      .hero-info h1 { font-size: 16px; }
     }
+
+    /* --- 5. MAIN CONTENT TABS --- */
+    .content-layout {
+      flex: 1;
+      padding: 0 15px 30px;
+    }
+
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-pane.active { display: flex; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HOME TAB */
+    .feature-cards { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    @media (min-width: 600px) { .feature-cards { grid-template-columns: repeat(3, 1fr); } }
+    .feature-card { background: rgba(2, 18, 15, 0.6); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
+    .feature-card:hover { border-color: var(--accent-green); }
+    .feature-card h3 { font-size: 14px; margin-bottom: 6px; }
+    .feature-card p { font-size: 12px; color: var(--text-muted); }
+    .about-us-section { background: rgba(2, 18, 15, 0.6); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 20px; }
+    .about-us-section h3 { color: var(--accent-green); font-family: 'Georgia', serif; font-size: 18px; margin-bottom: 12px; }
+    .about-us-section p { font-size: 13px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 12px; }
+
+    /* MENU TAB (Sub-Categories vs Content) */
+    .menu-layout { display: flex; flex-direction: column; gap: 16px; }
+    
+    .menu-sidebar {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-main);
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    /* Sub-category Pill Style (Contrast from main nav) */
     .cat-btn {
-      background: transparent;
+      background: rgba(2, 18, 15, 0.8);
       border: 1px solid var(--border-color);
       color: var(--text-subhead);
-      padding: 6px 2px;
+      padding: 10px 4px;
       border-radius: var(--border-radius-sm);
-      font-size: 10px; 
-      font-weight: 600; 
-      cursor: pointer; 
-      transition: all 0.2s ease;
-      display: flex; align-items: center; justify-content: center;
-      min-height: 34px; line-height: 1.1;
+      font-size: 11px; font-weight: 600; text-align: center;
+      cursor: pointer; transition: all 0.2s ease;
     }
     .cat-btn:hover, .cat-btn.active {
       background: rgba(30, 77, 64, 0.5);
       border-color: var(--accent-green); color: var(--accent-green);
     }
 
-    /* --- 5. TABS & MAIN CONTENT --- */
-    .main-content {
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
-      min-height: 0; 
-    }
+    .menu-main-area { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+
     @media (min-width: 768px) {
-      .main-content { overflow-y: auto; padding-right: 4px; padding-bottom: 20px; }
-      .main-content::-webkit-scrollbar { width: 6px; }
-      .main-content::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
+      .menu-layout { flex-direction: row; align-items: flex-start; }
+      .menu-sidebar {
+        width: 240px;
+        position: sticky;
+        top: 80px; /* Below Top Nav */
+        display: flex;
+        flex-direction: column;
+      }
+      .cat-btn { text-align: left; padding: 12px 14px; font-size: 13px; }
     }
 
-    .tab-pane {
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-      animation: fadeIn 0.3s ease;
-    }
-    .tab-pane.active {
-      display: flex;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- TAB 1: HOME STYLES --- */
-    .home-welcome { text-align: center; padding: 10px 0; }
-    .home-welcome h2 { font-family: 'Georgia', serif; color: var(--accent-green); margin-bottom: 8px; font-weight: 400;}
-    .home-welcome p { color: var(--text-subhead); font-size: 13px; line-height: 1.5;}
-    
-    .feature-cards {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    @media (min-width: 600px) { .feature-cards { grid-template-columns: repeat(3, 1fr); } }
-    
-    .feature-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius-main);
-      padding: 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .feature-card:hover { border-color: var(--accent-green); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74,222,128,0.1); }
-    .feature-card h3 { font-size: 14px; color: white; margin-bottom: 6px; }
-    .feature-card p { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
-
-    .about-us-section {
-      background: rgba(2, 18, 15, 0.6);
-      border: 1px solid var(--border-color);
-      border-radius: var(--border-radius-main);
-      padding: 20px;
-      margin-top: 10px;
-    }
-    .about-us-section h3 { color: var(--accent-green); font-family: 'Georgia', serif; font-size: 18px; margin-bottom: 12px; font-weight: 400;}
-    .about-us-section p { font-size: 13px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 12px; }
-    .about-us-section p:last-child { margin-bottom: 0; }
-
-    /* FEATURE BANNERS (Words of Hope & Review) */
-    .feature-banner {
-      width: 100%;
-      border-radius: var(--border-radius-main);
-      overflow: hidden;
-      position: relative;
-      border: 1px solid var(--border-color);
-      margin-bottom: 14px;
-    }
-    .feature-banner img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-      display: block;
-    }
-    @media (min-width: 600px) { .feature-banner img { height: 200px; } }
-    .feature-text-overlay {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(1, 12, 10, 0.9));
-      padding: 15px;
-      color: white;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    /* --- TAB 4: CAROUSEL STYLES --- */
-    .review-carousel-container {
-      position: relative;
-      width: 100%;
-      border-radius: var(--border-radius-main);
-      overflow: hidden;
-      border: 1px solid var(--border-color);
-    }
-    .review-carousel-track {
-      display: flex;
-      transition: transform 0.4s ease-in-out;
-    }
-    .carousel-img {
-      width: 100%;
-      flex-shrink: 0;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-    }
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(2, 18, 15, 0.75);
-      color: white;
-      border: 1px solid var(--border-color);
-      padding: 12px;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 50%;
-      z-index: 10;
-      transition: all 0.2s ease;
-    }
-    .carousel-btn:hover { background: var(--accent-green); color: var(--bg-dark); }
-    .carousel-btn.prev { left: 10px; }
-    .carousel-btn.next { right: 10px; }
-    .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 10px; margin-bottom: 20px;}
-    .dot { width: 8px; height: 8px; background: var(--border-color); border-radius: 50%; cursor: pointer; transition: background 0.2s; }
-    .dot.active { background: var(--accent-green); }
-
-    /* --- 6. MENU & PRODUCT CARDS --- */
-    .menu-section { display: flex; flex-direction: column; gap: 10px; }
-    .section-title { font-family: 'Georgia', serif; font-size: 16px; color: var(--accent-green); border-bottom: 1px solid var(--border-color); padding-bottom: 4px; }
+    /* MENU ITEMS & CARDS */
+    .section-title { font-family: 'Georgia', serif; font-size: 18px; color: var(--accent-green); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
     .products-grid { display: flex; flex-direction: column; gap: 10px; }
-
-    .product-card {
-      background: var(--card-bg); border: 1px solid var(--border-color);
-      border-radius: var(--border-radius-main); padding: 12px 14px;
-      display: flex; flex-direction: column; gap: 10px; transition: border-color 0.2s ease;
-    }
-    .product-card:hover { border-color: rgba(74, 222, 128, 0.4); }
+    .product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 14px; display: flex; flex-direction: column; gap: 10px; }
     @media (min-width: 600px) { .product-card { flex-direction: row; justify-content: space-between; align-items: center; } }
-
     .product-info { flex: 1; }
-    .product-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-    .product-desc { font-size: 12px; color: var(--text-muted); line-height: 1.3; }
-
+    .product-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .product-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
     .product-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    @media (min-width: 600px) { .product-action { justify-content: flex-end; min-width: 180px; } }
+    .price { font-size: 14px; font-weight: 700; color: var(--accent-green); }
+    .add-btn { background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: white; border: none; padding: 8px 16px; border-radius: var(--border-radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; }
 
-    .price { font-size: 13px; font-weight: 700; color: var(--accent-green); white-space: nowrap; }
-    .btn-wrapper { display: flex; align-items: center; gap: 8px; }
-    
-    .add-btn {
-      background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: white;
-      border: none; padding: 7px 14px; border-radius: var(--border-radius-sm);
-      font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.15s ease;
-    }
-    .add-btn:active { transform: scale(0.95); }
-    .item-count-text { color: #ef4444; font-size: 12px; font-weight: 800; }
-
-    /* --- 7. SHOPPING CART SUMMARY --- */
-    .cart-summary {
-      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
-      padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-top: 6px; margin-bottom: 10px;
-    }
+    /* CART SUMMARY */
+    .cart-summary { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 16px; display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
     .cart-title { font-family: 'Georgia', serif; font-size: 15px; color: var(--accent-green); display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
     .cart-items { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 6px; }
     .cart-item-name { font-size: 12px; font-weight: 600; }
     .cart-item-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
-    .cart-item-price { font-size: 12px; font-weight: 600; color: var(--accent-green); }
     .remove-btn { color: #f87171; background: none; border: none; font-size: 11px; cursor: pointer; margin-left: 8px; }
-
-    .order-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 4px; border-radius: var(--border-radius-sm); transition: border 0.2s ease; }
-    .order-options.error-highlight { border: 1px solid #ef4444; background: rgba(239, 68, 68, 0.1); }
-    .order-options label {
-      font-size: 12px; background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color);
-      padding: 8px; border-radius: var(--border-radius-sm); text-align: center;
-      display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; transition: all 0.2s ease;
-    }
-    .order-options input[type="radio"] { accent-color: var(--accent-green); }
+    .order-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .order-options label { font-size: 12px; background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color); padding: 10px; border-radius: var(--border-radius-sm); text-align: center; cursor: pointer; }
     .order-options label:has(input:checked) { border-color: var(--accent-green); background: rgba(30, 77, 64, 0.5); color: var(--accent-green); font-weight: 700; }
-    .order-type-error-msg { display: none; color: #f87171; font-size: 11px; font-weight: 700; text-align: center; background: rgba(239, 68, 68, 0.15); padding: 6px; border-radius: var(--border-radius-sm); border: 1px solid #ef4444; }
+    .cart-total { border-top: 1px solid var(--border-color); padding-top: 12px; }
+    .btn-wa, .btn-msgr { flex: 1; padding: 12px; color: white; border: none; border-radius: var(--border-radius-sm); font-weight: 600; font-size: 12px; cursor: pointer; width: 100%; margin-bottom: 8px;}
+    .btn-wa { background: var(--wa-color); } .btn-msgr { background: var(--msgr-color); }
+    @media (min-width: 600px) { .action-buttons { display: flex; gap: 10px; } .btn-wa, .btn-msgr { margin-bottom: 0; } }
 
-    .payment-note { font-size: 11px; color: #fbbf24; background: rgba(251, 191, 36, 0.1); padding: 8px 10px; border-radius: var(--border-radius-sm); border-left: 3px solid #fbbf24; line-height: 1.3; }
-    .cart-total { border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; flex-direction: column; gap: 12px; }
-    .total-row { display: flex; justify-content: space-between; align-items: center; font-size: 15px; font-weight: 700; }
-    .action-buttons { display: flex; flex-direction: column; gap: 8px; }
-    @media (min-width: 600px) { .action-buttons { flex-direction: row; } }
-    
-    .btn-wa, .btn-msgr {
-      flex: 1; padding: 10px; color: white; border: none; border-radius: var(--border-radius-sm);
-      font-weight: 600; font-size: 12px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 6px; transition: opacity 0.2s ease;
-    }
-    .btn-wa { background: var(--wa-color); }
-    .btn-msgr { background: var(--msgr-color); }
-    .btn-wa:hover, .btn-msgr:hover { opacity: 0.9; }
+    /* CAROUSEL */
+    .carousel-container { position: relative; width: 100%; border-radius: var(--border-radius-main); overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 15px;}
+    .carousel-track { display: flex; transition: transform 0.4s ease-in-out; }
+    .carousel-img { width: 100%; flex-shrink: 0; aspect-ratio: 16/9; object-fit: cover; }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(2, 18, 15, 0.75); color: white; border: 1px solid var(--border-color); padding: 12px; cursor: pointer; border-radius: 50%; z-index: 10; }
+    .carousel-btn:hover { background: var(--accent-green); color: var(--bg-dark); }
+    .carousel-btn.prev { left: 10px; } .carousel-btn.next { right: 10px; }
+    .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 10px;}
+    .dot { width: 8px; height: 8px; background: var(--border-color); border-radius: 50%; cursor: pointer; }
+    .dot.active { background: var(--accent-green); }
 
-    .delivery-section { border-top: 1px dashed var(--border-color); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
-    .delivery-title { font-size: 11px; font-weight: 700; color: var(--text-subhead); text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
-    .delivery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    @media (min-width: 600px) { .delivery-grid { grid-template-columns: repeat(4, 1fr); } }
-    
-    .platform-link {
-      background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color);
-      padding: 8px 6px; border-radius: var(--border-radius-sm); font-size: 11px; font-weight: 700; text-decoration: none;
-      text-align: center; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
-    }
-    
-    .platform-link.foodpanda { color: #D70F64; border-color: #D70F64; }
-    .platform-link.foodpanda:hover { background: rgba(215, 15, 100, 0.15); box-shadow: 0 0 8px rgba(215, 15, 100, 0.3); }
+    /* HOPE FORM */
+    .hope-form-wrapper { background: rgba(2, 18, 15, 0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
 
-    .platform-link.egets { color: #FF8200; border-color: #FF8200; }
-    .platform-link.egets:hover { background: rgba(255, 130, 0, 0.15); box-shadow: 0 0 8px rgba(255, 130, 0, 0.3); }
-
-    .platform-link.chompa { color: #00A651; border-color: #00A651; }
-    .platform-link.chompa:hover { background: rgba(0, 166, 81, 0.15); box-shadow: 0 0 8px rgba(0, 166, 81, 0.3); }
-
-    .platform-link.guru { color: #E53935; border-color: #E53935; }
-    .platform-link.guru:hover { background: rgba(229, 57, 53, 0.15); box-shadow: 0 0 8px rgba(229, 57, 53, 0.3); }
-
-    .btn-review-action {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      background: #ffffff; color: #1a73e8; padding: 12px; border-radius: var(--border-radius-sm);
-      font-size: 13px; font-weight: 700; text-decoration: none; transition: all 0.2s ease;
-      border: 1px solid #1a73e8; cursor: pointer; text-align: center; line-height: 1.2;
-    }
-    .btn-review-action:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(26, 115, 232, 0.3); }
-
-    /* --- 8. MODALS --- */
-    .modal-overlay {
-      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px);
-      display: none; justify-content: center; align-items: center; padding: 14px; z-index: 100;
-    }
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; padding: 14px; z-index: 2000; }
     .modal-overlay.active { display: flex; }
-    .modal-box {
-      background: #041f1a; border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
-      max-width: 480px; width: 100%; max-height: 90%; overflow-y: auto; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-      position: relative;
-    }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .modal-title { font-family: 'Georgia', serif; font-size: 16px; color: var(--accent-green); }
-    .close-modal { background: transparent; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; }
-
-    .builder-section { margin-bottom: 12px; }
-    .builder-section h4 { font-size: 11px; text-transform: uppercase; color: var(--text-subhead); margin-bottom: 6px; }
-    .builder-options { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-    .option-label {
-      background: rgba(2, 18, 15, 0.75); border: 1px solid var(--border-color); padding: 6px 8px;
-      border-radius: var(--border-radius-sm); font-size: 11px; display: flex; align-items: center; gap: 6px; cursor: pointer;
-    }
-    .option-label:has(input:checked) { border-color: var(--accent-green); background: rgba(30, 77, 64, 0.5); color: var(--accent-green); font-weight: 700; }
-    .modal-subtitle { font-size: 11px; color: var(--accent-green); margin-bottom: 10px; background: rgba(74, 222, 128, 0.1); padding: 6px 10px; border-radius: var(--border-radius-sm); }
+    .modal-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); max-width: 480px; width: 100%; max-height: 90%; overflow-y: auto; padding: 16px; }
   </style>
 </head>
 <body>
 
-<div class="app-container" id="appRoot">
-  
-  <!-- APP HEADER -->
-  <header>
-    <h1><span>✦</span> Oon Jai Marketplace <span>✦</span></h1>
-
-    <div class="header-info-bar">
-      <div class="business-hours">
-        🕒 Mon–Thu: 11:00 – 14:00, 16:00 – 18:30 | Fri: 11:00 – 14:00
-      </div>
-      <a href="https://maps.app.goo.gl/YojE5Vj56rt93vGC6?g_st=aw" target="_blank" rel="noopener noreferrer" class="location-link">
-        📍 Vientiane, Laos
-      </a>
+  <!-- 1. TOP NAVIGATION -->
+  <nav class="top-nav">
+    <div class="nav-left">
+      <img src="https://ibb.co/TMVHSpvR" class="nav-small-logo" alt="Logo" onerror="this.src='https://placehold.co/100x100/041f1a/4ade80?text=OonJai'" />
+      <span class="nav-brand">Oon Jai</span>
     </div>
-  </header>
 
-  <div class="content-layout" id="contentLayout">
+    <!-- Desktop Menu -->
+    <div class="nav-links">
+      <button class="nav-tab active" data-tab="home" onclick="switchMainTab('home')">Home</button>
+      <button class="nav-tab" data-tab="menu" onclick="switchMainTab('menu')">Menu</button>
+      <button class="nav-tab" data-tab="hope" onclick="switchMainTab('hope')">Words of Hope</button>
+      <button class="nav-tab" data-tab="review" onclick="switchMainTab('review')">Review</button>
+    </div>
+
+    <!-- Mobile Menu Trigger -->
+    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+  </nav>
+
+  <!-- Mobile Dropdown -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="nav-tab active" data-tab="home" onclick="switchMainTab('home')">Home</button>
+    <button class="nav-tab" data-tab="menu" onclick="switchMainTab('menu')">Menu</button>
+    <button class="nav-tab" data-tab="hope" onclick="switchMainTab('hope')">Words of Hope</button>
+    <button class="nav-tab" data-tab="review" onclick="switchMainTab('review')">Review</button>
+  </div>
+
+  <div class="app-container">
     
-    <!-- MAIN NAVIGATION SIDEBAR (Also acts as Header Tabs on Mobile) -->
-    <aside class="main-sidebar" id="mainSidebar">
-      <div class="main-tabs-wrapper">
-        <button class="main-tab-btn active" data-maintab="home" onclick="switchMainTab('home')">Home</button>
+    <!-- 2. HERO SECTION -->
+    <div class="hero-section">
+      <img src="https://ibb.co/BHSPL0Nn" class="hero-banner" alt="Banner" onerror="this.src='https://placehold.co/1200x300/083c33/4ade80?text=Oon+Jai+Banner'" />
+      
+      <div class="hero-card" id="heroCard">
+        <div class="hero-logo-wrapper">
+          <img src="https://ibb.co/TMVHSpvR" class="hero-big-logo" alt="Logo" onerror="this.src='https://placehold.co/200x200/041f1a/4ade80?text=Logo'"/>
+        </div>
         
-        <div class="menu-tab-group">
-          <button class="main-tab-btn" data-maintab="menu" onclick="switchMainTab('menu')">Menu</button>
+        <div class="hero-info">
+          <h1>Oon Jai Marketplace</h1>
+          <p>Ban Phonsynuan, Rue Bourichane</p>
           
-          <!-- COLLAPSIBLE SUB-MENU (Active only when Menu tab is open) -->
-          <div id="menuCategoriesContainer" class="collapsible-menu">
+          <div class="hero-details">
+            <div>📍 Vientiane, Laos</div>
+            <div>🕒 Mon–Thu: 11-14h, 16-18:30h | Fri: 11-14h</div>
+            <div>⭐ 5.0 (Community Ratings)</div>
+          </div>
+        </div>
+
+        <button class="collapse-btn" onclick="toggleHeroCard()">▼ Info</button>
+      </div>
+    </div>
+
+    <!-- 3. MAIN CONTENT LAYOUT -->
+    <div class="content-layout">
+      
+      <!-- TAB 1: HOME -->
+      <div id="tab-home" class="tab-pane active">
+        <div class="feature-cards">
+          <div class="feature-card" onclick="switchMainTab('menu')">
+            <h3>🍽️ Explore Menu</h3>
+            <p>Browse our vibrant plant-based dishes and customize your bowls.</p>
+          </div>
+          <div class="feature-card" onclick="switchMainTab('hope')">
+            <h3>🌱 Words of Hope</h3>
+            <p>Share a kind, encouraging message with a stranger.</p>
+          </div>
+          <div class="feature-card" onclick="switchMainTab('review')">
+            <h3>⭐ Leave a Review</h3>
+            <p>Let us know how we did! Review us on Google.</p>
+          </div>
+        </div>
+
+        <div class="about-us-section">
+          <h3>About Us</h3>
+          <p>Oon Jai Marketplace is a mission-driven vegetarian and vegan restaurant located in Vientiane, Laos. More than just a place to enjoy wholesome food, Oon Jai exists to promote healthy living, compassionate service, and meaningful relationships through plant-based meals and community engagement.</p>
+          <p>Every meal served and every person welcomed represents an opportunity to share kindness, care, and connection. Through food and hospitality, Oon Jai seeks to demonstrate that a simple meal can become a powerful expression of love, compassion, and service—nourishing not only the body but also the community.</p>
+        </div>
+      </div>
+
+      <!-- TAB 2: MENU -->
+      <div id="tab-menu" class="tab-pane">
+        <div class="menu-layout">
+          
+          <!-- Menu Sub-Categories Sidebar/Grid -->
+          <aside class="menu-sidebar">
             <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
             <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
             <button class="cat-btn" data-category="texmex" onclick="switchCategory('texmex')">Tex-Mexican</button>
@@ -516,469 +429,196 @@
             <button class="cat-btn" data-category="smoothies" onclick="switchCategory('smoothies')">Smoothies</button>
             <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
             <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
-          </div>
-        </div>
+          </aside>
 
-        <button class="main-tab-btn" data-maintab="hope" onclick="switchMainTab('hope')">Words of Hope</button>
-        <button class="main-tab-btn" data-maintab="review" onclick="switchMainTab('review')">Review</button>
-      </div>
-    </aside>
-
-    <main class="main-content" id="mainContent">
-      
-      <!-- ================== TAB 1: HOME ================== -->
-      <div id="tab-home" class="tab-pane active">
-        <div class="home-welcome">
-          <h2>Welcome to Oon Jai</h2>
-          <p>Nourishing the body and the community through wholesome plant-based meals.</p>
-        </div>
-        
-        <div class="feature-cards">
-          <div class="feature-card" onclick="switchMainTab('menu')">
-            <h3>🍽️ Explore Menu</h3>
-            <p>Browse our vibrant plant-based dishes, customize your bowls, and submit your order easily.</p>
-          </div>
-          <div class="feature-card" onclick="switchMainTab('hope')">
-            <h3>🌱 Words of Hope</h3>
-            <p>Share a kind, encouraging message with a stranger and help us spread community joy.</p>
-          </div>
-          <div class="feature-card" onclick="switchMainTab('review')">
-            <h3>⭐ Leave a Review</h3>
-            <p>Let us know how we did! Check out our highlights and review us on Google.</p>
-          </div>
-        </div>
-
-        <div class="about-us-section">
-          <h3>About Us</h3>
-          <p>Oon Jai Marketplace is a mission-driven vegetarian and vegan restaurant located in Vientiane, Laos. More than just a place to enjoy wholesome food, Oon Jai exists to promote healthy living, compassionate service, and meaningful relationships through plant-based meals and community engagement.</p>
-          <p>Every meal served and every person welcomed represents an opportunity to share kindness, care, and connection. Through food and hospitality, Oon Jai seeks to demonstrate that a simple meal can become a powerful expression of love, compassion, and service—nourishing not only the body but also the community.</p>
-          <p>For more information about Oon Jai and our mission, please visit us at <a href="http://www.oonjai.org" target="_blank" style="color:var(--accent-green)">www.oonjai.org</a>.</p>
-        </div>
-      </div>
-
-      <!-- ================== TAB 2: MENU ================== -->
-      <div id="tab-menu" class="tab-pane">
-        <!-- MENU PRODUCTS SECTION -->
-        <div class="menu-section">
-          <h2 class="section-title" id="categoryTitle">Burgers</h2>
-          <div class="products-grid" id="productsGrid"></div>
-        </div>
-
-        <!-- SHOPPING CART SUMMARY SECTION -->
-        <div class="cart-summary" id="cartSection">
-          <div class="cart-title">
-            <span>Your Order Basket</span>
-            <span id="cartCount">(0 items)</span>
-          </div>
-          
-          <div class="cart-items" id="cartItems">
-            <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
-          </div>
-
-          <div class="order-options" id="orderOptionsBox">
-            <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
-            <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
-          </div>
-          <div class="order-type-error-msg" id="orderTypeErrorMsg">
-            ⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.
-          </div>
-
-          <div class="payment-note">
-            <strong>Note:</strong> A QR code will be sent to you for payment before your order is processed. This helps us verify and prevent fake orders. Thank you!
-          </div>
-
-          <div class="cart-total">
-            <div class="total-row">
-              <span>Total:</span>
-              <span id="totalPrice" class="price" style="font-size: 16px;">0 Kip</span>
-            </div>
-            
-            <div class="action-buttons">
-              <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
-              <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
+          <!-- Menu Content & Cart -->
+          <div class="menu-main-area">
+            <div>
+              <h2 class="section-title" id="categoryTitle">Burgers</h2>
+              <div class="products-grid" id="productsGrid"></div>
             </div>
 
-            <div class="delivery-section">
-              <div class="delivery-title">Or Order / Find Us On</div>
-              <div class="delivery-grid">
-                <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" rel="noopener noreferrer" class="platform-link foodpanda">Food Panda</a>
-                <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" rel="noopener noreferrer" class="platform-link egets">E-GetS</a>
-                <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" rel="noopener noreferrer" class="platform-link chompa">ChompA</a>
-                <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" rel="noopener noreferrer" class="platform-link guru">Restaurant Guru</a>
+            <!-- Cart Section -->
+            <div class="cart-summary" id="cartSection">
+              <div class="cart-title">
+                <span>Your Order Basket</span>
+                <span id="cartCount">(0 items)</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              
+              <div class="cart-items" id="cartItems">
+                <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
+              </div>
 
-      <!-- ================== TAB 3: WORDS OF HOPE ================== -->
-      <div id="tab-hope" class="tab-pane">
-        
-        <div class="feature-banner">
-          <img src="https://ibb.co/TMVHSpvR" onerror="this.src='https://placehold.co/800x300/083c33/4ade80?text=Community+Project'" alt="Words of Hope Feature" />
-          <div class="feature-text-overlay">Spread Kindness Across Our Community</div>
-        </div>
+              <div class="order-options" id="orderOptionsBox">
+                <label><input type="radio" name="orderType" value="Dine-In"> Dine-In</label>
+                <label><input type="radio" name="orderType" value="Pick-Up"> Pick-Up</label>
+              </div>
 
-        <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 20px;">
-          <p style="font-size: 13px; color: var(--text-subhead); margin-bottom: 20px; line-height: 1.5; text-align: center;">
-            Share an encouraging message with a stranger. We print these out and pass them along to spread kindness across our community!
-          </p>
-
-          <div style="width: 100%; border-radius: 12px; background: rgba(2, 18, 15, 0.4); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; padding: 16px; color: #ffffff;">
-            <h3 style="margin-top: 0; margin-bottom: 4px; font-size: 18px; font-weight: 400; color: #ffffff; text-align: center; font-family: 'Georgia', serif;">
-              <span style="color: #4ade80; font-size: 11px; vertical-align: middle;">✦</span>
-              Message for a Stranger
-              <span style="color: #4ade80; font-size: 11px; vertical-align: middle;">✦</span>
-            </h3>
-            <p style="margin: 0 0 14px 0; font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.3;">
-              Leave an encouraging thought or quote to brighten someone's day.
-            </p>
-
-            <form id="customForm" autocomplete="off">
-              <input type="hidden" id="device_token" name="device_token" />
-
-              <div style="margin-bottom: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                  <label style="font-weight: 600; color: #cbd5e1; font-size: 10px; text-transform: uppercase;">Your Message</label>
-                  <span id="wordCounter" style="font-size: 10px; color: #64748b;">0 / 20-30 words</span>
+              <div class="cart-total">
+                <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; margin-bottom: 12px;">
+                  <span>Total:</span>
+                  <span id="totalPrice" class="price">0 Kip</span>
                 </div>
-                <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required style="width: 100%; padding: 8px 10px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 6px; font-size: 12px; color: #f8fafc; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
+                <div class="action-buttons">
+                  <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
+                  <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
+                </div>
               </div>
-
-              <div style="margin-bottom: 14px;">
-                <label style="display: block; font-weight: 600; margin-bottom: 4px; color: #cbd5e1; font-size: 10px; text-transform: uppercase;">Name or Initials</label>
-                <input type="text" id="name" name="sender_name" placeholder="e.g., Sarah V., or Anonymous" style="width: 100%; padding: 8px 10px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 6px; font-size: 12px; color: #f8fafc; box-sizing: border-box; outline: none;" />
-              </div>
-
-              <div style="display: flex; gap: 8px;">
-                <button type="submit" id="submitBtn" style="flex: 2; padding: 10px 12px; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: none; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">Submit Message</button>
-                <button type="button" onclick="clearForm()" style="flex: 1; padding: 10px 12px; background-color: transparent; color: #94a3b8; border: 1px solid #1e4d40; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer;">Clear</button>
-              </div>
-            </form>
-            <div id="statusMsg" style="margin-top: 8px; font-size: 11px; font-weight: 500; text-align: center; min-height: 16px;"></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- ================== TAB 4: REVIEW ================== -->
+      <!-- TAB 3: WORDS OF HOPE (Community Project) -->
+      <div id="tab-hope" class="tab-pane">
+        <div>
+          <h2 style="font-family: 'Georgia', serif; color: var(--accent-green); margin-bottom: 8px;">Community Project: Words of Hope</h2>
+          <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.5; margin-bottom: 20px;">
+            Share an encouraging message with a stranger. We print these out and pass them along to spread kindness across our community! Swipe through the gallery below to see previous messages of hope from our wonderful guests.
+          </p>
+        </div>
+
+        <!-- Community Project Carousel -->
+        <div class="carousel-container">
+          <button class="carousel-btn prev" onclick="moveHopeCarousel(-1)">&#10094;</button>
+          <div class="carousel-track" id="hopeCarouselTrack"></div>
+          <button class="carousel-btn next" onclick="moveHopeCarousel(1)">&#10095;</button>
+        </div>
+        <div class="carousel-dots" id="hopeCarouselDots"></div>
+
+        <div class="hope-form-wrapper">
+          <h3 style="margin-bottom: 15px; font-family: 'Georgia', serif; text-align: center; color: white;">Leave a Message</h3>
+          <form id="customForm" autocomplete="off">
+            <input type="hidden" id="device_token" name="device_token" />
+            <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required style="width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-bottom: 10px;"></textarea>
+            <input type="text" id="name" name="sender_name" placeholder="Name or Initials (e.g. Sarah V.)" style="width: 100%; padding: 10px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-bottom: 15px;" />
+            <button type="submit" style="width: 100%; padding: 12px; background: var(--accent-green); color: var(--bg-dark); border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Submit Message</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 4: REVIEW -->
       <div id="tab-review" class="tab-pane">
-        
-        <div style="text-align: center; padding: 10px 0;">
-          <h2 style="font-family: 'Georgia', serif; color: var(--accent-green); margin-bottom: 8px; font-weight: 400;">Share Your Experience</h2>
-          <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.5;">Check out our menu highlights below, and if you loved your meal, please take a moment to leave us a review!</p>
-        </div>
-
-        <!-- 10-IMAGE CAROUSEL -->
-        <div class="review-carousel-container">
-          <button class="carousel-btn prev" onclick="moveReviewCarousel(-1)">&#10094;</button>
-          <div class="review-carousel-track" id="reviewCarouselTrack">
-            <!-- Populated via JS -->
-          </div>
-          <button class="carousel-btn next" onclick="moveReviewCarousel(1)">&#10095;</button>
-        </div>
-        <div class="carousel-dots" id="reviewCarouselDots"></div>
-
-        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action" style="display:block; margin: 0 auto; max-width: 300px;">
-          ⭐ Leave us a Review on Google
-        </a>
-      </div>
-
-    </main>
-  </div>
-
-  <!-- CUSTOMIZATION MODAL -->
-  <div class="modal-overlay" id="customModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle">Build Your Own</h3>
-        <button class="close-modal" onclick="closeCustomModal()">✕</button>
-      </div>
-
-      <div id="refresherSweetenerBox" style="display: none;">
-        <div class="builder-section">
-          <h4>Choose Sweetener</h4>
-          <div class="builder-options">
-            <label class="option-label"><input type="radio" name="refresherSweetener" value="Honey" checked> Honey</label>
-            <label class="option-label"><input type="radio" name="refresherSweetener" value="Sugar"> Sugar</label>
-          </div>
+        <div style="text-align: center; padding: 20px;">
+          <h2 style="font-family: 'Georgia', serif; color: var(--accent-green); margin-bottom: 10px;">How did we do?</h2>
+          <p style="color: var(--text-subhead); font-size: 14px; margin-bottom: 20px;">If you enjoyed your experience, please let us know!</p>
+          <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding: 12px 24px; background: #ffffff; color: #1a73e8; text-decoration: none; font-weight: bold; border-radius: 8px;">⭐ Leave a Review on Google</a>
         </div>
       </div>
 
-      <div id="standardBuilderBox">
-        <div class="modal-subtitle" id="modalRulesInfo"></div>
-        
-        <div id="wellnessChoiceBox" class="builder-section" style="display: none;">
-          <h4>Choose Wellness Drink</h4>
-          <div class="builder-options" id="wellnessContainer"></div>
-        </div>
-
-        <div class="builder-section">
-          <h4>Sauces</h4>
-          <div class="builder-options" id="saucesContainer"></div>
-        </div>
-
-        <div class="builder-section">
-          <h4>Veggies</h4>
-          <div class="builder-options" id="veggiesContainer"></div>
-        </div>
-
-        <div class="builder-section">
-          <h4>Proteins</h4>
-          <div class="builder-options" id="proteinsContainer"></div>
-        </div>
-      </div>
-
-      <button class="btn-wa" style="width:100%; margin-top: 10px; background: #22c55e;" onclick="addCustomItemToCart()">Add to Order</button>
     </div>
   </div>
-
-  <!-- THEMED NOTIFICATION MODALS -->
-  <div class="modal-overlay" id="notificationModal" style="z-index: 110;">
-    <div class="modal-box" style="max-width: 320px; text-align: center; padding: 20px;">
-      <h3 class="modal-title" id="notifTitle" style="margin-bottom: 12px;">Notification</h3>
-      <p id="notifMessage" style="font-size: 13px; color: var(--text-subhead); margin-bottom: 20px; line-height: 1.5; white-space: pre-wrap;"></p>
-      
-      <div id="notifAlertAction">
-        <button class="add-btn" style="width: 100%;" onclick="closeNotification()">OK</button>
-      </div>
-      
-      <div id="notifConfirmActions" style="display: none; gap: 10px;">
-        <button class="cat-btn" style="flex: 1; justify-content: center;" id="btnNotifCancel">Cancel</button>
-        <button class="add-btn" style="flex: 1;" id="btnNotifProceed">Proceed</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
-  // --- 1. STORE CONFIGURATION ---
-  const PHONE_NUMBER = "8562057048174"; 
-  const MESSENGER_USERNAME = "oon.jai.laos";
-  const EXTRA_ADDON_PRICE = 7000;
+  // --- 1. UI TOGGLES ---
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('active');
+  }
 
-  // --- 2. MENU INGREDIENTS ---
-  const commonChoices = {
-    veggies: [
-      'Grilled mushrooms', 'Grilled bell peppers', 'Grilled eggplant', 
-      'Caramelized onion', 'Microgreens', 'Avocado', 
-      'Lettuce', 'Tomatoes', 'Onions', 'Carrots', 'Olives', 'Corn'
-    ],
-    proteins: [
-      'Beans', 'Sautéed tofu', 'Lemon chicken', 
-      'Ground meat', 'Spicy sausage', 'Regular sausage', 'Falafel'
-    ],
-    sandwichProteins: [
-      'Sautéed tofu', 'Lemon chicken', 'Ground meat', 
-      'Spicy sausage', 'Regular sausage'
-    ],
-    sauces: [
-      'Garlic mayo', 'Basil mayo', 'Chili mayo', 
-      'Tahini sauce', 'Hummus', 'Cheese sauce'
-    ],
-    wellnessDrinks: [
-      'Summer in My Heart', 'Wish Upon a Heart', 
-      'Heartwarmer', 'Red Heart'
-    ]
-  };
-
-  // --- 3. MENU DATA ---
-  const menuData = {
-    burgers: [
-      { id: 'b1', name: 'Burger Combo', price: 199000, desc: 'The Classic Burger + Mint Pineapple Refresher + Lemon Oat Cookie.' },
-      { id: 'b2', name: 'The Classic', price: 120000, desc: 'Meaty patty, lettuce, tomato, onion, pickles, garlic mayo, and cheese sauce. Served with a portion of fries.' },
-      { id: 'b3', name: 'The Cheeser', price: 110000, desc: 'Meaty patty, tomato, garlic mayo, and cheese sauce. Served with a portion of fries.' },
-      { id: 'b4', name: 'The Bougie', price: 130000, desc: 'Meaty patty, microgreens, tomato, caramelized onion, sautéed mushroom, grilled pineapple, and basil mayo. Served with a portion of fries.' },
-      { id: 'b5', name: 'French Fries', price: 60000, desc: 'Crispy golden French fries with seasoning.' }
-    ],
-    sandwiches: [
-      { id: 's1', name: 'Sandwich Combo', price: 180000, desc: 'Chickelicious sandwich + Paradise Point Refresher + Brownie.' },
-      { id: 's2', name: 'Mediterranean', price: 105000, desc: 'Falafel, hummus, tahini sauce, tomato, pickles, mint, and cilantro.' },
-      { id: 's3', name: 'Italian', price: 105000, desc: 'Grilled tofu, sautéed veggies, tomato, lettuce, onion, and basil mayo.' },
-      { id: 's4', name: 'Chickelicious', price: 110000, desc: 'Plant-based chicken, caramelized onion, olives, microgreens, tomato, cheese sauce, and basil mayo.' },
-      { id: 's5', name: 'Build Your Own Sandwich', price: 110000, desc: 'Customizable sandwich. Choose your sauces, veggies, and protein.', isCustom: true, maxSauces: 2, maxVeggies: 3, maxProteins: 1, specificProteins: 'sandwichProteins' }
-    ],
-    texmex: [
-      { id: 'tx1', name: 'Tex-Mex Combo', price: 210000, desc: 'Tacos + Quesadilla + Mint Pineapple Refresher.' },
-      { id: 'tx2', name: 'Quesadilla', price: 85000, desc: 'Flour tortilla with cheese sauce, ground meat, and pico de gallo.' },
-      { id: 'tx3', name: 'Tacos', price: 99000, desc: 'Two soft shell tacos filled with ground meat or black beans, grilled bell pepper, avocado, pico de gallo, and cheese sauce.' }
-    ],
-    pasta: [
-      { id: 'p1', name: 'Miso-Seaweed', price: 110000, desc: 'Herb, fresh, vibrant, and aromatic miso-seaweed fusion.' },
-      { id: 'p2', name: 'Carbonara', price: 110000, desc: 'Rich and creamy pasta made with peanut butter and coconut milk.' },
-      { id: 'p3', name: 'Spaghetti', price: 110000, desc: 'Classic spaghetti packed with fresh, bright tomato goodness.' },
-      { id: 'p4', name: 'Pesto Pasta', price: 110000, desc: 'Herb, fresh, vibrant, and aromatic basil pesto.' }
-    ],
-    bowl: [
-      { id: 'bw1', name: 'Bowl Combo', price: 160000, desc: 'Protein pack + Wellness drink of your choice + Banana bread.', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2, needsWellnessChoice: true },
-      { id: 'bw2', name: 'Veggie Pack', price: 110000, desc: 'Includes 2 sauces, 5 veggies, and 1 protein. Additional choices (+7,000 Kip each).', isCustom: true, maxSauces: 2, maxVeggies: 5, maxProteins: 1 },
-      { id: 'bw3', name: 'Protein Pack', price: 115000, desc: 'Includes 2 sauces, 4 veggies, and 2 proteins. Additional choices (+7,000 Kip each).', isCustom: true, maxSauces: 2, maxVeggies: 4, maxProteins: 2 },
-      { id: 'bw4', name: 'Mini Pack', price: 99000, desc: 'Includes 1 sauce, 3 veggies, and 1 protein. Additional choices (+7,000 Kip each).', isCustom: true, maxSauces: 1, maxVeggies: 3, maxProteins: 1 }
-    ],
-    smoothies: [
-      { id: 'sm1', name: 'Kickstart', price: 70000, desc: 'Banana, pineapple, and spinach. No ice or sugar added, sweetened by dates.' },
-      { id: 'sm2', name: 'Fruitopia', price: 70000, desc: 'Mango, strawberry, and pineapple. No ice or sugar added, sweetened by dates.' },
-      { id: 'sm3', name: 'Paradise Point', price: 70000, desc: 'Passion fruit and pineapple. No ice or sugar added, sweetened by dates.' },
-      { id: 'sm4', name: 'Mary Jane', price: 80000, desc: 'Strawberry, mulberry, and banana. No ice or sugar added, sweetened by dates.' },
-      { id: 'sm5', name: "Reese's Cup", price: 70000, desc: 'Banana, peanut butter, and cocoa powder. No ice or sugar added, sweetened by dates.' }
-    ],
-    refreshers: [
-      { id: 'r1', name: 'Mint Pineapple', price: 45000, desc: 'Fresh mint and pineapple.', isCustom: true, isRefresher: true },
-      { id: 'r2', name: 'Strawberry Lemonade', price: 50000, desc: 'Strawberry and lime.', isCustom: true, isRefresher: true },
-      { id: 'r3', name: 'Sparkling Lime', price: 45000, desc: 'Sparkling water and fresh lime.', isCustom: true, isRefresher: true },
-      { id: 'r4', name: 'Honey Passion', price: 45000, desc: 'Passion fruit and honey.', isCustom: true, isRefresher: true }
-    ],
-    wellness: [
-      { id: 'w1', name: 'Summer in My Heart', price: 47000, desc: 'Pineapple juice and coconut water.' },
-      { id: 'w2', name: 'Wish Upon a Heart', price: 47000, desc: 'Green apple, basil cordial, lemon juice, and tapioca pearls.' },
-      { id: 'w3', name: 'Heartwarmer', price: 47000, desc: 'Ginger and turmeric tea, lemon juice, honey, and chia seeds.' },
-      { id: 'w4', name: 'Red Heart', price: 47000, desc: 'Lemongrass cordial, lemon, beetroot, and apple.' }
-    ]
-  };
-
-  // --- 4. APP STATE & TABBING LOGIC ---
-  let cart = [];
-  let currentActiveCustomItem = null;
-  let currentCategory = 'burgers';
+  function toggleHeroCard() {
+    const card = document.getElementById('heroCard');
+    const btn = card.querySelector('.collapse-btn');
+    card.classList.toggle('collapsed');
+    btn.innerText = card.classList.contains('collapsed') ? '▼ Expand' : '▼ Collapse';
+  }
 
   function switchMainTab(tabId) {
     // Hide all tabs
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-    // Remove active state from main buttons
-    document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
-
-    // Show selected tab & highlight button
     document.getElementById('tab-' + tabId).classList.add('active');
-    document.querySelectorAll(`[data-maintab="${tabId}"]`).forEach(btn => btn.classList.add('active'));
 
-    // Toggle menu categories sub-menu
-    const categoriesGrid = document.getElementById('menuCategoriesContainer');
-    if (tabId === 'menu') {
-      categoriesGrid.classList.add('active');
-      renderProductsGrid(); // Refresh grid view
-    } else {
-      categoriesGrid.classList.remove('active');
-    }
+    // Update Nav Buttons
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(btn => btn.classList.add('active'));
 
-    // Scroll to top
-    const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
-    if (scrollTarget) scrollTarget.scrollTop = 0;
+    // Close mobile menu if open
+    document.getElementById('mobileMenu').classList.remove('active');
+    
+    // Refresh product grid if menu tab
+    if(tabId === 'menu') renderProductsGrid();
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // --- REVIEW CAROUSEL LOGIC ---
-  let currentReviewSlide = 0;
-  function initReviewCarousel() {
-    const track = document.getElementById('reviewCarouselTrack');
-    const dots = document.getElementById('reviewCarouselDots');
-    let html = '';
-    let dotsHtml = '';
+  // --- 2. HOPE CAROUSEL (COMMUNITY PROJECT) ---
+  const hopeImages = [
+    "https://ibb.co/q3NJnDdc", "https://ibb.co/htmW6py", "https://ibb.co/MkH31Hmv",
+    "https://ibb.co/SDNGd0Yf", "https://ibb.co/Mk8Bp20R", "https://ibb.co/ksZMFzT6",
+    "https://ibb.co/p6vqPY7P", "https://ibb.co/M5NbnM8L", "https://ibb.co/gLmQCB3G",
+    "https://ibb.co/zV8rZHt1"
+  ];
+  let currentHopeSlide = 0;
+
+  function initHopeCarousel() {
+    const track = document.getElementById('hopeCarouselTrack');
+    const dots = document.getElementById('hopeCarouselDots');
+    let html = ''; let dotsHtml = '';
     
-    // Using the exact placeholder provided for 10 slides
-    for(let i=0; i<10; i++) {
-      html += `<img src="https://ibb.co/TMVHSpvR" class="carousel-img" alt="Review Image ${i+1}" onerror="this.src='https://placehold.co/600x400/041f1a/4ade80?text=Menu+Highlight+${i+1}'"/>`;
-      dotsHtml += `<span class="dot" onclick="setReviewCarousel(${i})"></span>`;
-    }
+    hopeImages.forEach((imgLink, i) => {
+      // Note: ImgBB viewer links may fail to render as raw images in some browsers. 
+      // Replace these with direct links (e.g. ending in .jpg/.png) if they appear broken.
+      html += `<img src="${imgLink}" class="carousel-img" alt="Community Image ${i+1}" onerror="this.src='https://placehold.co/600x400/041f1a/4ade80?text=Community+Project+${i+1}'"/>`;
+      dotsHtml += `<span class="dot" onclick="setHopeCarousel(${i})"></span>`;
+    });
+    
     track.innerHTML = html;
     dots.innerHTML = dotsHtml;
-    setReviewCarousel(0);
+    setHopeCarousel(0);
   }
 
-  function moveReviewCarousel(dir) { setReviewCarousel(currentReviewSlide + dir); }
-  function setReviewCarousel(index) {
-    if(index < 0) index = 9;
-    if(index > 9) index = 0;
-    currentReviewSlide = index;
-    const track = document.getElementById('reviewCarouselTrack');
-    track.style.transform = `translateX(-${index * 100}%)`;
+  function moveHopeCarousel(dir) { setHopeCarousel(currentHopeSlide + dir); }
+  function setHopeCarousel(index) {
+    if(index < 0) index = hopeImages.length - 1;
+    if(index >= hopeImages.length) index = 0;
+    currentHopeSlide = index;
     
-    document.querySelectorAll('.carousel-dots .dot').forEach((d, i) => {
+    document.getElementById('hopeCarouselTrack').style.transform = `translateX(-${index * 100}%)`;
+    document.querySelectorAll('#hopeCarouselDots .dot').forEach((d, i) => {
       d.classList.toggle('active', i === index);
     });
   }
+  initHopeCarousel();
 
-  // --- THEMED NOTIFICATION HELPERS ---
-  function customAlert(message, title = 'Notification') {
-    document.getElementById('notifTitle').innerText = title;
-    document.getElementById('notifMessage').innerText = message;
-    document.getElementById('notifAlertAction').style.display = 'block';
-    document.getElementById('notifConfirmActions').style.display = 'none';
-    document.getElementById('notificationModal').classList.add('active');
-  }
+  // --- 3. MENU DATA & CART ---
+  const menuData = {
+    burgers: [
+      { id: 'b1', name: 'Burger Combo', price: 199000, desc: 'The Classic Burger + Mint Pineapple Refresher + Lemon Oat Cookie.' },
+      { id: 'b2', name: 'The Classic', price: 120000, desc: 'Meaty patty, lettuce, tomato, onion, pickles, garlic mayo, and cheese sauce. Served with a portion of fries.' }
+    ],
+    sandwiches: [
+      { id: 's1', name: 'Sandwich Combo', price: 180000, desc: 'Chickelicious sandwich + Paradise Point Refresher + Brownie.' }
+    ],
+    texmex: [{ id: 'tx1', name: 'Tex-Mex Combo', price: 210000, desc: 'Tacos + Quesadilla + Mint Pineapple Refresher.' }],
+    pasta: [{ id: 'p1', name: 'Miso-Seaweed', price: 110000, desc: 'Herb, fresh, vibrant, and aromatic miso-seaweed fusion.' }],
+    bowl: [{ id: 'bw1', name: 'Bowl Combo', price: 160000, desc: 'Protein pack + Wellness drink of your choice + Banana bread.' }],
+    smoothies: [{ id: 'sm1', name: 'Kickstart', price: 70000, desc: 'Banana, pineapple, and spinach.' }],
+    refreshers: [{ id: 'r1', name: 'Mint Pineapple', price: 45000, desc: 'Fresh mint and pineapple.' }],
+    wellness: [{ id: 'w1', name: 'Summer in My Heart', price: 47000, desc: 'Pineapple juice and coconut water.' }]
+  };
 
-  function closeNotification() {
-    document.getElementById('notificationModal').classList.remove('active');
-  }
+  let cart = [];
+  let currentCategory = 'burgers';
 
-  function customConfirm(message, title = 'Confirm Action') {
-    return new Promise((resolve) => {
-      document.getElementById('notifTitle').innerText = title;
-      document.getElementById('notifMessage').innerText = message;
-      document.getElementById('notifAlertAction').style.display = 'none';
-      document.getElementById('notifConfirmActions').style.display = 'flex';
-      document.getElementById('notificationModal').classList.add('active');
-      
-      document.getElementById('btnNotifCancel').onclick = () => {
-        closeNotification();
-        resolve(false);
-      };
-      document.getElementById('btnNotifProceed').onclick = () => {
-        closeNotification();
-        resolve(true);
-      };
-    });
-  }
-
-  // --- 5. UI RENDERING FUNCTIONS ---
-  function formatKip(amount) {
-    return amount.toLocaleString() + ' Kip';
-  }
-
-  function getItemCountInCart(id) {
-    return cart.filter(item => item.id === id).length;
-  }
-
+  function formatKip(amount) { return amount.toLocaleString() + ' Kip'; }
+  
   function switchCategory(catKey) {
     currentCategory = catKey;
     document.querySelectorAll('.cat-btn').forEach(btn => {
-      if (btn.dataset.category === catKey) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
+      btn.classList.toggle('active', btn.dataset.category === catKey);
     });
-
-    const titleMap = {
-      burgers: 'Burgers', sandwiches: 'Sandwiches', texmex: 'Tex-Mexican', pasta: 'Pasta',
-      bowl: 'Build Your Bowl', smoothies: 'Smoothies',
-      refreshers: 'Refreshers', wellness: 'Wellness Drinks'
-    };
+    
+    const titleMap = { burgers: 'Burgers', sandwiches: 'Sandwiches', texmex: 'Tex-Mexican', pasta: 'Pasta', bowl: 'Build Your Bowl', smoothies: 'Smoothies', refreshers: 'Refreshers', wellness: 'Wellness Drinks' };
     document.getElementById('categoryTitle').innerText = titleMap[catKey];
-    
-    // Automatically switch to Menu tab if clicking category from desktop view
-    if(!document.getElementById('tab-menu').classList.contains('active')){
-      switchMainTab('menu');
-    }
-
     renderProductsGrid();
-    
-    const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
-    if (scrollTarget) scrollTarget.scrollTop = 0;
   }
 
   function renderProductsGrid() {
     const container = document.getElementById('productsGrid');
     container.innerHTML = '';
-
     menuData[currentCategory].forEach(item => {
-      const count = getItemCountInCart(item.id);
       const card = document.createElement('div');
       card.className = 'product-card';
-      
-      const countTextHtml = count > 0 ? `<span class="item-count-text">×${count}</span>` : '';
-      
-      const actionButton = item.isCustom
-        ? `<button class="add-btn" onclick="openCustomModal('${currentCategory}', '${item.id}')">Customize</button>`
-        : `<button class="add-btn" onclick="addToCart('${item.id}', '${item.name}', ${item.price})">Add +</button>`;
-
       card.innerHTML = `
         <div class="product-info">
           <div class="product-name">${item.name}</div>
@@ -986,357 +626,55 @@
         </div>
         <div class="product-action">
           <span class="price">${formatKip(item.price)}</span>
-          <div class="btn-wrapper">
-            ${countTextHtml}
-            ${actionButton}
-          </div>
+          <button class="add-btn" onclick="addToCart('${item.id}', '${item.name}', ${item.price})">Add +</button>
         </div>
       `;
       container.appendChild(card);
     });
   }
 
-  // --- 6. CART MANAGEMENT ---
-  function addToCart(id, name, price, subtext = '') {
-    cart.push({ id, name, price, subtext });
+  function addToCart(id, name, price) {
+    cart.push({ id, name, price });
     renderCart();
-    renderProductsGrid();
   }
 
   function removeFromCart(index) {
     cart.splice(index, 1);
     renderCart();
-    renderProductsGrid();
   }
 
   function renderCart() {
     const container = document.getElementById('cartItems');
     const countEl = document.getElementById('cartCount');
     const totalEl = document.getElementById('totalPrice');
-
     let total = cart.reduce((sum, item) => sum + item.price, 0);
-    countEl.innerText = `(${cart.length} item${cart.length === 1 ? '' : 's'})`;
-
+    
+    countEl.innerText = `(${cart.length} items)`;
     if (cart.length === 0) {
       container.innerHTML = `<p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>`;
       totalEl.innerText = '0 Kip';
     } else {
       container.innerHTML = '';
       cart.forEach((item, idx) => {
-        const itemEl = document.createElement('div');
-        itemEl.className = 'cart-item';
-        itemEl.innerHTML = `
-          <div>
+        container.innerHTML += `
+          <div class="cart-item">
             <div class="cart-item-name">${item.name}</div>
-            ${item.subtext ? `<div class="cart-item-sub">${item.subtext}</div>` : ''}
-          </div>
-          <div style="display: flex; align-items: center;">
-            <span class="cart-item-price">${formatKip(item.price)}</span>
-            <button class="remove-btn" onclick="removeFromCart(${idx})">Remove</button>
-          </div>
-        `;
-        container.appendChild(itemEl);
+            <div>
+              <span style="color:var(--accent-green); font-size: 12px; font-weight: bold;">${formatKip(item.price)}</span>
+              <button class="remove-btn" onclick="removeFromCart(${idx})">✕</button>
+            </div>
+          </div>`;
       });
       totalEl.innerText = formatKip(total);
     }
   }
 
-  // --- 7. MODAL CUSTOMIZATION LOGIC ---
-  function enforceLimit(checkbox, groupName, maxAllowed) {
-    if (groupName === 'custSauce') {
-      const checked = document.querySelectorAll(`input[name="${groupName}"]:checked`);
-      if (checked.length > maxAllowed) {
-        checkbox.checked = false;
-        customAlert(`Limit reached! You can select up to ${maxAllowed} Sauce(s) for this section.`, 'Limit Reached');
-      }
-    }
-  }
-
-  function openCustomModal(catKey, itemId) {
-    const item = menuData[catKey].find(i => i.id === itemId);
-    if (!item) return;
-
-    currentActiveCustomItem = { ...item };
-    document.getElementById('modalTitle').innerText = item.name;
-
-    const refresherBox = document.getElementById('refresherSweetenerBox');
-    const builderBox = document.getElementById('standardBuilderBox');
-    const wellnessChoiceBox = document.getElementById('wellnessChoiceBox');
-
-    if (item.isRefresher) {
-      refresherBox.style.display = 'block';
-      builderBox.style.display = 'none';
-      wellnessChoiceBox.style.display = 'none';
-      document.querySelector('input[name="refresherSweetener"][value="Honey"]').checked = true;
-    } else {
-      refresherBox.style.display = 'none';
-      builderBox.style.display = 'block';
-
-      if (item.needsWellnessChoice) {
-        wellnessChoiceBox.style.display = 'block';
-        document.getElementById('wellnessContainer').innerHTML = commonChoices.wellnessDrinks.map((drink, idx) => `
-          <label class="option-label">
-            <input type="radio" name="custWellness" value="${drink}" ${idx === 0 ? 'checked' : ''}> ${drink}
-          </label>
-        `).join('');
-      } else {
-        wellnessChoiceBox.style.display = 'none';
-      }
-
-      updateModalRulesUI();
-
-      const createChoicesHtml = (arr, name) => arr.map(val => `
-        <label class="option-label">
-          <input type="checkbox" name="${name}" value="${val}" onchange="enforceLimit(this, '${name}', currentActiveCustomItem.max${name.replace('cust', '')}s)"> ${val}
-        </label>
-      `).join('');
-
-      const pList = item.specificProteins ? commonChoices[item.specificProteins] : commonChoices.proteins;
-
-      document.getElementById('saucesContainer').innerHTML = createChoicesHtml(commonChoices.sauces, 'custSauce');
-      document.getElementById('veggiesContainer').innerHTML = createChoicesHtml(commonChoices.veggies, 'custVeggie');
-      document.getElementById('proteinsContainer').innerHTML = createChoicesHtml(pList, 'custProtein');
-    }
-
-    document.getElementById('customModal').classList.add('active');
-  }
-
-  function updateModalRulesUI() {
-    if (!currentActiveCustomItem) return;
-    const rulesEl = document.getElementById('modalRulesInfo');
-    rulesEl.innerText = `Included: Up to ${currentActiveCustomItem.maxSauces} Sauce(s), ${currentActiveCustomItem.maxVeggies} Veggie(s), and ${currentActiveCustomItem.maxProteins} Protein(s).\n(Extra Veggies or Proteins: +7,000 Kip each)`;
-  }
-
-  function closeCustomModal() {
-    document.getElementById('customModal').classList.remove('active');
-    currentActiveCustomItem = null;
-  }
-
-  async function addCustomItemToCart() {
-    if (!currentActiveCustomItem) return;
-
-    if (currentActiveCustomItem.isRefresher) {
-      const sweetener = document.querySelector('input[name="refresherSweetener"]:checked').value;
-      addToCart(
-        currentActiveCustomItem.id,
-        currentActiveCustomItem.name,
-        currentActiveCustomItem.price,
-        `Sweetened by: ${sweetener}`
-      );
-      closeCustomModal();
-      return;
-    }
-
-    const getSelectedVals = (groupName) => {
-      return Array.from(document.querySelectorAll(`input[name="${groupName}"]:checked`)).map(cb => cb.value);
-    };
-
-    const sauces = getSelectedVals('custSauce');
-    const veggies = getSelectedVals('custVeggie');
-    const proteins = getSelectedVals('custProtein');
-
-    const maxS = currentActiveCustomItem.maxSauces;
-    const maxV = currentActiveCustomItem.maxVeggies;
-    const maxP = currentActiveCustomItem.maxProteins;
-
-    if (sauces.length === 0 && veggies.length === 0 && proteins.length === 0) {
-      customAlert("Please select at least one item to build your option.", "Selection Required");
-      return;
-    }
-
-    const extraVegCount = Math.max(0, veggies.length - maxV);
-    const extraProtCount = Math.max(0, proteins.length - maxP);
-    const totalExtraCount = extraVegCount + extraProtCount;
-    const totalExtraCost = totalExtraCount * EXTRA_ADDON_PRICE;
-
-    let warningParts = [];
-
-    if (sauces.length < maxS || veggies.length < maxV || proteins.length < maxP) {
-      let shortLines = [];
-      if (sauces.length < maxS) shortLines.push(`Sauces: ${sauces.length} / ${maxS}`);
-      if (veggies.length < maxV) shortLines.push(`Veggies: ${veggies.length} / ${maxV}`);
-      if (proteins.length < maxP) shortLines.push(`Proteins: ${proteins.length} / ${maxP}`);
-      warningParts.push(`You still have unused included choices:\n` + shortLines.join('\n'));
-    }
-
-    if (totalExtraCount > 0) {
-      let extraLines = [];
-      if (extraVegCount > 0) extraLines.push(`Extra Veggies: +${extraVegCount} (${formatKip(extraVegCount * EXTRA_ADDON_PRICE)})`);
-      if (extraProtCount > 0) extraLines.push(`Extra Proteins: +${extraProtCount} (${formatKip(extraProtCount * EXTRA_ADDON_PRICE)})`);
-      warningParts.push(`Additional Add-ons selected:\n` + extraLines.join('\n') + `\nTotal Extra: +${formatKip(totalExtraCost)}`);
-    }
-
-    if (warningParts.length > 0) {
-      const msg = warningParts.join('\n\n') + `\n\nAre you sure you want to proceed and add to order?`;
-      const proceed = await customConfirm(msg, 'Customize Confirmation');
-      if (!proceed) return;
-    }
-
-    let subParts = [];
-    
-    if (currentActiveCustomItem.needsWellnessChoice) {
-      const drink = document.querySelector('input[name="custWellness"]:checked').value;
-      subParts.push(`Drink: ${drink}`);
-    }
-
-    if (sauces.length) subParts.push(`Sauces: ${sauces.join(', ')}`);
-    if (veggies.length) subParts.push(`Veggies: ${veggies.join(', ')}`);
-    if (proteins.length) subParts.push(`Proteins: ${proteins.join(', ')}`);
-    
-    if (totalExtraCount > 0) {
-      subParts.push(`Add-ons: +${totalExtraCount} item(s) (+${formatKip(totalExtraCost)})`);
-    }
-
-    const finalPrice = currentActiveCustomItem.price + totalExtraCost;
-
-    addToCart(
-      currentActiveCustomItem.id,
-      currentActiveCustomItem.name,
-      finalPrice,
-      subParts.join(' | ')
-    );
-
-    closeCustomModal();
-  }
-
-  // --- 8. CHECKOUT & MESSAGING LOGIC ---
-  function clearOrderTypeError() {
-    document.getElementById('orderOptionsBox').classList.remove('error-highlight');
-    document.getElementById('orderTypeErrorMsg').style.display = 'none';
-  }
-
-  function buildOrderMessage() {
-    if (cart.length === 0) {
-      customAlert("Your basket is empty! Please add items before ordering.", "Empty Basket");
-      return null;
-    }
-
-    const orderTypeInput = document.querySelector('input[name="orderType"]:checked');
-    if (!orderTypeInput) {
-      document.getElementById('orderOptionsBox').classList.add('error-highlight');
-      document.getElementById('orderTypeErrorMsg').style.display = 'block';
-      document.getElementById('orderOptionsBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      customAlert("⚠️ Please select either Dine-In or Pick-Up before submitting your order!", "Action Required");
-      return null;
-    }
-
-    const orderType = orderTypeInput.value;
-    let message = `✦ *OON JAI ORDER* ✦\n`;
-    message += `*Type: ${orderType}*\n\n`;
-    message += `*Items Ordered:*\n`;
-
-    cart.forEach((item, index) => {
-      message += `${index + 1}. *${item.name}* - ${formatKip(item.price)}\n`;
-      if (item.subtext) {
-        message += `    _${item.subtext}_\n`;
-      }
-    });
-
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    message += `\n*Total: ${formatKip(total)}*\n`;
-    message += `\n👉Note: Please send your payment receipt to process this order.\n`;
-    
-    return message;
-  }
-
-  function checkoutWA() {
-    const msg = buildOrderMessage();
-    if (!msg) return;
-    const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
-  }
-
-  function checkoutMessenger() {
-    const msg = buildOrderMessage();
-    if (!msg) return;
-    const url = `https://m.me/${MESSENGER_USERNAME}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank');
-  }
-
-  // --- 9. WORDS OF HOPE INLINE FORM SCRIPT ---
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz447Z4KgONw60pVrGdHxFCWwferoy8koE2uza6BGILlDPiiY-UOtq79I8xJwQGNT2b/exec";
-
-  let deviceToken = localStorage.getItem("oonjai_user_id");
-  if (!deviceToken) {
-    deviceToken = "DEV-" + Math.random().toString(36).substring(2, 11) + Date.now();
-    localStorage.setItem("oonjai_user_id", deviceToken);
-  }
-  document.getElementById("device_token").value = deviceToken;
-
-  const messageInput = document.getElementById('message');
-  const wordCounter = document.getElementById('wordCounter');
-
-  function getWordCount(str) {
-    const trimmed = str.trim();
-    if (!trimmed) return 0;
-    return trimmed.split(/\s+/).length;
-  }
-
-  messageInput.addEventListener('input', function() {
-    const count = getWordCount(this.value);
-    wordCounter.innerText = `${count} / 20-30 words`;
-    
-    if (count >= 20 && count <= 30) {
-      wordCounter.style.color = "#4ade80";
-    } else {
-      wordCounter.style.color = "#64748b";
-    }
-  });
-
-  function clearForm() {
-    document.getElementById('customForm').reset();
-    document.getElementById("device_token").value = deviceToken;
-    document.getElementById('statusMsg').innerText = "";
-    wordCounter.innerText = "0 / 20-30 words";
-    wordCounter.style.color = "#64748b";
-  }
-
-  document.getElementById('customForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const status = document.getElementById('statusMsg');
-    const submitBtn = document.getElementById('submitBtn');
-    const wordCount = getWordCount(messageInput.value);
-
-    if (wordCount < 20) {
-      status.style.color = "#f87171";
-      status.innerText = `Too short (${wordCount} words). Must be 20-30 words.`;
-      return;
-    }
-
-    if (wordCount > 30) {
-      status.style.color = "#f87171";
-      status.innerText = `Too long (${wordCount} words). Must be 20-30 words.`;
-      return;
-    }
-
-    status.style.color = "#94a3b8";
-    status.innerText = "Submitting...";
-    submitBtn.disabled = true;
-
-    const formData = new FormData(this);
-
-    fetch(WEB_APP_URL, {
-      method: 'POST',
-      body: formData,
-      mode: 'no-cors'
-    })
-    .then(() => {
-      status.style.color = "#4ade80";
-      status.innerText = "✓ Message sent successfully!";
-      clearForm();
-      submitBtn.disabled = false;
-    })
-    .catch(error => {
-      status.style.color = "#f87171";
-      status.innerText = "Error submitting message. Please try again.";
-      submitBtn.disabled = false;
-    });
-  });
-
-  // --- INITIALIZATION ---
-  initReviewCarousel();
+  function checkoutWA() { alert("WhatsApp checkout logic goes here."); }
+  function checkoutMessenger() { alert("Messenger checkout logic goes here."); }
+  
+  // Init
   renderProductsGrid();
+
 </script>
 </body>
 </html>
