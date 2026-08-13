@@ -66,7 +66,7 @@
     .tab-pane.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- GLOBAL OUTLINE & BANNER STYLES --- */
+    /* --- GLOBAL OUTLINE & BANNER STYLES (Applies to ALL Tabs) --- */
     .tab-hero-banner {
       width: 100%; min-height: 220px; background-size: cover; background-position: center;
       display: flex; justify-content: center; align-items: center; 
@@ -85,9 +85,11 @@
       border-top: none;
       display: flex;
       flex-direction: column;
-      flex-grow: 1; /* Pushes footer to bottom */
+      flex-grow: 1; /* Automatically stretches to push the footer to the bottom */
     }
-    @media (max-width: 600px) { .tab-content-wrapper { padding: 20px 10px; } }
+    @media (max-width: 600px) { 
+      .tab-content-wrapper { padding: 20px 10px; } 
+    }
 
     .banner-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; }
     .banner-container { text-align: center; padding: 6px 10px; width: 100%; max-width: 750px; font-family: 'Montserrat', sans-serif; box-sizing: border-box; transform-origin: center center; }
@@ -106,12 +108,12 @@
     @media (max-width: 380px) { .banner-container { transform: scale(0.85); width: 115%; } }
 
     /* --- GLOBAL FOOTER WRAPPER --- */
-    .footer-wrapper { margin-top: auto; width: 100%; }
+    .footer-wrapper { margin-top: auto; width: 100%; padding-top: 30px; }
     .app-footer { text-align: center; padding: 30px 20px 10px 20px; border-top: 1px dashed var(--border-color); }
     .footer-brand { color: var(--accent-green); font-weight: 700; font-family: 'Georgia', serif; font-size: 16px; margin-bottom: 6px; }
     .footer-text { color: var(--text-muted); font-size: 12px; line-height: 1.6; }
     
-    .quotation-block { text-align: center; max-width: 600px; margin: 30px auto 20px auto; padding-top: 25px; border-top: 1px solid rgba(74, 222, 128, 0.15); }
+    .quotation-block { text-align: center; max-width: 600px; margin: 0 auto 10px auto; padding-bottom: 25px; }
     .quotation-text { font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif; }
     .quotation-author { font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px; }
 
@@ -128,7 +130,7 @@
     .home-card-btn { color: var(--text-bright); font-weight: 700; font-size: 14px; text-align: center; padding: 12px; transition: color 0.2s ease; }
     .home-card:hover .home-card-btn { color: var(--accent-green); }
     
-    .about-us-section { text-align: center; padding: 30px 15px; border-top: 1px dashed var(--border-color); margin-bottom: 20px; }
+    .about-us-section { text-align: center; padding: 30px 15px; border-top: 1px dashed var(--border-color); margin-bottom: 10px; }
     .about-us-section h3 { color: var(--text-bright); font-size: 20px; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; }
     .about-us-section p { font-size: 13px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 12px; max-width: 900px; margin-left: auto; margin-right: auto; }
 
@@ -139,7 +141,7 @@
     .business-hours { color: var(--text-muted); font-size: 11px; text-align: center; line-height: 1.3; }
     @media (min-width: 768px) { .menu-info-bar { flex-direction: row; gap: 20px; } .business-hours { font-size: 12px; } }
 
-    .menu-content-layout { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 30px; }
+    .menu-content-layout { display: flex; flex-direction: column; gap: 10px; flex: 1; }
     .sidebar-logo { display: none; }
     .categories-nav { flex-shrink: 0; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 6px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; backdrop-filter: blur(10px); }
     .nav-header { grid-column: 1 / -1; background: rgba(74, 222, 128, 0.15); color: var(--accent-green); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: 1px; text-align: center; padding: 8px; border-radius: var(--border-radius-sm); margin-bottom: 2px; border: 1px solid rgba(74, 222, 128, 0.3); }
@@ -220,7 +222,13 @@
     .modal-subtitle { font-size: 11px; color: var(--accent-green); margin-bottom: 10px; background: rgba(74, 222, 128, 0.1); padding: 6px 10px; border-radius: var(--border-radius-sm); }
 
     /* --- 8. SHARED CAROUSEL STYLES (Used in Hope & Reviews) --- */
-    .carousel-container { position: relative; width: 100%; max-width: 480px; margin: 0 auto; border-radius: var(--border-radius-main); overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.5); aspect-ratio: 16/9; }
+    .carousel-container { 
+      position: relative; width: 100%; max-width: 480px; margin: 0 auto; 
+      border-radius: var(--border-radius-main); overflow: hidden; 
+      border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.5); 
+      min-height: 250px; /* Fallback height ensures it never disappears on older phones */
+      aspect-ratio: 16/9; 
+    }
     .carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; height: 100%; }
     .carousel-track::-webkit-scrollbar { display: none; }
     .carousel-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; background: var(--bg-dark); scroll-snap-align: center; user-select: none; }
@@ -233,7 +241,7 @@
     .dot.active { background: var(--accent-green); }
 
     /* --- 9. WORDS OF HOPE TAB SPECIFIC --- */
-    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 15px 0 30px 0; }
+    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 15px 0 20px 0; }
     @media (min-width: 768px) { .hope-split-layout { grid-template-columns: 1fr 1fr; align-items: center; } }
 
     /* --- 10. REVIEW TAB SPECIFIC --- */
@@ -242,14 +250,16 @@
 
     /* Vertical Reviews Container */
     .reviews-vertical-wrapper { 
-      width: 100%; max-width: 480px; margin: 0 auto;
+      width: 100%; max-width: 480px; margin: 0 auto; position: relative;
+      min-height: 250px; /* Fallback height ensures it never disappears on older phones */
       aspect-ratio: 16/9; /* Perfect height match to the photo carousel */
       border-radius: var(--border-radius-main); overflow: hidden; 
       border: 1px solid var(--border-color); background: rgba(2, 18, 15, 0.4);
     }
+    
     .reviews-vertical-carousel {
       height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; display: flex; flex-direction: column; gap: 15px;
-      /* Padding top ensures the first card completely clears the outline border */
+      /* Padding firmly clears the first/last card away from the border */
       padding: 25px 15px; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
       scroll-padding-top: 25px; scroll-padding-bottom: 25px;
     }
@@ -259,15 +269,15 @@
       flex: none; height: auto; 
       scroll-snap-align: start;
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
-      padding: 18px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      padding: 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
-    .vertical-review-card:first-child { margin-top: 5px; } /* Extra clearance */
-    .review-stars { color: #fbbf24; font-size: 15px; letter-spacing: 2px; }
-    .review-text { font-style: italic; font-size: 13.5px; color: var(--text-subhead); line-height: 1.5; flex-grow: 1; font-family: 'Georgia', serif;}
+    
+    .review-stars { color: #fbbf24; font-size: 14px; letter-spacing: 2px; }
+    .review-text { font-style: italic; font-size: 13px; color: var(--text-subhead); line-height: 1.5; flex-grow: 1; font-family: 'Georgia', serif;}
     .review-author { font-weight: 700; font-size: 12px; color: var(--accent-green); text-align: right; letter-spacing: 0.5px; }
 
     /* Bottom Full Width Row for Review Links */
-    .review-bottom-full { max-width: 900px; margin: 30px auto 30px auto; text-align: center; padding: 25px 20px 0 20px; border-top: 1px dashed var(--border-color); }
+    .review-bottom-full { max-width: 900px; margin: 20px auto 10px auto; text-align: center; padding: 25px 20px 0 20px; border-top: 1px dashed var(--border-color); }
     .review-encouragement { font-size: 14px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 15px; }
     .google-review-btn { display:inline-block; padding: 14px 28px; background: #ffffff; color: #1a73e8; text-decoration: none; font-weight: bold; border-radius: var(--border-radius-sm); font-size: 14px; box-shadow: 0 4px 12px rgba(26,115,232,0.2); transition: all 0.2s ease; margin-bottom: 25px; border: 1px solid #1a73e8; }
     .google-review-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(26,115,232,0.3); }
@@ -325,6 +335,7 @@
     
     <!-- ================== TAB: HOME ================== -->
     <div id="tab-home" class="tab-pane active">
+      <!-- Universal Banner -->
       <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg');">
         <div class="banner-wrapper">
           <div class="banner-container">
@@ -527,14 +538,14 @@
             </div>
           </div>
 
-          <!-- GROUPED QUOTATION AND FOOTER (Sticks to the bottom perfectly) -->
+          <!-- GROUPED QUOTATION AND FOOTER (Locked Together) -->
           <div class="footer-wrapper">
             <div class="quotation-block">
               <p class="quotation-text">"A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."</p>
               <span class="quotation-author">— Amelia Earhart</span>
             </div>
             
-            <footer class="app-footer" style="border-top: none; padding-top: 0;">
+            <footer class="app-footer" style="border-top: none; padding-top: 0; margin-top: 0;">
               <div class="footer-brand">Oon Jai Marketplace</div>
               <div class="footer-text">Vientiane, Laos</div>
               <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
@@ -1297,7 +1308,6 @@
     });
   }
 
-  renderProductsGrid();
 </script>
 </body>
 </html>
