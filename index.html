@@ -19,13 +19,24 @@
     /* --- 1. THEME COLORS & VARIABLES --- */
     :root {
       --bg-dark: #010c0a; --bg-gradient: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%);
-      --card-bg: rgba(2, 18, 15, 0.85); --border-color: #1e4d40; --accent-green: #4ade80;
+      --card-bg: rgba(2, 18, 15, 0.75); --border-color: #1e4d40; --accent-green: #4ade80;
       --wa-color: #25D366; --msgr-color: #0084FF; --text-bright: #ffffff;
       --text-muted: #94a3b8; --text-subhead: #cbd5e1; --border-radius-main: 14px; --border-radius-sm: 10px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-dark); color: var(--text-bright); }
+    
+    /* Native scrolling enabled for pull-to-refresh */
+    html, body { 
+      width: 100%; 
+      min-height: 100vh; 
+      background: var(--bg-dark); 
+      color: var(--text-bright); 
+    }
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+    }
 
     /* --- 2. TOP NAVIGATION --- */
     .top-nav {
@@ -57,11 +68,12 @@
 
     /* --- 3. MAIN APP LAYOUT & TABS --- */
     .app-container {
-      width: 100%; height: 100%; background: var(--bg-gradient); padding: 10px; padding-top: 75px;
-      display: flex; flex-direction: column; gap: 10px; margin: 0 auto; max-width: 1200px; position: relative; overflow: hidden;
+      width: 100%; min-height: 100vh; padding: 10px; padding-top: 75px;
+      display: flex; flex-direction: column; gap: 10px; margin: 0 auto; max-width: 1200px; position: relative;
     }
-    .tab-pane { display: none; flex-direction: column; height: 100%; overflow-y: auto; padding-bottom: 40px; animation: fadeIn 0.3s ease; scrollbar-width: thin; scrollbar-color: var(--border-color) transparent; }
-    .tab-pane::-webkit-scrollbar { width: 5px; } .tab-pane::-webkit-scrollbar-thumb { background-color: var(--border-color); border-radius: 4px; }
+    .tab-pane { 
+      display: none; flex-direction: column; padding-bottom: 40px; animation: fadeIn 0.3s ease; 
+    }
     .tab-pane.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -71,7 +83,7 @@
       display: flex; justify-content: center; align-items: center; border-radius: var(--border-radius-main);
       margin-bottom: 20px; position: relative; overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;
     }
-    .tab-hero-banner::before { content: ''; position: absolute; inset: 0; background: rgba(1, 12, 10, 0.7); } /* Dark overlay */
+    .tab-hero-banner::before { content: ''; position: absolute; inset: 0; background: rgba(1, 12, 10, 0.7); }
     
     .banner-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; }
     .banner-container { text-align: center; padding: 6px 10px; width: 100%; max-width: 750px; font-family: 'Montserrat', sans-serif; box-sizing: border-box; transform-origin: center center; }
@@ -80,8 +92,15 @@
     .banner-divider { width: 50px; height: 1px; background: linear-gradient(90deg, transparent, #D4AF37, transparent); margin: 0 auto 8px auto; }
     .banner-subtitle { font-size: 0.95rem; font-style: italic; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; color: #d1e2d3; margin: 0; line-height: 1.25; letter-spacing: 0.3px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7); }
 
-    @media (max-width: 500px) { .banner-container { transform: scale(0.85); width: 115%; } }
-    @media (max-width: 380px) { .banner-container { transform: scale(0.75); width: 130%; } }
+    /* Mobile specifically shorter banner */
+    @media (max-width: 600px) { 
+      .tab-hero-banner { min-height: 140px; margin-bottom: 15px; }
+      .banner-badge { font-size: 9px; margin-bottom: 4px; }
+      .banner-title { font-size: 1.35rem; margin-bottom: 4px; }
+      .banner-subtitle { font-size: 0.85rem; }
+    }
+    @media (max-width: 500px) { .banner-container { transform: scale(0.9); width: 110%; } }
+    @media (max-width: 380px) { .banner-container { transform: scale(0.85); width: 115%; } }
 
     /* --- 5. HOME TAB SPECIFIC STYLES --- */
     .home-intro { text-align: center; margin-bottom: 25px; padding: 0 15px; }
@@ -91,10 +110,11 @@
     .home-cards-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 30px; padding: 0 10px; }
     @media (min-width: 768px) { .home-cards-grid { grid-template-columns: repeat(3, 1fr); padding: 0; } }
     
-    .home-card { cursor: pointer; border-radius: 12px; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; background: #ffffff; }
-    .home-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(74, 222, 128, 0.2); }
-    .home-card img { width: 100%; height: auto; display: block; border: 1px solid var(--border-color); border-bottom: none; border-radius: 12px 12px 0 0; }
-    .home-card-btn { color: #010c0a; font-weight: 700; font-size: 14px; text-align: center; padding: 12px; }
+    .home-card { cursor: pointer; border-radius: 12px; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--border-color); }
+    .home-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(74, 222, 128, 0.2); border-color: var(--accent-green); }
+    .home-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--border-color); border-radius: 12px 12px 0 0; }
+    .home-card-btn { color: var(--text-bright); font-weight: 700; font-size: 14px; text-align: center; padding: 12px; transition: color 0.2s ease; }
+    .home-card:hover .home-card-btn { color: var(--accent-green); }
     
     .about-us-section { text-align: center; padding: 30px 15px; border-top: 1px dashed var(--border-color); }
     .about-us-section h3 { color: var(--text-bright); font-size: 20px; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; }
@@ -114,9 +134,10 @@
     .sidebar-bottom-actions { display: none; }
 
     @media (min-width: 768px) {
-      .menu-content-layout { display: grid; grid-template-columns: 220px 1fr; gap: 18px; align-items: stretch; }
+      .menu-content-layout { display: grid; grid-template-columns: 220px 1fr; gap: 18px; align-items: flex-start; }
       .sidebar-logo { display: block; margin: 0 auto 15px auto; width: 114px; height: 114px; border-radius: 50%; border: 2px solid var(--accent-green); object-fit: cover; }
-      .categories-nav { display: flex; flex-direction: column; justify-content: flex-start; padding: 15px 10px 10px 10px; gap: 8px; }
+      /* Makes the sidebar stick on desktop while scrolling */
+      .categories-nav { position: sticky; top: 75px; max-height: calc(100vh - 90px); overflow-y: auto; display: flex; flex-direction: column; justify-content: flex-start; padding: 15px 10px 10px 10px; gap: 8px; }
       .nav-header { font-size: 13px; padding: 10px; margin-bottom: 6px; }
       .sidebar-bottom-actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-top: 18px; border-top: 1px dashed var(--border-color); }
     }
@@ -197,7 +218,42 @@
     .dot { width: 8px; height: 8px; background: var(--border-color); border-radius: 50%; cursor: pointer; }
     .dot.active { background: var(--accent-green); }
 
-    /* --- 8. MODALS --- */
+    /* --- 8. REVIEW TAB CAROUSEL --- */
+    .reviews-carousel-wrapper {
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+    .reviews-carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding: 10px 20px 20px 20px; /* Padding for shadow/glow */
+      scroll-behavior: smooth;
+      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+    .reviews-carousel::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+    
+    .review-card {
+      flex: 0 0 82%; /* Allows peaking at the next card */
+      max-width: 340px;
+      scroll-snap-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-main);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .review-stars { color: #fbbf24; font-size: 16px; letter-spacing: 2px; }
+    .review-text { font-style: italic; font-size: 14px; color: var(--text-subhead); line-height: 1.5; flex-grow: 1; font-family: 'Georgia', serif;}
+    .review-author { font-weight: 700; font-size: 13px; color: var(--accent-green); text-align: right; letter-spacing: 0.5px; }
+
+    /* --- 9. MODALS --- */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; padding: 14px; z-index: 2000; }
     .modal-overlay.active { display: flex; }
     .modal-box { background: #041f1a; border: 1px solid var(--border-color); border-radius: var(--border-radius-main); max-width: 480px; width: 100%; max-height: 90%; overflow-y: auto; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.8); position: relative; }
@@ -215,11 +271,10 @@
 <body>
 
   <!-- ========================================== -->
-  <!--               TOP NAVIGATION               -->
+  <!--                TOP NAVIGATION              -->
   <!-- ========================================== -->
   <nav class="top-nav">
     <div class="nav-left">
-      <!-- [EDIT IMAGE LINK HERE: Top Navigation Logo] -->
       <img src="https://i.postimg.cc/DZmP1t7Q/logo.jpg" class="nav-small-logo" alt="Oon Jai Logo" />
       <span class="nav-brand">Oon Jai</span>
     </div>
@@ -228,7 +283,7 @@
       <button class="nav-tab active" data-tab="home" onclick="switchMainTab('home')">Home</button>
       <button class="nav-tab" data-tab="menu" onclick="switchMainTab('menu')">Menu</button>
       <button class="nav-tab" data-tab="hope" onclick="switchMainTab('hope')">Words of Hope</button>
-      <button class="nav-tab" data-tab="review" onclick="switchMainTab('review')">Review</button>
+      <button class="nav-tab" data-tab="review" onclick="switchMainTab('review')">Reviews</button>
     </div>
     <!-- Mobile Menu Trigger -->
     <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
@@ -239,7 +294,7 @@
     <button class="nav-tab active" data-tab="home" onclick="switchMainTab('home')">Home</button>
     <button class="nav-tab" data-tab="menu" onclick="switchMainTab('menu')">Menu</button>
     <button class="nav-tab" data-tab="hope" onclick="switchMainTab('hope')">Words of Hope</button>
-    <button class="nav-tab" data-tab="review" onclick="switchMainTab('review')">Review</button>
+    <button class="nav-tab" data-tab="review" onclick="switchMainTab('review')">Reviews</button>
   </div>
 
 
@@ -251,7 +306,6 @@
     <!-- ================== TAB: HOME ================== -->
     <div id="tab-home" class="tab-pane active">
       
-      <!-- [EDIT IMAGE LINK HERE: Home Tab Background Banner] -->
       <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg');">
         <div class="banner-wrapper">
           <div class="banner-container">
@@ -271,23 +325,20 @@
       <div class="home-cards-grid">
         <!-- Home Card 1: Menu -->
         <div class="home-card" onclick="switchMainTab('menu')">
-          <!-- [EDIT IMAGE LINK HERE: Home Tab Card 1 (Menu Image)] -->
           <img src="https://i.postimg.cc/K8FhG55D/Home-1.png" alt="Menu" />
-          <div class="home-card-btn">Menu</div>
+          <div class="home-card-btn">Explore Menu</div>
         </div>
         
         <!-- Home Card 2: Words of Hope -->
         <div class="home-card" onclick="switchMainTab('hope')">
-          <!-- [EDIT IMAGE LINK HERE: Home Tab Card 2 (Words of Hope Image)] -->
           <img src="https://i.postimg.cc/qv0HJGGq/Home-2.png" alt="Words of Hope" />
           <div class="home-card-btn">Words of Hope</div>
         </div>
         
         <!-- Home Card 3: Review -->
         <div class="home-card" onclick="switchMainTab('review')">
-          <!-- [EDIT IMAGE LINK HERE: Home Tab Card 3 (Review Image)] -->
           <img src="https://i.postimg.cc/sgyCjJJM/Home-3.png" alt="Review" />
-          <div class="home-card-btn">Review</div>
+          <div class="home-card-btn">Customer Reviews</div>
         </div>
       </div>
 
@@ -295,7 +346,6 @@
         <h3>About Us</h3>
         <p>Oon Jai Marketplace is a mission-driven vegetarian and vegan restaurant located in Vientiane, Laos. More than just a place to enjoy wholesome food, Oon Jai exists to promote healthy living, compassionate service, and meaningful relationships through plant-based meals and community engagement.</p>
         <p>Every meal served and every person welcomed represents an opportunity to share kindness, care, and connection. Through food and hospitality, Oon Jai seeks to demonstrate that a simple meal can become a powerful expression of love, compassion, and service—nourishing not only the body but also the community.</p>
-        <!-- [EDIT LINK HERE: About Us Website Link] -->
         <p style="margin-top: 15px;">For more information about Oon Jai and our mission, please visit us at <a href="http://www.oonjai.org" target="_blank" style="color: var(--accent-green); text-decoration: none; font-weight: bold;">www.oonjai.org</a></p>
       </div>
     </div>
@@ -303,7 +353,6 @@
     <!-- ================== TAB: MENU ================== -->
     <div id="tab-menu" class="tab-pane">
       
-      <!-- [EDIT IMAGE LINK HERE: Menu Tab Background Banner] -->
       <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg');">
         <div class="banner-wrapper">
           <div class="banner-container">
@@ -317,7 +366,6 @@
 
       <div class="menu-info-bar">
         <div class="business-hours">🕒 Mon–Thu: 11:00 – 14:00, 16:00 – 18:30 | Fri: 11:00 – 14:00</div>
-        <!-- [EDIT LINK HERE: Location Google Maps Link] -->
         <a href="https://maps.app.goo.gl/YojE5Vj56rt93vGC6?g_st=aw" target="_blank" rel="noopener noreferrer" class="location-link">📍 Vientiane, Laos</a>
       </div>
 
@@ -325,7 +373,6 @@
         
         <!-- SIDEBAR -->
         <aside class="categories-nav" id="categoryNav">
-          <!-- [EDIT IMAGE LINK HERE: Sidebar Desktop Logo] -->
           <img src="https://i.postimg.cc/DZmP1t7Q/logo.jpg" class="sidebar-logo" alt="Oon Jai Logo" />
           
           <div class="nav-header">Menu Categories</div>
@@ -339,7 +386,6 @@
           <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
 
           <div class="sidebar-bottom-actions">
-            <!-- [EDIT LINK HERE: Sidebar Google Review Link] -->
             <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">⭐ Leave us a Review</a>
             <button class="btn-hope-action" onclick="switchMainTab('hope')">🌱 Words of Hope</button>
           </div>
@@ -386,13 +432,9 @@
               <div class="delivery-section">
                 <div class="delivery-title">Or Order / Find Us On</div>
                 <div class="delivery-grid">
-                  <!-- [EDIT LINK HERE: FoodPanda] -->
                   <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" rel="noopener noreferrer" class="platform-link foodpanda">Food Panda</a>
-                  <!-- [EDIT LINK HERE: E-GetS] -->
                   <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" rel="noopener noreferrer" class="platform-link egets">E-GetS</a>
-                  <!-- [EDIT LINK HERE: ChompA] -->
                   <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" rel="noopener noreferrer" class="platform-link chompa">ChompA</a>
-                  <!-- [EDIT LINK HERE: Restaurant Guru] -->
                   <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" rel="noopener noreferrer" class="platform-link guru">Restaurant Guru</a>
                 </div>
               </div>
@@ -405,7 +447,6 @@
     <!-- ================== TAB: WORDS OF HOPE ================== -->
     <div id="tab-hope" class="tab-pane">
       
-      <!-- [EDIT IMAGE LINK HERE: Words of Hope Background Banner] -->
       <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg'); margin-bottom: 0; border-radius: var(--border-radius-main) var(--border-radius-main) 0 0; border-bottom: none;">
         <div class="banner-wrapper">
           <div class="banner-container">
@@ -445,7 +486,6 @@
             <div style="display: flex; justify-content: center; align-items: flex-start;">
               <div style="font-family: 'Georgia', 'Times New Roman', serif; max-width: 480px; width: 100%; min-height: 252px; margin: 0 auto; padding: 28px 20px; border-radius: 16px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: #ffffff;">
                 <div>
-                  <!-- Font size uses clamp to dynamically resize on mobile to prevent line-breaks -->
                   <h3 style="margin-top: 0; margin-bottom: 6px; font-size: clamp(16px, 4.5vw, 22px); font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif; white-space: nowrap;">
                     <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-right: 4px;">✦</span>
                     Message for a Stranger
@@ -455,7 +495,6 @@
                     Leave an encouraging thought or quote to brighten someone's day.
                   </p>
 
-                  <!-- USER SCRIPT FORM -->
                   <form id="customForm" autocomplete="off" style="font-family: 'Segoe UI', -apple-system, sans-serif;">
                     <input type="hidden" id="device_token" name="device_token" />
                     <div style="margin-bottom: 16px;">
@@ -491,22 +530,28 @@
       </div>
     </div>
     
-    <!-- ================== TAB: REVIEW ================== -->
+    <!-- ================== TAB: REVIEWS ================== -->
     <div id="tab-review" class="tab-pane">
-      <!-- [EDIT IMAGE LINK HERE: Review Tab Background Banner] -->
       <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg');">
         <div class="banner-wrapper">
           <div class="banner-container">
             <div class="banner-badge">✦ Community Voices ✦</div>
             <h1 class="banner-title">Share Your Experience</h1>
             <div class="banner-divider"></div>
-            <p class="banner-subtitle">"If you enjoyed your experience, please let us know!"</p>
+            <p class="banner-subtitle">"Hear what our guests are saying, or leave us a review!"</p>
           </div>
         </div>
       </div>
-      <div style="text-align: center; padding: 20px;">
-        <!-- [EDIT LINK HERE: Review Tab Google Review Link] -->
-        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding: 14px 28px; background: #ffffff; color: #1a73e8; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 15px; box-shadow: 0 4px 12px rgba(26,115,232,0.2);">⭐ Leave a Review on Google</a>
+      
+      <!-- HORIZONTAL SWIPEABLE REVIEWS CAROUSEL -->
+      <div class="reviews-carousel-wrapper">
+        <div class="reviews-carousel" id="reviewsCarousel">
+          <!-- JS will populate these custom cards -->
+        </div>
+      </div>
+
+      <div style="text-align: center; padding: 10px 20px 40px 20px;">
+        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" style="display:inline-block; padding: 14px 28px; background: #ffffff; color: #1a73e8; text-decoration: none; font-weight: bold; border-radius: 8px; font-size: 15px; box-shadow: 0 4px 12px rgba(26,115,232,0.2);">⭐ Leave your Review on Google</a>
       </div>
     </div>
   </div>
@@ -564,11 +609,21 @@
   </div>
 
 <script>
-  // --- TOP NAVIGATION LOGIC ---
+  // --- MOBILE MENU AUTO-CLOSE LOGIC ---
   function toggleMobileMenu() {
     document.getElementById('mobileMenu').classList.toggle('active');
   }
 
+  document.addEventListener('click', function(event) {
+    const menu = document.getElementById('mobileMenu');
+    const hamburger = document.querySelector('.hamburger');
+    // If the menu is open, AND the click is not inside the menu, AND not on the hamburger button... close it.
+    if (menu.classList.contains('active') && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+      menu.classList.remove('active');
+    }
+  });
+
+  // --- TAB NAVIGATION LOGIC ---
   function switchMainTab(tabId) {
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + tabId).classList.add('active');
@@ -580,19 +635,47 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // --- REVIEWS CAROUSEL (15 CUSTOM REVIEWS) ---
+  const customReviews = [
+    { text: "Absolutely delicious! The Classic Burger is a must-try. Everything tastes so fresh.", name: "Sarah V.", stars: "★★★★★" },
+    { text: "Love the Words of Hope section. The food is equally uplifting and nourishing.", name: "James L.", stars: "★★★★★" },
+    { text: "Best vegan options in Vientiane! The Miso-Seaweed pasta was incredible.", name: "Nina K.", stars: "★★★★★" },
+    { text: "Cozy atmosphere and kind staff. Will definitely come back when I'm in town.", name: "Mark D.", stars: "★★★★☆" },
+    { text: "The Chickelicious sandwich completely blew my mind. Great flavors and textures.", name: "Elena R.", stars: "★★★★★" },
+    { text: "I ordered via Messenger and everything was seamless. Great customer service!", name: "Tui S.", stars: "★★★★★" },
+    { text: "Healthy, tasty, and the portion sizes are very generous for the price.", name: "Claire M.", stars: "★★★★☆" },
+    { text: "Their Mint Pineapple Refresher is the perfect summer drink! Highly recommend.", name: "Alex B.", stars: "★★★★★" },
+    { text: "Affordable and truly wholesome. The Build Your Bowl combo is my go-to order.", name: "Pheng S.", stars: "★★★★★" },
+    { text: "A hidden gem. It feels good to support a business with such a great mission.", name: "Chloe T.", stars: "★★★★★" },
+    { text: "The Mediterranean sandwich was packed with flavor. The falafel is perfectly spiced.", name: "David W.", stars: "★★★★☆" },
+    { text: "A calm, beautiful place to eat and reflect. Thank you Oon Jai for this space.", name: "Maria G.", stars: "★★★★★" },
+    { text: "So glad I found this place! The pesto pasta is out of this world.", name: "Sophie L.", stars: "★★★★★" },
+    { text: "Excellent presentation and taste. Even my non-vegan friends loved it.", name: "Ryan P.", stars: "★★★★★" },
+    { text: "Consistently amazing. Every meal feels like it's made with care and love.", name: "Anou S.", stars: "★★★★★" }
+  ];
+
+  function initReviewsCarousel() {
+    const container = document.getElementById('reviewsCarousel');
+    let html = '';
+    customReviews.forEach(rev => {
+      html += `
+        <div class="review-card">
+          <div class="review-stars">${rev.stars}</div>
+          <div class="review-text">"${rev.text}"</div>
+          <div class="review-author">- ${rev.name}</div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+  initReviewsCarousel();
+
+
   // --- HOPE TAB CAROUSEL LOGIC ---
-  // [EDIT IMAGE LINKS HERE: Words of Hope Carousel Photos]
   const hopeImages = [
-    "https://i.postimg.cc/9f27Ws4W/10.jpg",
-    "https://i.postimg.cc/KYbMZCKF/11.jpg",
-    "https://i.postimg.cc/pdvF239R/12.jpg",
-    "https://i.postimg.cc/CK4fdJDS/3.jpg",
-    "https://i.postimg.cc/Gpjs9zYr/4.jpg",
-    "https://i.postimg.cc/W4Vk2xD1/5.jpg",
-    "https://i.postimg.cc/LsVZhvfd/6.jpg",
-    "https://i.postimg.cc/8CG61xFP/7.jpg",
-    "https://i.postimg.cc/tgbxX81R/8.jpg",
-    "https://i.postimg.cc/k5CbnLV7/9.jpg"
+    "https://i.postimg.cc/9f27Ws4W/10.jpg", "https://i.postimg.cc/KYbMZCKF/11.jpg", "https://i.postimg.cc/pdvF239R/12.jpg",
+    "https://i.postimg.cc/CK4fdJDS/3.jpg", "https://i.postimg.cc/Gpjs9zYr/4.jpg", "https://i.postimg.cc/W4Vk2xD1/5.jpg",
+    "https://i.postimg.cc/LsVZhvfd/6.jpg", "https://i.postimg.cc/8CG61xFP/7.jpg", "https://i.postimg.cc/tgbxX81R/8.jpg", "https://i.postimg.cc/k5CbnLV7/9.jpg"
   ];
   let currentHopeSlide = 0;
 
@@ -623,8 +706,10 @@
     });
   }
 
+
   // --- USER FORM SUBMISSION LOGIC (WORDS OF HOPE) ---
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz447Z4KgONw60pVrGdHxFCWwferoy8koE2uza6BGILlDPiiY-UOtq79I8xJwQGNT2b/exec";
+  // NEW SCRIPT LINK UPDATED HERE
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw82CgCvJ6vcNC4IZ86-gDOkn9--L2w-DYVD-txuZ3rqzjmcDeHftf9KSjgYS2USezn/exec";
 
   let deviceToken = localStorage.getItem("oonjai_user_id");
   if (!deviceToken) {
@@ -645,11 +730,7 @@
   messageInput.addEventListener('input', function() {
     const count = getWordCount(this.value);
     wordCounter.innerText = `${count} / 20-30 words`;
-    if (count >= 20 && count <= 30) {
-      wordCounter.style.color = "#4ade80"; 
-    } else {
-      wordCounter.style.color = "#64748b"; 
-    }
+    if (count >= 20 && count <= 30) { wordCounter.style.color = "#4ade80"; } else { wordCounter.style.color = "#64748b"; }
   });
 
   function clearForm() {
@@ -811,8 +892,11 @@
     document.getElementById('categoryTitle').innerText = titleMap[catKey];
     renderProductsGrid();
     
+    // Auto-scroll to top of main content when category is clicked
     const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
-    if (scrollTarget) scrollTarget.scrollTop = 0;
+    if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
+      scrollTarget.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
   }
 
   function renderProductsGrid() {
@@ -1059,10 +1143,37 @@
     window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
+  // --- MESSENGER FIX ---
+  // Copies to clipboard before opening Messenger, as FB blocks direct link text fills.
   function checkoutMessenger() {
     const msg = buildOrderMessage();
     if (!msg) return;
-    window.open(`https://m.me/${MESSENGER_USERNAME}?text=${encodeURIComponent(msg)}`, '_blank');
+
+    // Use clipboard API
+    navigator.clipboard.writeText(msg).then(() => {
+      // Show confirmation popup with direct link button
+      document.getElementById('notifTitle').innerText = "Order Copied! 📋";
+      document.getElementById('notifMessage').innerText = "Your order details have been successfully copied.\n\nWhen Messenger opens, just PASTE the text into the chat to send your order.";
+      
+      document.getElementById('notifAlertAction').style.display = 'none';
+      document.getElementById('notifConfirmActions').style.display = 'flex';
+      
+      const proceedBtn = document.getElementById('btnNotifProceed');
+      proceedBtn.innerText = "Open Messenger";
+      
+      document.getElementById('notificationModal').classList.add('active');
+      
+      document.getElementById('btnNotifCancel').onclick = () => { closeNotification(); };
+      proceedBtn.onclick = () => { 
+          closeNotification(); 
+          window.open(`https://m.me/${MESSENGER_USERNAME}`, '_blank');
+          // Reset button text
+          proceedBtn.innerText = "Proceed";
+      };
+    }).catch(err => {
+      // Fallback if user's browser blocks clipboard access
+      customAlert("We couldn't copy the text automatically. You can still proceed to Messenger, or use WhatsApp for an automatic message.", "Notice");
+    });
   }
 
   // Init Calls
