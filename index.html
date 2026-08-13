@@ -26,7 +26,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; }
     
-    html, body { width: 100%; min-height: 100vh; background: var(--bg-dark); color: var(--text-bright); }
+    html, body { width: 100%; min-height: 100vh; background: var(--bg-dark); color: var(--text-bright); overflow-x: hidden; }
     body { background: var(--bg-gradient); background-attachment: fixed; }
 
     /* --- 2. TOP NAVIGATION --- */
@@ -211,12 +211,13 @@
 
     /* --- 8. SHARED CAROUSEL STYLES (Used in Hope & Reviews) --- */
     .carousel-container { 
-      position: relative; width: 100%; max-width: 480px; margin: 0 auto; 
+      position: relative; width: 100%; max-width: 100%; margin: 0 auto; 
       border-radius: var(--border-radius-main); overflow: hidden; 
       border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.5); 
       min-height: 250px; 
       aspect-ratio: 16/9; 
     }
+    @media (min-width: 480px) { .carousel-container { max-width: 480px; } }
     .carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; height: 100%; }
     .carousel-track::-webkit-scrollbar { display: none; }
     .carousel-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; background: var(--bg-dark); scroll-snap-align: center; user-select: none; pointer-events: none; }
@@ -230,31 +231,34 @@
 
     /* --- 9. WORDS OF HOPE TAB SPECIFIC --- */
     .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 15px 0 30px 0; }
+    /* Prevent flex/grid blowout on small screens */
+    .hope-split-layout > div { min-width: 0; max-width: 100%; } 
     @media (min-width: 768px) { .hope-split-layout { grid-template-columns: 1fr 1fr; align-items: center; } }
 
     /* --- 10. REVIEW TAB SPECIFIC --- */
     .review-top-split { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 10px; justify-items: center; }
+    /* Prevent flex/grid blowout on small screens */
+    .review-top-split > div { min-width: 0; max-width: 100%; }
     @media (min-width: 768px) { .review-top-split { grid-template-columns: 1fr 1fr; align-items: center; justify-items: stretch; } }
 
     /* Vertical Reviews Container */
     .reviews-vertical-wrapper { 
-      width: 100%; max-width: 480px; margin: 0 auto; position: relative;
+      width: 100%; max-width: 100%; margin: 0 auto; position: relative;
       min-height: 250px; 
       aspect-ratio: 16/9; /* Perfect height match to the photo carousel */
       border-radius: var(--border-radius-main); overflow: hidden; 
       border: 1px solid var(--border-color); background: rgba(2, 18, 15, 0.4);
     }
+    @media (min-width: 480px) { .reviews-vertical-wrapper { max-width: 480px; } }
     
     .reviews-vertical-carousel {
-      height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; display: flex; flex-direction: column; gap: 15px;
-      padding: 25px 15px; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
-      scroll-padding-top: 25px; scroll-padding-bottom: 25px;
+      height: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 15px;
+      padding: 25px 15px; -ms-overflow-style: none; scrollbar-width: none;
     }
     .reviews-vertical-carousel::-webkit-scrollbar { display: none; }
     
     .vertical-review-card {
       flex-shrink: 0; height: auto; 
-      scroll-snap-align: start;
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
       padding: 18px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
@@ -496,7 +500,7 @@
           <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%;">
             <div style="font-family: 'Georgia', 'Times New Roman', serif; max-width: 480px; width: 100%; min-height: 252px; margin: 0 auto; padding: 28px 20px; border-radius: 16px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: #ffffff;">
               <div>
-                <h3 style="margin-top: 0; margin-bottom: 6px; font-size: clamp(16px, 4.5vw, 22px); font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif; white-space: nowrap;">
+                <h3 style="margin-top: 0; margin-bottom: 6px; font-size: clamp(16px, 4.5vw, 22px); font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif;">
                   <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-right: 4px;">✦</span>
                   Message for a Stranger
                   <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-left: 4px;">✦</span>
@@ -526,24 +530,24 @@
               <div id="statusMsg" style="margin-top: 10px; font-size: 12px; font-weight: 500; text-align: center; min-height: 18px; font-family: 'Segoe UI', sans-serif;"></div>
             </div>
           </div>
-        </div> <!-- [FIX] Closes hope-split-layout so footer is full-width -->
+        </div>
 
-        <!-- GROUPED QUOTATION AND FOOTER (Now outside the grid, properly centered) -->
-        <div style="margin-top: auto; padding-top: 30px; border-top: 1px dashed var(--border-color);">
+        <!-- GROUPED QUOTATION AND FOOTER (Centered, Border fixed) -->
+        <div style="margin-top: auto; padding-top: 30px;">
           <div class="quotation-block" style="text-align: center; max-width: 600px; margin: 0 auto 10px auto; padding-top: 20px;">
             <p class="quotation-text" style="font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif;">"A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."</p>
             <span class="quotation-author" style="font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px;">— Amelia Earhart</span>
           </div>
           
-          <footer class="app-footer" style="border-top: none; padding-top: 10px; margin-top: 0; text-align: center;">
+          <footer class="app-footer" style="border-top: 1px dashed var(--border-color); padding-top: 20px; margin-top: 25px; text-align: center;">
             <div class="footer-brand">Oon Jai Marketplace</div>
             <div class="footer-text">Vientiane, Laos</div>
             <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
           </footer>
         </div>
 
-      </div> <!-- Closes tab-content-wrapper -->
-    </div> <!-- [FIX] This missing closing div prevents tab-review from being hidden inside tab-hope! -->
+      </div>
+    </div>
     
     <!-- ================== TAB: REVIEWS ================== -->
     <div id="tab-review" class="tab-pane">
@@ -813,6 +817,27 @@
     { text: "Consistently amazing. Every meal feels like it's made with care and love.", name: "Anou S.", stars: "★★★★★" }
   ];
 
+  // --- VERTICAL AUTO SCROLL LOGIC ---
+  let verticalScrollInterval;
+  let isVerticalHoveredOrDragged = false;
+
+  function startVerticalAutoScroll() {
+    const track = document.getElementById('verticalReviewsCarousel');
+    if (!track) return;
+    
+    clearInterval(verticalScrollInterval);
+    verticalScrollInterval = setInterval(() => {
+      // Pause if hovered or touched by user
+      if (!isVerticalHoveredOrDragged) {
+        track.scrollTop += 1;
+        // Loop back to top if scrolled past the end
+        if (Math.ceil(track.scrollTop + track.clientHeight) >= track.scrollHeight) {
+          track.scrollTop = 0;
+        }
+      }
+    }, 35); // Slow, continuous smooth scroll
+  }
+
   function initVerticalReviewsCarousel() {
     const container = document.getElementById('verticalReviewsCarousel');
     if(!container) return;
@@ -826,8 +851,29 @@
         </div>
       `;
     });
+    // Duplicate once to make looping look smoother (optional, but good for continuous scroll)
+    customReviewsData.forEach(rev => {
+      html += `
+        <div class="vertical-review-card">
+          <div class="review-stars">${rev.stars}</div>
+          <div class="review-text">"${rev.text}"</div>
+          <div class="review-author">- ${rev.name}</div>
+        </div>
+      `;
+    });
     container.innerHTML = html;
-    makeScrollableDraggable(container, 'verticalReviewsCarousel', true);
+    
+    makeScrollableDraggable(container, null, true); // True = isVertical
+    
+    // Add interaction listeners to PAUSE the auto scroll while user reads/scrolls
+    container.addEventListener('mouseenter', () => isVerticalHoveredOrDragged = true);
+    container.addEventListener('mouseleave', () => isVerticalHoveredOrDragged = false);
+    container.addEventListener('touchstart', () => isVerticalHoveredOrDragged = true, {passive: true});
+    container.addEventListener('touchend', () => { 
+        setTimeout(() => isVerticalHoveredOrDragged = false, 1500); 
+    }, {passive: true});
+
+    startVerticalAutoScroll();
   }
 
   // --- HOPE & REVIEW PHOTOS (15 Slots) ---
