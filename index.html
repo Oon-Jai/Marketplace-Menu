@@ -62,7 +62,7 @@
       width: 100%; min-height: 100vh; padding: 10px; padding-top: 75px;
       display: flex; flex-direction: column; gap: 10px; margin: 0 auto; max-width: 1200px; position: relative;
     }
-    .tab-pane { display: none; flex-direction: column; padding-bottom: 40px; animation: fadeIn 0.3s ease; }
+    .tab-pane { display: none; flex-direction: column; padding-bottom: 40px; animation: fadeIn 0.3s ease; height: 100%; }
     .tab-pane.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -85,10 +85,9 @@
       border-top: none;
       display: flex;
       flex-direction: column;
+      flex-grow: 1; /* Pushes footer to bottom */
     }
-    @media (max-width: 600px) {
-      .tab-content-wrapper { padding: 20px 10px; }
-    }
+    @media (max-width: 600px) { .tab-content-wrapper { padding: 20px 10px; } }
 
     .banner-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; }
     .banner-container { text-align: center; padding: 6px 10px; width: 100%; max-width: 750px; font-family: 'Montserrat', sans-serif; box-sizing: border-box; transform-origin: center center; }
@@ -106,11 +105,20 @@
     @media (max-width: 500px) { .banner-container { transform: scale(0.9); width: 110%; } }
     @media (max-width: 380px) { .banner-container { transform: scale(0.85); width: 115%; } }
 
+    /* --- GLOBAL FOOTER WRAPPER --- */
+    .footer-wrapper { margin-top: auto; width: 100%; }
+    .app-footer { text-align: center; padding: 30px 20px 10px 20px; border-top: 1px dashed var(--border-color); }
+    .footer-brand { color: var(--accent-green); font-weight: 700; font-family: 'Georgia', serif; font-size: 16px; margin-bottom: 6px; }
+    .footer-text { color: var(--text-muted); font-size: 12px; line-height: 1.6; }
+    
+    .quotation-block { text-align: center; max-width: 600px; margin: 30px auto 20px auto; padding-top: 25px; border-top: 1px solid rgba(74, 222, 128, 0.15); }
+    .quotation-text { font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif; }
+    .quotation-author { font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px; }
+
     /* --- 5. HOME TAB SPECIFIC STYLES --- */
     .home-intro { text-align: center; margin-bottom: 25px; padding: 0 15px; }
     .home-intro h3 { color: var(--accent-green); font-size: 18px; margin-bottom: 8px; font-family: 'Segoe UI', sans-serif; }
     .home-intro p { color: var(--text-subhead); font-size: 13px; line-height: 1.5; }
-    
     .home-cards-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 30px; padding: 0 10px; }
     @media (min-width: 768px) { .home-cards-grid { grid-template-columns: repeat(3, 1fr); padding: 0; } }
     
@@ -120,7 +128,7 @@
     .home-card-btn { color: var(--text-bright); font-weight: 700; font-size: 14px; text-align: center; padding: 12px; transition: color 0.2s ease; }
     .home-card:hover .home-card-btn { color: var(--accent-green); }
     
-    .about-us-section { text-align: center; padding: 30px 15px; border-top: 1px dashed var(--border-color); }
+    .about-us-section { text-align: center; padding: 30px 15px; border-top: 1px dashed var(--border-color); margin-bottom: 20px; }
     .about-us-section h3 { color: var(--text-bright); font-size: 20px; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; }
     .about-us-section p { font-size: 13px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 12px; max-width: 900px; margin-left: auto; margin-right: auto; }
 
@@ -131,7 +139,7 @@
     .business-hours { color: var(--text-muted); font-size: 11px; text-align: center; line-height: 1.3; }
     @media (min-width: 768px) { .menu-info-bar { flex-direction: row; gap: 20px; } .business-hours { font-size: 12px; } }
 
-    .menu-content-layout { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .menu-content-layout { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 30px; }
     .sidebar-logo { display: none; }
     .categories-nav { flex-shrink: 0; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 6px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; backdrop-filter: blur(10px); }
     .nav-header { grid-column: 1 / -1; background: rgba(74, 222, 128, 0.15); color: var(--accent-green); text-transform: uppercase; font-size: 12px; font-weight: 800; letter-spacing: 1px; text-align: center; padding: 8px; border-radius: var(--border-radius-sm); margin-bottom: 2px; border: 1px solid rgba(74, 222, 128, 0.3); }
@@ -167,7 +175,7 @@
     .add-btn:active { transform: scale(0.95); }
     .item-count-text { color: #ef4444; font-size: 12px; font-weight: 800; }
 
-    /* Cart & Delivery */
+    /* Cart */
     .cart-summary { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main); padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
     .cart-title { font-family: 'Georgia', serif; font-size: 15px; color: var(--accent-green); display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
     .cart-items { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
@@ -225,11 +233,11 @@
     .dot.active { background: var(--accent-green); }
 
     /* --- 9. WORDS OF HOPE TAB SPECIFIC --- */
-    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 15px; }
+    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; padding: 15px 0 30px 0; }
     @media (min-width: 768px) { .hope-split-layout { grid-template-columns: 1fr 1fr; align-items: center; } }
 
     /* --- 10. REVIEW TAB SPECIFIC --- */
-    .review-top-split { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 0 10px; justify-items: center; }
+    .review-top-split { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 10px; justify-items: center; }
     @media (min-width: 768px) { .review-top-split { grid-template-columns: 1fr 1fr; align-items: center; justify-items: stretch; } }
 
     /* Vertical Reviews Container */
@@ -241,10 +249,9 @@
     }
     .reviews-vertical-carousel {
       height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; display: flex; flex-direction: column; gap: 15px;
-      /* Adding extra padding so the first card clears the top border comfortably */
+      /* Padding top ensures the first card completely clears the outline border */
       padding: 25px 15px; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
-      scroll-padding-top: 25px; /* Ensures snap scroll stops perfectly with the padded gap */
-      scroll-padding-bottom: 25px;
+      scroll-padding-top: 25px; scroll-padding-bottom: 25px;
     }
     .reviews-vertical-carousel::-webkit-scrollbar { display: none; }
     
@@ -252,14 +259,15 @@
       flex: none; height: auto; 
       scroll-snap-align: start;
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
-      padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      padding: 18px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     }
+    .vertical-review-card:first-child { margin-top: 5px; } /* Extra clearance */
     .review-stars { color: #fbbf24; font-size: 15px; letter-spacing: 2px; }
     .review-text { font-style: italic; font-size: 13.5px; color: var(--text-subhead); line-height: 1.5; flex-grow: 1; font-family: 'Georgia', serif;}
     .review-author { font-weight: 700; font-size: 12px; color: var(--accent-green); text-align: right; letter-spacing: 0.5px; }
 
     /* Bottom Full Width Row for Review Links */
-    .review-bottom-full { max-width: 900px; margin: 30px auto 0 auto; text-align: center; padding: 25px 20px 0 20px; border-top: 1px dashed var(--border-color); }
+    .review-bottom-full { max-width: 900px; margin: 30px auto 30px auto; text-align: center; padding: 25px 20px 0 20px; border-top: 1px dashed var(--border-color); }
     .review-encouragement { font-size: 14px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 15px; }
     .google-review-btn { display:inline-block; padding: 14px 28px; background: #ffffff; color: #1a73e8; text-decoration: none; font-weight: bold; border-radius: var(--border-radius-sm); font-size: 14px; box-shadow: 0 4px 12px rgba(26,115,232,0.2); transition: all 0.2s ease; margin-bottom: 25px; border: 1px solid #1a73e8; }
     .google-review-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(26,115,232,0.3); }
@@ -278,11 +286,6 @@
     .review-bottom-full .delivery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     @media (min-width: 500px) { .review-bottom-full .delivery-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (min-width: 900px) { .review-bottom-full .delivery-grid { grid-template-columns: repeat(6, 1fr); } } 
-
-    /* --- 11. GLOBAL FOOTER --- */
-    .app-footer { text-align: center; padding: 40px 20px 20px 20px; margin-top: auto; border-top: 1px dashed var(--border-color); }
-    .footer-brand { color: var(--accent-green); font-weight: 700; font-family: 'Georgia', serif; font-size: 16px; margin-bottom: 6px; }
-    .footer-text { color: var(--text-muted); font-size: 12px; line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -361,11 +364,13 @@
         </div>
 
         <!-- GLOBAL FOOTER -->
-        <footer class="app-footer">
-          <div class="footer-brand">Oon Jai Marketplace</div>
-          <div class="footer-text">Vientiane, Laos</div>
-          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
-        </footer>
+        <div class="footer-wrapper">
+          <footer class="app-footer">
+            <div class="footer-brand">Oon Jai Marketplace</div>
+            <div class="footer-text">Vientiane, Laos</div>
+            <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+          </footer>
+        </div>
       </div>
     </div>
 
@@ -440,11 +445,13 @@
         </div>
 
         <!-- GLOBAL FOOTER -->
-        <footer class="app-footer">
-          <div class="footer-brand">Oon Jai Marketplace</div>
-          <div class="footer-text">Vientiane, Laos</div>
-          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
-        </footer>
+        <div class="footer-wrapper">
+          <footer class="app-footer">
+            <div class="footer-brand">Oon Jai Marketplace</div>
+            <div class="footer-text">Vientiane, Laos</div>
+            <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+          </footer>
+        </div>
       </div>
     </div>
     
@@ -463,7 +470,7 @@
       
       <!-- Unified Outline Wrapper -->
       <div class="tab-content-wrapper">
-        <div style="border-top: 1px dashed var(--border-color); border-bottom: 1px dashed var(--border-color); padding: 20px 10px; margin-bottom: 30px; text-align: center;">
+        <div style="border-bottom: 1px dashed var(--border-color); padding-bottom: 20px; margin-bottom: 15px; text-align: center;">
           <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.6;">
             Every message shared here has the power to brighten someone's day! Leave a word of encouragement, an inspiring quote, or a meaningful message—it may be featured on one of our next cards and bring hope to someone when they need it most.
           </p>
@@ -519,20 +526,21 @@
               <div id="statusMsg" style="margin-top: 10px; font-size: 12px; font-weight: 500; text-align: center; min-height: 18px; font-family: 'Segoe UI', sans-serif;"></div>
             </div>
           </div>
-          
-          <div style="text-align: center; max-width: 600px; margin: 40px auto 10px auto; padding-top: 25px; border-top: 1px solid rgba(74, 222, 128, 0.15);">
-            <p style="font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif;">
-              "A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."
-            </p>
-            <span style="font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px;">— Amelia Earhart</span>
+
+          <!-- GROUPED QUOTATION AND FOOTER (Sticks to the bottom perfectly) -->
+          <div class="footer-wrapper">
+            <div class="quotation-block">
+              <p class="quotation-text">"A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."</p>
+              <span class="quotation-author">— Amelia Earhart</span>
+            </div>
+            
+            <footer class="app-footer" style="border-top: none; padding-top: 0;">
+              <div class="footer-brand">Oon Jai Marketplace</div>
+              <div class="footer-text">Vientiane, Laos</div>
+              <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+            </footer>
           </div>
 
-        <!-- GLOBAL FOOTER -->
-        <footer class="app-footer">
-          <div class="footer-brand">Oon Jai Marketplace</div>
-          <div class="footer-text">Vientiane, Laos</div>
-          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
-        </footer>
       </div>
     </div>
     
@@ -595,11 +603,13 @@
         </div>
 
         <!-- GLOBAL FOOTER -->
-        <footer class="app-footer">
-          <div class="footer-brand">Oon Jai Marketplace</div>
-          <div class="footer-text">Vientiane, Laos</div>
-          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
-        </footer>
+        <div class="footer-wrapper">
+          <footer class="app-footer">
+            <div class="footer-brand">Oon Jai Marketplace</div>
+            <div class="footer-text">Vientiane, Laos</div>
+            <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+          </footer>
+        </div>
       </div>
     </div>
   </div>
@@ -657,11 +667,9 @@
   </div>
 
 <script>
-
   // --- REUSABLE AUTO-PLAY & DRAG LOGIC FOR ALL CAROUSELS ---
   const carouselIntervals = {};
 
-  // Drag-to-Scroll for Desktop Users
   function makeScrollableDraggable(ele, trackId) {
     let pos = { top: 0, left: 0, x: 0, y: 0 };
     let isDragging = false;
@@ -673,7 +681,7 @@
       pos = { left: ele.scrollLeft, top: ele.scrollTop, x: e.clientX, y: e.clientY };
       document.addEventListener('mousemove', mouseMoveHandler);
       document.addEventListener('mouseup', mouseUpHandler);
-      clearInterval(carouselIntervals[trackId]); // Pause auto-scroll when user grabs
+      clearInterval(carouselIntervals[trackId]); 
     };
 
     const mouseMoveHandler = function(e) {
@@ -691,43 +699,39 @@
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
       if(trackId && trackId !== 'verticalReviewsCarousel') {
-        startAutoPlay(trackId, 4000); // Resume auto-scroll when user lets go
+        startAutoPlay(trackId, 4000); 
       }
     };
     ele.addEventListener('mousedown', mouseDownHandler);
     ele.style.cursor = 'grab';
     
-    // Pause auto-scroll on touch as well
     ele.addEventListener('touchstart', () => clearInterval(carouselIntervals[trackId]));
     ele.addEventListener('touchend', () => { 
         if(trackId && trackId !== 'verticalReviewsCarousel') startAutoPlay(trackId, 4000); 
     });
   }
 
-  // Universal Auto-Play Function
   function startAutoPlay(trackId, intervalMs) {
     clearInterval(carouselIntervals[trackId]);
     carouselIntervals[trackId] = setInterval(() => {
       const track = document.getElementById(trackId);
-      if(!track || track.clientWidth === 0) return; // Don't scroll hidden tabs
+      if(!track || track.clientWidth === 0) return; 
       
       const maxScroll = track.scrollWidth - track.clientWidth;
       if (track.scrollLeft >= maxScroll - 10) {
-        track.scrollTo({ left: 0, behavior: 'smooth' }); // Loop to beginning
+        track.scrollTo({ left: 0, behavior: 'smooth' }); 
       } else {
-        track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); // Next slide
+        track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); 
       }
     }, intervalMs);
   }
 
-  // Button Click Scroll Function
   function scrollCarousel(trackId, dir) {
     const track = document.getElementById(trackId);
     track.scrollBy({ left: track.clientWidth * dir, behavior: 'smooth' });
-    startAutoPlay(trackId, 4000); // Reset timer so it doesn't double-jump
+    startAutoPlay(trackId, 4000); 
   }
 
-  // Universal Carousel Builder Function
   function setupCarousel(trackId, dotsId, imagesArray) {
     const track = document.getElementById(trackId);
     const dots = document.getElementById(dotsId);
@@ -737,14 +741,13 @@
 
     let html = ''; let dotsHtml = '';
     validImages.forEach((imgLink, i) => {
-      html += `<img src="${imgLink}" class="carousel-img" alt="Carousel Image ${i+1}"/>`;
+      html += `<img src="${imgLink}" class="carousel-img" alt="Carousel Image ${i+1}" draggable="false"/>`;
       dotsHtml += `<span class="dot" onclick="document.getElementById('${trackId}').scrollTo({ left: document.getElementById('${trackId}').clientWidth * ${i}, behavior: 'smooth' }); startAutoPlay('${trackId}', 4000);"></span>`;
     });
     
     track.innerHTML = html;
     dots.innerHTML = dotsHtml;
     
-    // Update dots on scroll
     track.addEventListener('scroll', () => {
       if(track.clientWidth === 0) return;
       const index = Math.round(track.scrollLeft / track.clientWidth);
@@ -755,18 +758,15 @@
     if (document.querySelector(`#${dotsId} .dot`)) {
        document.querySelector(`#${dotsId} .dot`).classList.add('active');
     }
-    startAutoPlay(trackId, 4000); // Start 4-second auto rotation
+    startAutoPlay(trackId, 4000); 
   }
 
-
-  // --- MOBILE MENU AUTO-CLOSE LOGIC ---
-  function toggleMobileMenu() {
-    document.getElementById('mobileMenu').classList.toggle('active');
-  }
+  // --- MOBILE MENU AUTO-CLOSE ---
+  function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
   document.addEventListener('click', function(event) {
     const menu = document.getElementById('mobileMenu');
     const hamburger = document.querySelector('.hamburger');
-    if (menu.classList.contains('active') && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+    if (menu && hamburger && menu.classList.contains('active') && !menu.contains(event.target) && !hamburger.contains(event.target)) {
       menu.classList.remove('active');
     }
   });
@@ -783,8 +783,9 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // --- VERTICAL REVIEWS LOGIC ---
-  const customReviews = [
+  // --- DATA INITIALIZATION ---
+
+  const customReviewsData = [
     { text: "Absolutely delicious! The Classic Burger is a must-try. Everything tastes so fresh.", name: "Sarah V.", stars: "★★★★★" },
     { text: "Love the Words of Hope section. The food is equally uplifting and nourishing.", name: "James L.", stars: "★★★★★" },
     { text: "Best vegan options in Vientiane! The Miso-Seaweed pasta was incredible.", name: "Nina K.", stars: "★★★★★" },
@@ -805,7 +806,7 @@
   function initVerticalReviewsCarousel() {
     const container = document.getElementById('verticalReviewsCarousel');
     let html = '';
-    customReviews.forEach(rev => {
+    customReviewsData.forEach(rev => {
       html += `
         <div class="vertical-review-card">
           <div class="review-stars">${rev.stars}</div>
@@ -815,30 +816,26 @@
       `;
     });
     container.innerHTML = html;
-    
-    // Makes vertical dragging work on desktop
     makeScrollableDraggable(container, 'verticalReviewsCarousel');
   }
-  initVerticalReviewsCarousel();
 
-
-  // --- CAROUSEL INITIALIZATION ---
-
-  // Words of Hope Images
-  const hopeImages = [
+  // --- HOPE & REVIEW PHOTOS (15 Slots) ---
+  const hopeImagesData = [
     "https://i.postimg.cc/9f27Ws4W/10.jpg", "https://i.postimg.cc/KYbMZCKF/11.jpg", "https://i.postimg.cc/pdvF239R/12.jpg",
     "https://i.postimg.cc/CK4fdJDS/3.jpg", "https://i.postimg.cc/Gpjs9zYr/4.jpg", "https://i.postimg.cc/W4Vk2xD1/5.jpg",
     "https://i.postimg.cc/LsVZhvfd/6.jpg", "https://i.postimg.cc/8CG61xFP/7.jpg", "https://i.postimg.cc/tgbxX81R/8.jpg", "https://i.postimg.cc/k5CbnLV7/9.jpg"
   ];
-  setupCarousel('hopeCarouselTrack', 'hopeCarouselDots', hopeImages);
-
-  // Google Reviews Images (15 Slots - 13 left blank for future pasting)
-  const googleReviewPhotos = [
+  
+  const googleReviewPhotosData = [
     "https://i.postimg.cc/KvNdQJj3/1.png",
     "https://i.postimg.cc/KvNdQJjj/2.png",
     "", "", "", "", "", "", "", "", "", "", "", "", ""
   ];
-  setupCarousel('reviewCarouselTrack', 'reviewCarouselDots', googleReviewPhotos);
+
+  // Initialize both photo carousels
+  setupCarousel('hopeCarouselTrack', 'hopeCarouselDots', hopeImagesData);
+  setupCarousel('reviewCarouselTrack', 'reviewCarouselDots', googleReviewPhotosData);
+  initVerticalReviewsCarousel();
 
 
   // --- USER FORM SUBMISSION LOGIC (WORDS OF HOPE) ---
@@ -993,9 +990,7 @@
     document.getElementById('notificationModal').classList.add('active');
   }
 
-  function closeNotification() {
-    document.getElementById('notificationModal').classList.remove('active');
-  }
+  function closeNotification() { document.getElementById('notificationModal').classList.remove('active'); }
 
   function customConfirm(message, title = 'Confirm Action') {
     return new Promise((resolve) => {
@@ -1025,7 +1020,6 @@
     document.getElementById('categoryTitle').innerText = titleMap[catKey];
     renderProductsGrid();
     
-    // Auto-scroll to top of main content when category is clicked
     const scrollTarget = window.innerWidth < 768 ? document.getElementById('contentLayout') : document.getElementById('mainContent');
     if (scrollTarget && typeof scrollTarget.scrollIntoView === 'function') {
       scrollTarget.scrollIntoView({behavior: 'smooth', block: 'start'});
