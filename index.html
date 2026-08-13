@@ -314,7 +314,7 @@
   </div>
 
   <!-- ========================================== -->
-  <!--             MAIN APP CONTAINER             -->
+  <!--               MAIN APP CONTAINER             -->
   <!-- ========================================== -->
   <div class="app-container" id="appRoot">
     
@@ -526,24 +526,24 @@
               <div id="statusMsg" style="margin-top: 10px; font-size: 12px; font-weight: 500; text-align: center; min-height: 18px; font-family: 'Segoe UI', sans-serif;"></div>
             </div>
           </div>
+        </div> <!-- [FIX] Closes hope-split-layout so footer is full-width -->
 
-          <!-- GROUPED QUOTATION AND FOOTER -->
-          <div style="margin-top: auto; padding-top: 30px; border-top: 1px dashed var(--border-color);">
-            <div class="quotation-block" style="text-align: center; max-width: 600px; margin: 0 auto 10px auto; padding-top: 20px;">
-              <p class="quotation-text" style="font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif;">"A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."</p>
-              <span class="quotation-author" style="font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px;">— Amelia Earhart</span>
-            </div>
-            
-            <!-- Universal Footer placed intimately with Quotation, NO splitting border -->
-            <footer class="app-footer" style="border-top: none; padding-top: 10px; margin-top: 0; text-align: center;">
-              <div class="footer-brand">Oon Jai Marketplace</div>
-              <div class="footer-text">Vientiane, Laos</div>
-              <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
-            </footer>
+        <!-- GROUPED QUOTATION AND FOOTER (Now outside the grid, properly centered) -->
+        <div style="margin-top: auto; padding-top: 30px; border-top: 1px dashed var(--border-color);">
+          <div class="quotation-block" style="text-align: center; max-width: 600px; margin: 0 auto 10px auto; padding-top: 20px;">
+            <p class="quotation-text" style="font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif;">"A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."</p>
+            <span class="quotation-author" style="font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px;">— Amelia Earhart</span>
           </div>
+          
+          <footer class="app-footer" style="border-top: none; padding-top: 10px; margin-top: 0; text-align: center;">
+            <div class="footer-brand">Oon Jai Marketplace</div>
+            <div class="footer-text">Vientiane, Laos</div>
+            <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+          </footer>
+        </div>
 
-      </div>
-    </div>
+      </div> <!-- Closes tab-content-wrapper -->
+    </div> <!-- [FIX] This missing closing div prevents tab-review from being hidden inside tab-hope! -->
     
     <!-- ================== TAB: REVIEWS ================== -->
     <div id="tab-review" class="tab-pane">
@@ -1267,7 +1267,7 @@
     let message = `✦ *OON JAI ORDER* ✦\n*Type: ${orderTypeInput.value}*\n\n*Items Ordered:*\n`;
     cart.forEach((item, index) => {
       message += `${index + 1}. *${item.name}* - ${formatKip(item.price)}\n`;
-      if (item.subtext) { message += `    _${item.subtext}_\n`; }
+      if (item.subtext) { message += `   _${item.subtext}_\n`; }
     });
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
