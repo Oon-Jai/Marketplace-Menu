@@ -66,7 +66,7 @@
     .tab-pane.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- 4. UNIVERSAL HERO BANNER TEXT (Google Fonts Overlay) --- */
+    /* --- 4. UNIVERSAL HERO BANNER TEXT --- */
     .tab-hero-banner {
       width: 100%; min-height: 220px; background-size: cover; background-position: center;
       display: flex; justify-content: center; align-items: center; border-radius: var(--border-radius-main);
@@ -181,25 +181,7 @@
     .btn-hope-action { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: linear-gradient(135deg, #10b981 0%, #047857 100%); color: #ffffff; padding: 10px 12px; border-radius: var(--border-radius-sm); font-size: 11px; font-weight: 700; border: 1px solid var(--accent-green); cursor: pointer; transition: all 0.2s ease; text-align: center; line-height: 1.2; }
     .btn-hope-action:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(74, 222, 128, 0.3); }
 
-    /* --- 7. WORDS OF HOPE TAB SPECIFIC STYLES --- */
-    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 15px; }
-    @media (min-width: 768px) { .hope-split-layout { grid-template-columns: 1fr 1fr; align-items: center; } }
-    
-    .carousel-container { position: relative; width: 100%; max-width: 480px; margin: 0 auto; border-radius: var(--border-radius-main); overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 10px; }
-    
-    /* Native scrolling + Drag to Scroll for Hope Carousel */
-    .carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; gap: 10px; }
-    .carousel-track::-webkit-scrollbar { display: none; }
-    .carousel-img { flex: 0 0 100%; width: 100%; aspect-ratio: 16/9; object-fit: contain; background: #010c0a; scroll-snap-align: center; user-select: none; border-radius: 8px; }
-    
-    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(2, 18, 15, 0.75); color: white; border: 1px solid var(--border-color); padding: 12px; cursor: pointer; border-radius: 50%; z-index: 10; transition: all 0.2s ease;}
-    .carousel-btn:hover { background: var(--accent-green); color: var(--bg-dark); }
-    .carousel-btn.prev { left: 10px; } .carousel-btn.next { right: 10px; }
-    .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 15px; flex-wrap: wrap;}
-    .dot { width: 8px; height: 8px; background: var(--border-color); border-radius: 50%; cursor: pointer; transition: background 0.3s ease; }
-    .dot.active { background: var(--accent-green); }
-
-    /* --- 8. MODALS --- */
+    /* --- 7. MODALS --- */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; padding: 14px; z-index: 2000; }
     .modal-overlay.active { display: flex; }
     .modal-box { background: #041f1a; border: 1px solid var(--border-color); border-radius: var(--border-radius-main); max-width: 480px; width: 100%; max-height: 90%; overflow-y: auto; padding: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.8); position: relative; }
@@ -213,17 +195,52 @@
     .option-label:has(input:checked) { border-color: var(--accent-green); background: rgba(30, 77, 64, 0.5); color: var(--accent-green); font-weight: 700; }
     .modal-subtitle { font-size: 11px; color: var(--accent-green); margin-bottom: 10px; background: rgba(74, 222, 128, 0.1); padding: 6px 10px; border-radius: var(--border-radius-sm); }
 
-    /* --- 9. NEW REVIEW TAB SPECIFIC STYLES --- */
+    /* --- 8. SHARED CAROUSEL STYLES (Used in Hope & Reviews) --- */
+    .carousel-container { position: relative; width: 100%; max-width: 480px; margin: 0 auto; border-radius: var(--border-radius-main); overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.5); aspect-ratio: 16/9; }
+    .carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; height: 100%; }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    /* Object-fit: contain ensures tall/wide images fit completely within the frame */
+    .carousel-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; background: var(--bg-dark); scroll-snap-align: center; user-select: none; }
     
-    /* Top Split Section */
-    .review-top-split { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 0 10px; }
-    @media (min-width: 768px) { .review-top-split { grid-template-columns: 1fr 1fr; align-items: stretch; } }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(2, 18, 15, 0.75); color: white; border: 1px solid var(--border-color); padding: 12px; cursor: pointer; border-radius: 50%; z-index: 10; transition: all 0.2s ease; }
+    .carousel-btn:hover { background: var(--accent-green); color: var(--bg-dark); }
+    .carousel-btn.prev { left: 10px; } .carousel-btn.next { right: 10px; }
+    .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .dot { width: 8px; height: 8px; background: var(--border-color); border-radius: 50%; cursor: pointer; transition: background 0.3s ease; }
+    .dot.active { background: var(--accent-green); }
 
-    /* Left Side Photo */
-    .review-photo-container { display: flex; align-items: center; justify-content: center; }
-    .review-photo-display { width: 100%; border-radius: var(--border-radius-main); aspect-ratio: 4/3; object-fit: contain; border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.5); background-color: var(--bg-dark); transition: opacity 0.5s ease; }
+    /* --- 9. WORDS OF HOPE TAB SPECIFIC --- */
+    .hope-split-layout { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 15px; }
+    @media (min-width: 768px) { .hope-split-layout { grid-template-columns: 1fr 1fr; align-items: center; } }
+
+    /* --- 10. REVIEW TAB SPECIFIC --- */
+    .review-top-split { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 0 10px; justify-items: center; }
+    @media (min-width: 768px) { .review-top-split { grid-template-columns: 1fr 1fr; align-items: center; justify-items: stretch; } }
+
+    /* Vertical Reviews Container (Same exact size as photo carousel) */
+    .reviews-vertical-wrapper { 
+      width: 100%; max-width: 480px; margin: 0 auto;
+      aspect-ratio: 16/9; /* Perfect height match to the 480px photo carousel */
+      border-radius: var(--border-radius-main); overflow: hidden; 
+      border: 1px solid var(--border-color); background: rgba(2, 18, 15, 0.4);
+    }
+    .reviews-vertical-carousel {
+      height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; display: flex; flex-direction: column; gap: 15px;
+      padding: 15px 12px; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
+    }
+    .reviews-vertical-carousel::-webkit-scrollbar { display: none; }
     
-    /* Bottom Full Width Row */
+    .vertical-review-card {
+      flex: none; height: auto; /* Auto-adjusts height to text */
+      scroll-snap-align: start;
+      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
+      padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    .review-stars { color: #fbbf24; font-size: 15px; letter-spacing: 2px; }
+    .review-text { font-style: italic; font-size: 13.5px; color: var(--text-subhead); line-height: 1.5; flex-grow: 1; font-family: 'Georgia', serif;}
+    .review-author { font-weight: 700; font-size: 12px; color: var(--accent-green); text-align: right; letter-spacing: 0.5px; }
+
+    /* Bottom Full Width Row for Review Links */
     .review-bottom-full { max-width: 900px; margin: 30px auto 0 auto; text-align: center; padding: 25px 20px 0 20px; border-top: 1px dashed var(--border-color); }
     .review-encouragement { font-size: 14px; color: var(--text-subhead); line-height: 1.6; margin-bottom: 15px; }
     .google-review-btn { display:inline-block; padding: 14px 28px; background: #ffffff; color: #1a73e8; text-decoration: none; font-weight: bold; border-radius: var(--border-radius-sm); font-size: 14px; box-shadow: 0 4px 12px rgba(26,115,232,0.2); transition: all 0.2s ease; margin-bottom: 25px; border: 1px solid #1a73e8; }
@@ -242,32 +259,9 @@
 
     .review-bottom-full .delivery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     @media (min-width: 500px) { .review-bottom-full .delivery-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (min-width: 900px) { .review-bottom-full .delivery-grid { grid-template-columns: repeat(6, 1fr); } } /* Balanced in one row on large screens */
+    @media (min-width: 900px) { .review-bottom-full .delivery-grid { grid-template-columns: repeat(6, 1fr); } } 
 
-    /* Right Side: Vertical Swipeable Carousel */
-    .reviews-vertical-wrapper { 
-      height: 100%; min-height: 350px; max-height: 480px; 
-      border-radius: var(--border-radius-main); overflow: hidden; 
-      border: 1px solid var(--border-color); background: rgba(2, 18, 15, 0.4);
-    }
-    
-    .reviews-vertical-carousel {
-      height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; display: flex; flex-direction: column; gap: 15px;
-      padding: 20px 15px; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
-    }
-    .reviews-vertical-carousel::-webkit-scrollbar { display: none; }
-    
-    .vertical-review-card {
-      flex: none; height: auto; /* Automatically adjusts height based on text length */
-      scroll-snap-align: start;
-      background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
-      padding: 20px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
-    .review-stars { color: #fbbf24; font-size: 16px; letter-spacing: 2px; }
-    .review-text { font-style: italic; font-size: 14.5px; color: var(--text-subhead); line-height: 1.6; flex-grow: 1; font-family: 'Georgia', serif;}
-    .review-author { font-weight: 700; font-size: 13px; color: var(--accent-green); text-align: right; letter-spacing: 0.5px; }
-
-    /* Simple Footer */
+    /* Footer */
     .app-footer { text-align: center; padding: 40px 20px 20px 20px; margin-top: 20px; border-top: 1px dashed var(--border-color); }
     .footer-brand { color: var(--accent-green); font-weight: 700; font-family: 'Georgia', serif; font-size: 16px; margin-bottom: 6px; }
     .footer-text { color: var(--text-muted); font-size: 12px; line-height: 1.6; }
@@ -435,22 +429,24 @@
             </p>
           </div>
           <div class="hope-split-layout">
-            <div style="display: flex; flex-direction: column; align-items: center;">
+            
+            <!-- LEFT: Hope Carousel -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
               <h3 style="margin-top: 0; margin-bottom: 4px; font-size: 18px; font-weight: 600; color: #ffffff; text-align: center; font-family: 'Georgia', serif;">
                 <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span> Featured Messages <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span>
               </h3>
               <p style="margin: 0 0 15px 0; font-size: 11px; color: #94a3b8; text-align: center;">We are grateful for every word of encouragement.</p>
               
               <div class="carousel-container">
-                <button class="carousel-btn prev" onclick="scrollHope(-1)">&#10094;</button>
-                <!-- Native Scrollable + Draggable Track -->
+                <button class="carousel-btn prev" onclick="scrollCarousel('hopeCarouselTrack', -1)">&#10094;</button>
                 <div class="carousel-track" id="hopeCarouselTrack"></div>
-                <button class="carousel-btn next" onclick="scrollHope(1)">&#10095;</button>
+                <button class="carousel-btn next" onclick="scrollCarousel('hopeCarouselTrack', 1)">&#10095;</button>
               </div>
               <div class="carousel-dots" id="hopeCarouselDots"></div>
             </div>
 
-            <div style="display: flex; justify-content: center; align-items: flex-start;">
+            <!-- RIGHT: Message Form -->
+            <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%;">
               <div style="font-family: 'Georgia', 'Times New Roman', serif; max-width: 480px; width: 100%; min-height: 252px; margin: 0 auto; padding: 28px 20px; border-radius: 16px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: #ffffff;">
                 <div>
                   <h3 style="margin-top: 0; margin-bottom: 6px; font-size: clamp(16px, 4.5vw, 22px); font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif; white-space: nowrap;">
@@ -506,33 +502,35 @@
         </div>
       </div>
       
-      <!-- NEW SPLIT-SCREEN REVIEWS LAYOUT -->
+      <!-- SPLIT-SCREEN REVIEWS LAYOUT -->
       <div class="review-top-split">
         
-        <!-- Left Side: Photo -->
-        <div class="review-photo-container">
-          <img id="randomGoogleReviewPhoto" class="review-photo-display" src="" alt="Oon Jai Customer Photo" />
+        <!-- Left Side: Interactive Photo Carousel -->
+        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+          <div class="carousel-container">
+            <button class="carousel-btn prev" onclick="scrollCarousel('reviewCarouselTrack', -1)">&#10094;</button>
+            <div class="carousel-track" id="reviewCarouselTrack"></div>
+            <button class="carousel-btn next" onclick="scrollCarousel('reviewCarouselTrack', 1)">&#10095;</button>
+          </div>
+          <div class="carousel-dots" id="reviewCarouselDots"></div>
         </div>
 
         <!-- Right Side: Vertical Swipeable Reviews -->
         <div class="reviews-vertical-wrapper">
-          <!-- Native Scrollable + Draggable Container -->
           <div class="reviews-vertical-carousel" id="verticalReviewsCarousel">
             <!-- JS will populate vertical cards here -->
           </div>
         </div>
       </div>
 
-      <!-- BOTTOM FULL WIDTH ROW: Encouragement, Links -->
+      <!-- BOTTOM FULL WIDTH ROW -->
       <div class="review-bottom-full">
         <p class="review-encouragement">
           Your feedback helps us grow and continue to spread kindness. If you enjoyed your time with us, please share your thoughts!
         </p>
         
-        <!-- Clickable Review Button -->
         <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="google-review-btn">⭐ Leave your Review on Google</a>
 
-        <!-- Find Us Online Section -->
         <div class="delivery-section">
           <div class="delivery-title" style="font-size: 13px;">Find Us Online</div>
           <div class="delivery-grid">
@@ -552,7 +550,6 @@
         <div class="footer-text">Vientiane, Laos</div>
         <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
       </footer>
-
     </div>
   </div>
 
@@ -610,9 +607,11 @@
 
 <script>
 
-  // --- DRAG TO SCROLL HELPER (For Desktop Mouse Users) ---
-  // This makes any natively scrollable container clickable & draggable
-  function makeScrollableDraggable(ele) {
+  // --- REUSABLE AUTO-PLAY & DRAG LOGIC FOR ALL CAROUSELS ---
+  const carouselIntervals = {};
+
+  // Drag-to-Scroll for Desktop Users
+  function makeScrollableDraggable(ele, trackId) {
     let pos = { top: 0, left: 0, x: 0, y: 0 };
     let isDragging = false;
 
@@ -623,6 +622,7 @@
       pos = { left: ele.scrollLeft, top: ele.scrollTop, x: e.clientX, y: e.clientY };
       document.addEventListener('mousemove', mouseMoveHandler);
       document.addEventListener('mouseup', mouseUpHandler);
+      clearInterval(carouselIntervals[trackId]); // Pause auto-scroll when user grabs
     };
 
     const mouseMoveHandler = function(e) {
@@ -639,17 +639,79 @@
       ele.style.removeProperty('user-select');
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
+      if(trackId && trackId !== 'verticalReviewsCarousel') {
+        startAutoPlay(trackId, 4000); // Resume auto-scroll when user lets go
+      }
     };
-
     ele.addEventListener('mousedown', mouseDownHandler);
     ele.style.cursor = 'grab';
+    
+    // Pause auto-scroll on touch as well
+    ele.addEventListener('touchstart', () => clearInterval(carouselIntervals[trackId]));
+    ele.addEventListener('touchend', () => { 
+        if(trackId && trackId !== 'verticalReviewsCarousel') startAutoPlay(trackId, 4000); 
+    });
   }
+
+  // Universal Auto-Play Function
+  function startAutoPlay(trackId, intervalMs) {
+    clearInterval(carouselIntervals[trackId]);
+    carouselIntervals[trackId] = setInterval(() => {
+      const track = document.getElementById(trackId);
+      if(!track || track.clientWidth === 0) return; // Don't scroll hidden tabs
+      
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (track.scrollLeft >= maxScroll - 10) {
+        track.scrollTo({ left: 0, behavior: 'smooth' }); // Loop to beginning
+      } else {
+        track.scrollBy({ left: track.clientWidth, behavior: 'smooth' }); // Next slide
+      }
+    }, intervalMs);
+  }
+
+  // Button Click Scroll Function
+  function scrollCarousel(trackId, dir) {
+    const track = document.getElementById(trackId);
+    track.scrollBy({ left: track.clientWidth * dir, behavior: 'smooth' });
+    startAutoPlay(trackId, 4000); // Reset timer so it doesn't double-jump
+  }
+
+  // Universal Carousel Builder Function
+  function setupCarousel(trackId, dotsId, imagesArray) {
+    const track = document.getElementById(trackId);
+    const dots = document.getElementById(dotsId);
+    const validImages = imagesArray.filter(link => link.trim() !== "");
+    
+    if (validImages.length === 0) return;
+
+    let html = ''; let dotsHtml = '';
+    validImages.forEach((imgLink, i) => {
+      html += `<img src="${imgLink}" class="carousel-img" alt="Carousel Image ${i+1}"/>`;
+      dotsHtml += `<span class="dot" onclick="document.getElementById('${trackId}').scrollTo({ left: document.getElementById('${trackId}').clientWidth * ${i}, behavior: 'smooth' }); startAutoPlay('${trackId}', 4000);"></span>`;
+    });
+    
+    track.innerHTML = html;
+    dots.innerHTML = dotsHtml;
+    
+    // Update dots on scroll
+    track.addEventListener('scroll', () => {
+      if(track.clientWidth === 0) return;
+      const index = Math.round(track.scrollLeft / track.clientWidth);
+      document.querySelectorAll(`#${dotsId} .dot`).forEach((d, i) => d.classList.toggle('active', i === index));
+    });
+
+    makeScrollableDraggable(track, trackId);
+    if (document.querySelector(`#${dotsId} .dot`)) {
+       document.querySelector(`#${dotsId} .dot`).classList.add('active');
+    }
+    startAutoPlay(trackId, 4000); // Start 4-second auto rotation
+  }
+
 
   // --- MOBILE MENU AUTO-CLOSE LOGIC ---
   function toggleMobileMenu() {
     document.getElementById('mobileMenu').classList.toggle('active');
   }
-
   document.addEventListener('click', function(event) {
     const menu = document.getElementById('mobileMenu');
     const hamburger = document.querySelector('.hamburger');
@@ -670,7 +732,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // --- VERTICAL REVIEWS CAROUSEL ---
+  // --- VERTICAL REVIEWS LOGIC ---
   const customReviews = [
     { text: "Absolutely delicious! The Classic Burger is a must-try. Everything tastes so fresh.", name: "Sarah V.", stars: "★★★★★" },
     { text: "Love the Words of Hope section. The food is equally uplifting and nourishing.", name: "James L.", stars: "★★★★★" },
@@ -703,78 +765,29 @@
     });
     container.innerHTML = html;
     
-    // Make draggable for desktop users
-    makeScrollableDraggable(container);
+    // Makes vertical dragging work on desktop
+    makeScrollableDraggable(container, 'verticalReviewsCarousel');
   }
   initVerticalReviewsCarousel();
 
-  // --- NOTE: THESE ARE THE LINKS FOR THE GOOGLE REVIEW PICTURES ---
-  // You have 15 slots here. Replace the empty quotes ("") with your Postimages links once you have them.
-  const googleReviewPhotos = [
-    "https://i.postimg.cc/KvNdQJj3/1.png",
-    "https://i.postimg.cc/KvNdQJjj/2.png",
-    "", "", "", "", "", "", "", "", "", "", "", "", ""
-  ];
 
-  function setRandomReviewPhoto() {
-    const validPhotos = googleReviewPhotos.filter(link => link !== "");
-    if(validPhotos.length > 0) {
-      const randomPic = validPhotos[Math.floor(Math.random() * validPhotos.length)];
-      const imgElement = document.getElementById('randomGoogleReviewPhoto');
-      
-      imgElement.style.opacity = 0;
-      setTimeout(() => {
-        imgElement.src = randomPic;
-        imgElement.onload = () => { imgElement.style.opacity = 1; };
-      }, 300);
-    }
-  }
-  setRandomReviewPhoto();
-  setInterval(setRandomReviewPhoto, 5000);
+  // --- CAROUSEL INITIALIZATION ---
 
-
-  // --- HOPE TAB CAROUSEL LOGIC ---
+  // Words of Hope Images
   const hopeImages = [
     "https://i.postimg.cc/9f27Ws4W/10.jpg", "https://i.postimg.cc/KYbMZCKF/11.jpg", "https://i.postimg.cc/pdvF239R/12.jpg",
     "https://i.postimg.cc/CK4fdJDS/3.jpg", "https://i.postimg.cc/Gpjs9zYr/4.jpg", "https://i.postimg.cc/W4Vk2xD1/5.jpg",
     "https://i.postimg.cc/LsVZhvfd/6.jpg", "https://i.postimg.cc/8CG61xFP/7.jpg", "https://i.postimg.cc/tgbxX81R/8.jpg", "https://i.postimg.cc/k5CbnLV7/9.jpg"
   ];
+  setupCarousel('hopeCarouselTrack', 'hopeCarouselDots', hopeImages);
 
-  function initHopeCarousel() {
-    const track = document.getElementById('hopeCarouselTrack');
-    const dots = document.getElementById('hopeCarouselDots');
-    let html = ''; let dotsHtml = '';
-    
-    hopeImages.forEach((imgLink, i) => {
-      html += `<img src="${imgLink}" class="carousel-img" alt="Community Image ${i+1}"/>`;
-      dotsHtml += `<span class="dot" onclick="setHopeCarousel(${i})"></span>`;
-    });
-    
-    track.innerHTML = html;
-    dots.innerHTML = dotsHtml;
-    
-    // Update active dot when user scrolls/swipes
-    track.addEventListener('scroll', () => {
-      const index = Math.round(track.scrollLeft / track.clientWidth);
-      document.querySelectorAll('#hopeCarouselDots .dot').forEach((d, i) => d.classList.toggle('active', i === index));
-    });
-
-    // Make draggable for desktop users
-    makeScrollableDraggable(track);
-    
-    // Set initial dot
-    document.querySelector('#hopeCarouselDots .dot').classList.add('active');
-  }
-
-  function scrollHope(dir) {
-    const track = document.getElementById('hopeCarouselTrack');
-    track.scrollBy({ left: track.clientWidth * dir, behavior: 'smooth' });
-  }
-
-  function setHopeCarousel(index) {
-    const track = document.getElementById('hopeCarouselTrack');
-    track.scrollTo({ left: track.clientWidth * index, behavior: 'smooth' });
-  }
+  // Google Reviews Images (15 Slots - 13 left blank for future pasting)
+  const googleReviewPhotos = [
+    "https://i.postimg.cc/KvNdQJj3/1.png",
+    "https://i.postimg.cc/KvNdQJjj/2.png",
+    "", "", "", "", "", "", "", "", "", "", "", "", ""
+  ];
+  setupCarousel('reviewCarouselTrack', 'reviewCarouselDots', googleReviewPhotos);
 
 
   // --- USER FORM SUBMISSION LOGIC (WORDS OF HOPE) ---
@@ -1239,8 +1252,6 @@
     });
   }
 
-  // Init Calls
-  initHopeCarousel();
   renderProductsGrid();
 </script>
 </body>
