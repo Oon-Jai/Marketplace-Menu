@@ -66,14 +66,30 @@
     .tab-pane.active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* --- 4. UNIVERSAL HERO BANNER TEXT --- */
+    /* --- GLOBAL OUTLINE & BANNER STYLES --- */
     .tab-hero-banner {
       width: 100%; min-height: 220px; background-size: cover; background-position: center;
-      display: flex; justify-content: center; align-items: center; border-radius: var(--border-radius-main);
-      margin-bottom: 20px; position: relative; overflow: hidden; border: 1px solid var(--border-color); flex-shrink: 0;
+      display: flex; justify-content: center; align-items: center; 
+      margin-bottom: 0; position: relative; overflow: hidden; 
+      border: 1px solid var(--border-color); flex-shrink: 0;
+      border-radius: var(--border-radius-main) var(--border-radius-main) 0 0;
+      border-bottom: none;
     }
     .tab-hero-banner::before { content: ''; position: absolute; inset: 0; background: rgba(1, 12, 10, 0.7); }
     
+    .tab-content-wrapper {
+      background: rgba(2, 18, 15, 0.6);
+      padding: 30px 20px;
+      border-radius: 0 0 var(--border-radius-main) var(--border-radius-main);
+      border: 1px solid var(--border-color);
+      border-top: none;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (max-width: 600px) {
+      .tab-content-wrapper { padding: 20px 10px; }
+    }
+
     .banner-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; }
     .banner-container { text-align: center; padding: 6px 10px; width: 100%; max-width: 750px; font-family: 'Montserrat', sans-serif; box-sizing: border-box; transform-origin: center center; }
     .banner-badge { font-size: 10px; color: #D4AF37; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; text-shadow: 0 2px 6px rgba(0,0,0,0.6); }
@@ -82,7 +98,7 @@
     .banner-subtitle { font-size: 0.95rem; font-style: italic; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; color: #d1e2d3; margin: 0; line-height: 1.25; letter-spacing: 0.3px; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7); }
 
     @media (max-width: 600px) { 
-      .tab-hero-banner { min-height: 140px; margin-bottom: 15px; }
+      .tab-hero-banner { min-height: 140px; }
       .banner-badge { font-size: 9px; margin-bottom: 4px; }
       .banner-title { font-size: 1.35rem; margin-bottom: 4px; }
       .banner-subtitle { font-size: 0.85rem; }
@@ -199,7 +215,6 @@
     .carousel-container { position: relative; width: 100%; max-width: 480px; margin: 0 auto; border-radius: var(--border-radius-main); overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.5); aspect-ratio: 16/9; }
     .carousel-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; scroll-behavior: smooth; height: 100%; }
     .carousel-track::-webkit-scrollbar { display: none; }
-    /* Object-fit: contain ensures tall/wide images fit completely within the frame */
     .carousel-img { flex: 0 0 100%; width: 100%; height: 100%; object-fit: contain; background: var(--bg-dark); scroll-snap-align: center; user-select: none; }
     
     .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(2, 18, 15, 0.75); color: white; border: 1px solid var(--border-color); padding: 12px; cursor: pointer; border-radius: 50%; z-index: 10; transition: all 0.2s ease; }
@@ -217,21 +232,24 @@
     .review-top-split { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 0 10px; justify-items: center; }
     @media (min-width: 768px) { .review-top-split { grid-template-columns: 1fr 1fr; align-items: center; justify-items: stretch; } }
 
-    /* Vertical Reviews Container (Same exact size as photo carousel) */
+    /* Vertical Reviews Container */
     .reviews-vertical-wrapper { 
       width: 100%; max-width: 480px; margin: 0 auto;
-      aspect-ratio: 16/9; /* Perfect height match to the 480px photo carousel */
+      aspect-ratio: 16/9; /* Perfect height match to the photo carousel */
       border-radius: var(--border-radius-main); overflow: hidden; 
       border: 1px solid var(--border-color); background: rgba(2, 18, 15, 0.4);
     }
     .reviews-vertical-carousel {
       height: 100%; overflow-y: auto; scroll-snap-type: y mandatory; display: flex; flex-direction: column; gap: 15px;
-      padding: 15px 12px; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
+      /* Adding extra padding so the first card clears the top border comfortably */
+      padding: 25px 15px; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none;
+      scroll-padding-top: 25px; /* Ensures snap scroll stops perfectly with the padded gap */
+      scroll-padding-bottom: 25px;
     }
     .reviews-vertical-carousel::-webkit-scrollbar { display: none; }
     
     .vertical-review-card {
-      flex: none; height: auto; /* Auto-adjusts height to text */
+      flex: none; height: auto; 
       scroll-snap-align: start;
       background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius-main);
       padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
@@ -261,8 +279,8 @@
     @media (min-width: 500px) { .review-bottom-full .delivery-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (min-width: 900px) { .review-bottom-full .delivery-grid { grid-template-columns: repeat(6, 1fr); } } 
 
-    /* Footer */
-    .app-footer { text-align: center; padding: 40px 20px 20px 20px; margin-top: 20px; border-top: 1px dashed var(--border-color); }
+    /* --- 11. GLOBAL FOOTER --- */
+    .app-footer { text-align: center; padding: 40px 20px 20px 20px; margin-top: auto; border-top: 1px dashed var(--border-color); }
     .footer-brand { color: var(--accent-green); font-weight: 700; font-family: 'Georgia', serif; font-size: 16px; margin-bottom: 6px; }
     .footer-text { color: var(--text-muted); font-size: 12px; line-height: 1.6; }
   </style>
@@ -314,29 +332,40 @@
           </div>
         </div>
       </div>
-      <div class="home-intro">
-        <h3>Nourish - Inspire - Connect</h3>
-        <p>Discover what makes Oon Jai special — enjoy wholesome food, find encouragement through Words of Hope, and stay connected with our growing community.</p>
-      </div>
-      <div class="home-cards-grid">
-        <div class="home-card" onclick="switchMainTab('menu')">
-          <img src="https://i.postimg.cc/K8FhG55D/Home-1.png" alt="Menu" />
-          <div class="home-card-btn">Explore Menu</div>
+      
+      <!-- Unified Outline Wrapper -->
+      <div class="tab-content-wrapper">
+        <div class="home-intro">
+          <h3>Nourish - Inspire - Connect</h3>
+          <p>Discover what makes Oon Jai special — enjoy wholesome food, find encouragement through Words of Hope, and stay connected with our growing community.</p>
         </div>
-        <div class="home-card" onclick="switchMainTab('hope')">
-          <img src="https://i.postimg.cc/qv0HJGGq/Home-2.png" alt="Words of Hope" />
-          <div class="home-card-btn">Words of Hope</div>
+        <div class="home-cards-grid">
+          <div class="home-card" onclick="switchMainTab('menu')">
+            <img src="https://i.postimg.cc/K8FhG55D/Home-1.png" alt="Menu" />
+            <div class="home-card-btn">Explore Menu</div>
+          </div>
+          <div class="home-card" onclick="switchMainTab('hope')">
+            <img src="https://i.postimg.cc/qv0HJGGq/Home-2.png" alt="Words of Hope" />
+            <div class="home-card-btn">Words of Hope</div>
+          </div>
+          <div class="home-card" onclick="switchMainTab('review')">
+            <img src="https://i.postimg.cc/sgyCjJJM/Home-3.png" alt="Review" />
+            <div class="home-card-btn">Customer Reviews</div>
+          </div>
         </div>
-        <div class="home-card" onclick="switchMainTab('review')">
-          <img src="https://i.postimg.cc/sgyCjJJM/Home-3.png" alt="Review" />
-          <div class="home-card-btn">Customer Reviews</div>
+        <div class="about-us-section">
+          <h3>About Us</h3>
+          <p>Oon Jai Marketplace is a mission-driven vegetarian and vegan restaurant located in Vientiane, Laos. More than just a place to enjoy wholesome food, Oon Jai exists to promote healthy living, compassionate service, and meaningful relationships through plant-based meals and community engagement.</p>
+          <p>Every meal served and every person welcomed represents an opportunity to share kindness, care, and connection. Through food and hospitality, Oon Jai seeks to demonstrate that a simple meal can become a powerful expression of love, compassion, and service—nourishing not only the body but also the community.</p>
+          <p style="margin-top: 15px;">For more information about Oon Jai and our mission, please visit us at <a href="http://www.oonjai.org" target="_blank" style="color: var(--accent-green); text-decoration: none; font-weight: bold;">www.oonjai.org</a></p>
         </div>
-      </div>
-      <div class="about-us-section">
-        <h3>About Us</h3>
-        <p>Oon Jai Marketplace is a mission-driven vegetarian and vegan restaurant located in Vientiane, Laos. More than just a place to enjoy wholesome food, Oon Jai exists to promote healthy living, compassionate service, and meaningful relationships through plant-based meals and community engagement.</p>
-        <p>Every meal served and every person welcomed represents an opportunity to share kindness, care, and connection. Through food and hospitality, Oon Jai seeks to demonstrate that a simple meal can become a powerful expression of love, compassion, and service—nourishing not only the body but also the community.</p>
-        <p style="margin-top: 15px;">For more information about Oon Jai and our mission, please visit us at <a href="http://www.oonjai.org" target="_blank" style="color: var(--accent-green); text-decoration: none; font-weight: bold;">www.oonjai.org</a></p>
+
+        <!-- GLOBAL FOOTER -->
+        <footer class="app-footer">
+          <div class="footer-brand">Oon Jai Marketplace</div>
+          <div class="footer-text">Vientiane, Laos</div>
+          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+        </footer>
       </div>
     </div>
 
@@ -353,66 +382,75 @@
         </div>
       </div>
       
-      <!-- SWAPPED LOCATION AND HOURS -->
-      <div class="menu-info-bar">
-        <a href="https://maps.app.goo.gl/YojE5Vj56rt93vGC6?g_st=aw" target="_blank" rel="noopener noreferrer" class="location-link">📍 Vientiane, Laos</a>
-        <div class="business-hours">🕒 Mon–Thu: 11:00 – 14:00, 16:00 – 18:30 | Fri: 11:00 – 14:00</div>
-      </div>
-      
-      <div class="menu-content-layout" id="contentLayout">
-        <aside class="categories-nav" id="categoryNav">
-          <img src="https://i.postimg.cc/DZmP1t7Q/logo.jpg" class="sidebar-logo" alt="Oon Jai Logo" />
-          <div class="nav-header">Menu Categories</div>
-          <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
-          <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
-          <button class="cat-btn" data-category="texmex" onclick="switchCategory('texmex')">Tex-Mexican</button>
-          <button class="cat-btn" data-category="pasta" onclick="switchCategory('pasta')">Pasta</button>
-          <button class="cat-btn" data-category="bowl" onclick="switchCategory('bowl')">Build Your Bowl</button>
-          <button class="cat-btn" data-category="smoothies" onclick="switchCategory('smoothies')">Smoothies</button>
-          <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
-          <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
-          <div class="sidebar-bottom-actions">
-            <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">⭐ Leave us a Review</a>
-            <button class="btn-hope-action" onclick="switchMainTab('hope')">🌱 Words of Hope</button>
-          </div>
-        </aside>
-        <main class="main-content" id="mainContent">
-          <div class="menu-section">
-            <h2 class="section-title" id="categoryTitle">Burgers</h2>
-            <div class="products-grid" id="productsGrid"></div>
-          </div>
-          <div class="cart-summary" id="cartSection">
-            <div class="cart-title">
-              <span>Your Order Basket</span>
-              <span id="cartCount">(0 items)</span>
+      <!-- Unified Outline Wrapper -->
+      <div class="tab-content-wrapper">
+        <div class="menu-info-bar">
+          <a href="https://maps.app.goo.gl/YojE5Vj56rt93vGC6?g_st=aw" target="_blank" rel="noopener noreferrer" class="location-link">📍 Vientiane, Laos</a>
+          <div class="business-hours">🕒 Mon–Thu: 11:00 – 14:00, 16:00 – 18:30 | Fri: 11:00 – 14:00</div>
+        </div>
+        
+        <div class="menu-content-layout" id="contentLayout">
+          <aside class="categories-nav" id="categoryNav">
+            <img src="https://i.postimg.cc/DZmP1t7Q/logo.jpg" class="sidebar-logo" alt="Oon Jai Logo" />
+            <div class="nav-header">Menu Categories</div>
+            <button class="cat-btn active" data-category="burgers" onclick="switchCategory('burgers')">Burgers</button>
+            <button class="cat-btn" data-category="sandwiches" onclick="switchCategory('sandwiches')">Sandwiches</button>
+            <button class="cat-btn" data-category="texmex" onclick="switchCategory('texmex')">Tex-Mexican</button>
+            <button class="cat-btn" data-category="pasta" onclick="switchCategory('pasta')">Pasta</button>
+            <button class="cat-btn" data-category="bowl" onclick="switchCategory('bowl')">Build Your Bowl</button>
+            <button class="cat-btn" data-category="smoothies" onclick="switchCategory('smoothies')">Smoothies</button>
+            <button class="cat-btn" data-category="refreshers" onclick="switchCategory('refreshers')">Refreshers</button>
+            <button class="cat-btn" data-category="wellness" onclick="switchCategory('wellness')">Wellness Drinks</button>
+            <div class="sidebar-bottom-actions">
+              <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="btn-review-action">⭐ Leave us a Review</a>
+              <button class="btn-hope-action" onclick="switchMainTab('hope')">🌱 Words of Hope</button>
             </div>
-            <div class="cart-items" id="cartItems">
-              <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
+          </aside>
+          <main class="main-content" id="mainContent">
+            <div class="menu-section">
+              <h2 class="section-title" id="categoryTitle">Burgers</h2>
+              <div class="products-grid" id="productsGrid"></div>
             </div>
-            <div class="order-options" id="orderOptionsBox">
-              <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
-              <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
-            </div>
-            <div class="order-type-error-msg" id="orderTypeErrorMsg">⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.</div>
-            <div class="payment-note"><strong>Note:</strong> A QR code will be sent to you for payment before your order is processed. This helps us verify and prevent fake orders. Thank you!</div>
-            <div class="cart-total">
-              <div class="total-row">
-                <span>Total:</span>
-                <span id="totalPrice" class="price" style="font-size: 16px;">0 Kip</span>
+            <div class="cart-summary" id="cartSection">
+              <div class="cart-title">
+                <span>Your Order Basket</span>
+                <span id="cartCount">(0 items)</span>
               </div>
-              <div class="action-buttons">
-                <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
-                <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
+              <div class="cart-items" id="cartItems">
+                <p style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 12px 0;">Your basket is empty.</p>
+              </div>
+              <div class="order-options" id="orderOptionsBox">
+                <label><input type="radio" name="orderType" value="Dine-In" onchange="clearOrderTypeError()"> Dine-In</label>
+                <label><input type="radio" name="orderType" value="Pick-Up" onchange="clearOrderTypeError()"> Pick-Up</label>
+              </div>
+              <div class="order-type-error-msg" id="orderTypeErrorMsg">⚠️ Please choose either "Dine-In" or "Pick-Up" to complete your order.</div>
+              <div class="payment-note"><strong>Note:</strong> A QR code will be sent to you for payment before your order is processed. This helps us verify and prevent fake orders. Thank you!</div>
+              <div class="cart-total">
+                <div class="total-row">
+                  <span>Total:</span>
+                  <span id="totalPrice" class="price" style="font-size: 16px;">0 Kip</span>
+                </div>
+                <div class="action-buttons">
+                  <button class="btn-wa" onclick="checkoutWA()">Order via WhatsApp</button>
+                  <button class="btn-msgr" onclick="checkoutMessenger()">Order via Messenger</button>
+                </div>
               </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </div>
+
+        <!-- GLOBAL FOOTER -->
+        <footer class="app-footer">
+          <div class="footer-brand">Oon Jai Marketplace</div>
+          <div class="footer-text">Vientiane, Laos</div>
+          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+        </footer>
       </div>
     </div>
     
     <!-- ================== TAB: WORDS OF HOPE ================== -->
     <div id="tab-hope" class="tab-pane">
-      <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg'); margin-bottom: 0; border-radius: var(--border-radius-main) var(--border-radius-main) 0 0; border-bottom: none;">
+      <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg');">
         <div class="banner-wrapper">
           <div class="banner-container">
             <div class="banner-badge">✦ Shared Kindness ✦</div>
@@ -422,76 +460,85 @@
           </div>
         </div>
       </div>
-      <div style="background: rgba(2, 18, 15, 0.6); padding: 30px 20px; border-radius: 0 0 var(--border-radius-main) var(--border-radius-main); border: 1px solid var(--border-color); border-top: none;">
-          <div style="border-top: 1px dashed var(--border-color); border-bottom: 1px dashed var(--border-color); padding: 20px 10px; margin-bottom: 30px; text-align: center;">
-            <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.6;">
-              Every message shared here has the power to brighten someone's day! Leave a word of encouragement, an inspiring quote, or a meaningful message—it may be featured on one of our next cards and bring hope to someone when they need it most.
-            </p>
-          </div>
-          <div class="hope-split-layout">
+      
+      <!-- Unified Outline Wrapper -->
+      <div class="tab-content-wrapper">
+        <div style="border-top: 1px dashed var(--border-color); border-bottom: 1px dashed var(--border-color); padding: 20px 10px; margin-bottom: 30px; text-align: center;">
+          <p style="color: var(--text-subhead); font-size: 13px; line-height: 1.6;">
+            Every message shared here has the power to brighten someone's day! Leave a word of encouragement, an inspiring quote, or a meaningful message—it may be featured on one of our next cards and bring hope to someone when they need it most.
+          </p>
+        </div>
+        
+        <div class="hope-split-layout">
+          <!-- LEFT: Hope Carousel -->
+          <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+            <h3 style="margin-top: 0; margin-bottom: 4px; font-size: 18px; font-weight: 600; color: #ffffff; text-align: center; font-family: 'Georgia', serif;">
+              <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span> Featured Messages <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span>
+            </h3>
+            <p style="margin: 0 0 15px 0; font-size: 11px; color: #94a3b8; text-align: center;">We are grateful for every word of encouragement.</p>
             
-            <!-- LEFT: Hope Carousel -->
-            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-              <h3 style="margin-top: 0; margin-bottom: 4px; font-size: 18px; font-weight: 600; color: #ffffff; text-align: center; font-family: 'Georgia', serif;">
-                <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span> Featured Messages <span style="color: #4ade80; font-size: 13px; vertical-align: middle;">✦</span>
-              </h3>
-              <p style="margin: 0 0 15px 0; font-size: 11px; color: #94a3b8; text-align: center;">We are grateful for every word of encouragement.</p>
-              
-              <div class="carousel-container">
-                <button class="carousel-btn prev" onclick="scrollCarousel('hopeCarouselTrack', -1)">&#10094;</button>
-                <div class="carousel-track" id="hopeCarouselTrack"></div>
-                <button class="carousel-btn next" onclick="scrollCarousel('hopeCarouselTrack', 1)">&#10095;</button>
-              </div>
-              <div class="carousel-dots" id="hopeCarouselDots"></div>
+            <div class="carousel-container">
+              <button class="carousel-btn prev" onclick="scrollCarousel('hopeCarouselTrack', -1)">&#10094;</button>
+              <div class="carousel-track" id="hopeCarouselTrack"></div>
+              <button class="carousel-btn next" onclick="scrollCarousel('hopeCarouselTrack', 1)">&#10095;</button>
             </div>
+            <div class="carousel-dots" id="hopeCarouselDots"></div>
+          </div>
 
-            <!-- RIGHT: Message Form -->
-            <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%;">
-              <div style="font-family: 'Georgia', 'Times New Roman', serif; max-width: 480px; width: 100%; min-height: 252px; margin: 0 auto; padding: 28px 20px; border-radius: 16px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: #ffffff;">
-                <div>
-                  <h3 style="margin-top: 0; margin-bottom: 6px; font-size: clamp(16px, 4.5vw, 22px); font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif; white-space: nowrap;">
-                    <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-right: 4px;">✦</span>
-                    Message for a Stranger
-                    <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-left: 4px;">✦</span>
-                  </h3>
-                  <p style="margin: 0 0 20px 0; font-size: 12px; color: #94a3b8; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif; line-height: 1.4; font-weight: 300;">
-                    Leave an encouraging thought or quote to brighten someone's day.
-                  </p>
-                  <form id="customForm" autocomplete="off" style="font-family: 'Segoe UI', -apple-system, sans-serif;">
-                    <input type="hidden" id="device_token" name="device_token" />
-                    <div style="margin-bottom: 16px;">
-                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                        <label style="font-weight: 600; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Your Message</label>
-                        <span id="wordCounter" style="font-size: 11px; color: #64748b; font-weight: 500;">0 / 20-30 words</span>
-                      </div>
-                      <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
+          <!-- RIGHT: Message Form -->
+          <div style="display: flex; justify-content: center; align-items: flex-start; width: 100%;">
+            <div style="font-family: 'Georgia', 'Times New Roman', serif; max-width: 480px; width: 100%; min-height: 252px; margin: 0 auto; padding: 28px 20px; border-radius: 16px; background: radial-gradient(circle at 85% 15%, #083c33 0%, #041f1a 60%, #010c0a 100%); border: 1px solid rgba(56, 161, 105, 0.25); box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; color: #ffffff;">
+              <div>
+                <h3 style="margin-top: 0; margin-bottom: 6px; font-size: clamp(16px, 4.5vw, 22px); font-weight: 400; color: #ffffff; text-align: center; letter-spacing: 0.5px; font-family: 'Georgia', serif; white-space: nowrap;">
+                  <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-right: 4px;">✦</span>
+                  Message for a Stranger
+                  <span style="color: #4ade80; font-size: 13px; vertical-align: middle; margin-left: 4px;">✦</span>
+                </h3>
+                <p style="margin: 0 0 20px 0; font-size: 12px; color: #94a3b8; text-align: center; font-family: 'Segoe UI', -apple-system, sans-serif; line-height: 1.4; font-weight: 300;">
+                  Leave an encouraging thought or quote to brighten someone's day.
+                </p>
+                <form id="customForm" autocomplete="off" style="font-family: 'Segoe UI', -apple-system, sans-serif;">
+                  <input type="hidden" id="device_token" name="device_token" />
+                  <div style="margin-bottom: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                      <label style="font-weight: 600; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Your Message</label>
+                      <span id="wordCounter" style="font-size: 11px; color: #64748b; font-weight: 500;">0 / 20-30 words</span>
                     </div>
-                    <div style="margin-bottom: 20px;">
-                      <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Name or Initials</label>
-                      <input type="text" id="name" name="sender_name" placeholder="e.g., Sarah V., S. Valdez, or Anonymous" autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; outline: none;" />
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                      <button type="submit" id="submitBtn" style="flex: 2; padding: 11px 16px; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif; letter-spacing: 0.02em;">Submit Message</button>
-                      <button type="button" onclick="clearForm()" style="flex: 1; padding: 11px 16px; background-color: transparent; color: #94a3b8; border: 1px solid #1e4d40; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif;">Clear</button>
-                    </div>
-                  </form>
-                </div>
-                <div id="statusMsg" style="margin-top: 10px; font-size: 12px; font-weight: 500; text-align: center; min-height: 18px; font-family: 'Segoe UI', sans-serif;"></div>
+                    <textarea id="message" name="message" rows="3" placeholder="Type your message here (20–30 words)..." required autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; resize: vertical; outline: none;"></textarea>
+                  </div>
+                  <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 6px; color: #cbd5e1; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;">Name or Initials</label>
+                    <input type="text" id="name" name="sender_name" placeholder="e.g., Sarah V., S. Valdez, or Anonymous" autocomplete="off" style="width: 100%; padding: 11px 12px; background-color: rgba(2, 18, 15, 0.75); border: 1px solid #1e4d40; border-radius: 8px; font-size: 13px; font-family: 'Segoe UI', sans-serif; color: #f8fafc; box-sizing: border-box; outline: none;" />
+                  </div>
+                  <div style="display: flex; gap: 10px;">
+                    <button type="submit" id="submitBtn" style="flex: 2; padding: 11px 16px; background: linear-gradient(135deg, #22c55e 0%, #15803d 100%); color: #ffffff; border: none; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif; letter-spacing: 0.02em;">Submit Message</button>
+                    <button type="button" onclick="clearForm()" style="flex: 1; padding: 11px 16px; background-color: transparent; color: #94a3b8; border: 1px solid #1e4d40; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; font-family: 'Segoe UI', sans-serif;">Clear</button>
+                  </div>
+                </form>
               </div>
+              <div id="statusMsg" style="margin-top: 10px; font-size: 12px; font-weight: 500; text-align: center; min-height: 18px; font-family: 'Segoe UI', sans-serif;"></div>
             </div>
           </div>
+          
           <div style="text-align: center; max-width: 600px; margin: 40px auto 10px auto; padding-top: 25px; border-top: 1px solid rgba(74, 222, 128, 0.15);">
             <p style="font-style: italic; color: var(--text-subhead); font-size: 15px; line-height: 1.6; font-family: 'Georgia', serif;">
               "A single act of kindness throws out roots in all directions, and the roots spring up and make new trees."
             </p>
             <span style="font-weight: 700; color: var(--accent-green); display: block; margin-top: 12px; font-size: 13px; letter-spacing: 0.5px;">— Amelia Earhart</span>
           </div>
+
+        <!-- GLOBAL FOOTER -->
+        <footer class="app-footer">
+          <div class="footer-brand">Oon Jai Marketplace</div>
+          <div class="footer-text">Vientiane, Laos</div>
+          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+        </footer>
       </div>
     </div>
     
     <!-- ================== TAB: REVIEWS ================== -->
     <div id="tab-review" class="tab-pane">
-      <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg'); margin-bottom: 0;">
+      <div class="tab-hero-banner" style="background-image: url('https://i.postimg.cc/8PH5RscH/banner.jpg');">
         <div class="banner-wrapper">
           <div class="banner-container">
             <div class="banner-badge">✦ Community Voices ✦</div>
@@ -502,54 +549,58 @@
         </div>
       </div>
       
-      <!-- SPLIT-SCREEN REVIEWS LAYOUT -->
-      <div class="review-top-split">
+      <!-- Unified Outline Wrapper -->
+      <div class="tab-content-wrapper">
         
-        <!-- Left Side: Interactive Photo Carousel -->
-        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-          <div class="carousel-container">
-            <button class="carousel-btn prev" onclick="scrollCarousel('reviewCarouselTrack', -1)">&#10094;</button>
-            <div class="carousel-track" id="reviewCarouselTrack"></div>
-            <button class="carousel-btn next" onclick="scrollCarousel('reviewCarouselTrack', 1)">&#10095;</button>
+        <!-- SPLIT-SCREEN REVIEWS LAYOUT -->
+        <div class="review-top-split">
+          
+          <!-- Left Side: Interactive Photo Carousel -->
+          <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div class="carousel-container">
+              <button class="carousel-btn prev" onclick="scrollCarousel('reviewCarouselTrack', -1)">&#10094;</button>
+              <div class="carousel-track" id="reviewCarouselTrack"></div>
+              <button class="carousel-btn next" onclick="scrollCarousel('reviewCarouselTrack', 1)">&#10095;</button>
+            </div>
+            <div class="carousel-dots" id="reviewCarouselDots"></div>
           </div>
-          <div class="carousel-dots" id="reviewCarouselDots"></div>
+
+          <!-- Right Side: Vertical Swipeable Reviews -->
+          <div class="reviews-vertical-wrapper">
+            <div class="reviews-vertical-carousel" id="verticalReviewsCarousel">
+              <!-- JS will populate vertical cards here -->
+            </div>
+          </div>
         </div>
 
-        <!-- Right Side: Vertical Swipeable Reviews -->
-        <div class="reviews-vertical-wrapper">
-          <div class="reviews-vertical-carousel" id="verticalReviewsCarousel">
-            <!-- JS will populate vertical cards here -->
+        <!-- BOTTOM FULL WIDTH ROW -->
+        <div class="review-bottom-full">
+          <p class="review-encouragement">
+            Your feedback helps us grow and continue to spread kindness. If you enjoyed your time with us, please share your thoughts!
+          </p>
+          
+          <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="google-review-btn">⭐ Leave your Review on Google</a>
+
+          <div class="delivery-section">
+            <div class="delivery-title" style="font-size: 13px;">Find Us Online</div>
+            <div class="delivery-grid">
+              <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" class="platform-link foodpanda">Food Panda</a>
+              <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" class="platform-link egets">E-GetS</a>
+              <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" class="platform-link chompa">ChompA</a>
+              <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" class="platform-link guru">Rest. Guru</a>
+              <a href="https://www.facebook.com/oon.jai.laos" target="_blank" class="platform-link facebook">Facebook</a>
+              <a href="https://www.tripadvisor.com/Search?q=Vientiane+Restaurants" target="_blank" class="platform-link tripadvisor">Tripadvisor</a>
+            </div>
           </div>
         </div>
+
+        <!-- GLOBAL FOOTER -->
+        <footer class="app-footer">
+          <div class="footer-brand">Oon Jai Marketplace</div>
+          <div class="footer-text">Vientiane, Laos</div>
+          <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
+        </footer>
       </div>
-
-      <!-- BOTTOM FULL WIDTH ROW -->
-      <div class="review-bottom-full">
-        <p class="review-encouragement">
-          Your feedback helps us grow and continue to spread kindness. If you enjoyed your time with us, please share your thoughts!
-        </p>
-        
-        <a href="https://search.google.com/local/writereview?placeid=ChIJi5aMHuhnJDER7mdo7-eX_fM" target="_blank" rel="noopener noreferrer" class="google-review-btn">⭐ Leave your Review on Google</a>
-
-        <div class="delivery-section">
-          <div class="delivery-title" style="font-size: 13px;">Find Us Online</div>
-          <div class="delivery-grid">
-            <a href="https://www.foodpanda.la/en/restaurant/d2l0/oon-jai-marketplace" target="_blank" class="platform-link foodpanda">Food Panda</a>
-            <a href="https://ng-takeaway.e-gets.com/tw/2tSWa6" target="_blank" class="platform-link egets">E-GetS</a>
-            <a href="https://chompa-delivery.com/restaurant?id=13&from_dine_in=false" target="_blank" class="platform-link chompa">ChompA</a>
-            <a href="https://t.restaurantguru.com/Oon-Jai-Marketplace-Vientiane" target="_blank" class="platform-link guru">Rest. Guru</a>
-            <a href="https://www.facebook.com/oon.jai.laos" target="_blank" class="platform-link facebook">Facebook</a>
-            <a href="https://www.tripadvisor.com/Search?q=Vientiane+Restaurants" target="_blank" class="platform-link tripadvisor">Tripadvisor</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- FOOTER -->
-      <footer class="app-footer">
-        <div class="footer-brand">Oon Jai Marketplace</div>
-        <div class="footer-text">Vientiane, Laos</div>
-        <div class="footer-text" style="margin-top: 15px; opacity: 0.6;">© 2026 Oon Jai. All Rights Reserved.<br>Spreading kindness, one meal at a time.</div>
-      </footer>
     </div>
   </div>
 
