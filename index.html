@@ -243,7 +243,8 @@
     .review-top-split { display: grid; grid-template-columns: 1fr; gap: 20px; padding: 10px; justify-items: center; }
     /* Prevent flex/grid blowout on small screens */
     .review-top-split > div { min-width: 0; max-width: 100%; }
-    @media (min-width: 768px) { .review-top-split { grid-template-columns: 1fr 1fr; align-items: center; justify-items: stretch; } }
+    /* Changed align-items to flex-start so the tops of the containers are perfectly aligned! */
+    @media (min-width: 768px) { .review-top-split { grid-template-columns: 1fr 1fr; align-items: flex-start; justify-items: stretch; } }
 
     /* Vertical Reviews Container */
     .reviews-vertical-wrapper { 
