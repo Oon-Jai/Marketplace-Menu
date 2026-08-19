@@ -1178,32 +1178,32 @@
   }
 
   function renderProductsGrid() {
-    const container = document.getElementById('productsGrid');
-    container.innerHTML = '';
+  const container = document.getElementById('productsGrid');
+  container.innerHTML = '';
 
-    menuData[currentCategory].forEach(item => {
-      const count = getItemCountInCart(item.id);
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      
-      const countTextHtml = count > 0 ? `<span class="item-count-text">×${count}</span>` : '';
-      const actionButton = item.isCustom
-        ? `<button class="add-btn" onclick="openCustomModal('${currentCategory}', '${item.id}')">Customize</button>`
-        : `<button class="add-btn" onclick="addToCart('${item.id}', '${item.name}', ${item.price})">Add +</button>`;
+  menuData[currentCategory].forEach(item => {
+    const count = getItemCountInCart(item.id);
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    
+    const countTextHtml = count > 0 ? `<span class="item-count-text">×${count}</span>` : '';
+    const actionButton = item.isCustom
+      ? `<button class="add-btn" onclick="openCustomModal('${currentCategory}', '${item.id}')">Customize</button>`
+      : `<button class="add-btn" onclick="addMenuItemToCart('${currentCategory}', '${item.id}')">Add +</button>`;
 
-      card.innerHTML = `
-        <div class="product-info">
-          <div class="product-name">${item.name}</div>
-          <div class="product-desc">${item.desc}</div>
-        </div>
-        <div class="product-action">
-          <span class="price">${formatKip(item.price)}</span>
-          <div class="btn-wrapper">${countTextHtml}${actionButton}</div>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-  }
+    card.innerHTML = `
+      <div class="product-info">
+        <div class="product-name">${item.name}</div>
+        <div class="product-desc">${item.desc}</div>
+      </div>
+      <div class="product-action">
+        <span class="price">${formatKip(item.price)}</span>
+        <div class="btn-wrapper">${countTextHtml}${actionButton}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
 
   function addToCart(id, name, price, subtext = '') {
     cart.push({ id, name, price, subtext });
